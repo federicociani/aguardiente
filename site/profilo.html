@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Il mio profilo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="profilo">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="profile-hero">
+      <div class="profile-cover"></div>
+      <div class="profile-info">
+        <div class="profile-avatar">OM</div>
+        <div style="flex-grow:1;display:flex;flex-direction:column;gap:6px;padding-bottom:6px">
+          <div class="chips" style="align-items:center">
+            <h1 style="font-size:44px">Ombra &amp; Mare</h1>
+            <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Verificati</span>
+            <span class="badge badge-grad">Premium</span>
+          </div>
+          <span class="muted" style="font-size:17px">Coppia, 35 / 33, Ravenna</span>
+        </div>
+        <div class="actions" style="padding-bottom:6px">
+          <a class="btn btn-ghost" href="#">Modifica profilo</a>
+          <a class="btn btn-primary" href="annunci.html" id="nuovo-annuncio">Nuovo annuncio</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <div class="main">
+        <section><h2 style="font-size:28px;margin-bottom:14px">Chi siamo</h2>
+          <p style="color:var(--text-2);font-size:17px;line-height:1.6;max-width:680px">Coppia insieme da otto anni, amiamo il mare d’inverno, la buona cucina e le persone che sanno ascoltare. Ci piace prenderci il tempo per conoscerci prima di tutto.</p></section>
+        <section><h2 style="font-size:28px;margin-bottom:14px">Cosa cerchiamo</h2>
+          <div class="chips"><span class="chip">Coppie</span><span class="chip">Amicizie</span><span class="chip">Serate al club</span><span class="chip">Weekend fuori</span><span class="chip">Solo profili verificati</span></div></section>
+        <section>
+          <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:28px">I nostri annunci</h2><a href="annunci.html">Gestisci</a></div>
+          <article class="card ad">
+            <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><h3>Cena e due chiacchiere a Ravenna</h3><span class="badge">Attivo</span></div>
+            <span class="cat-label">Coppia cerca coppia</span>
+            <p class="muted">Cerchiamo una coppia affine per una cena senza impegno. Se c’è sintonia, il resto verrà da sé.</p>
+            <span class="muted" style="font-size:14px">Pubblicato 3 giorni fa, scade tra 27 giorni</span>
+          </article>
+        </section>
+        <section><h2 style="font-size:28px;margin-bottom:14px">Foto</h2>
+          <div class="photos">
+            <div class="photo"><span class="photo-label">[FOTO] pubblica</span></div>
+            <div class="photo"><span class="photo-label">[FOTO] solo contatti</span></div>
+            <button class="add-photo" type="button">Aggiungi foto</button>
+          </div></section>
+      </div>
+
+      <aside>
+        <section class="card">
+          <h2 style="font-size:22px;margin-bottom:10px">Privacy</h2>
+        <div class="switch-row"><span><strong style="font-weight:500">Solo utenti verificati</strong><br><span class="muted" style="font-size:13px">Gli altri non vedono il profilo</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Solo utenti verificati"></button></div>
+        <div class="switch-row"><span><strong style="font-weight:500">Foto sfocate</strong><br><span class="muted" style="font-size:13px">Nitide solo per i contatti accettati</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Foto sfocate"></button></div>
+        <div class="switch-row"><span><strong style="font-weight:500">Mostra distanza</strong><br><span class="muted" style="font-size:13px">Indicativa, mai la posizione esatta</span></span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Mostra distanza"></button></div>
+        <div class="switch-row"><span><strong style="font-weight:500">Ricevi offerte dai locali</strong><br><span class="muted" style="font-size:13px">Solo attività verificate</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ricevi offerte dai locali"></button></div>
+        </section>
+        <section class="card-deep" style="display:flex;flex-direction:column;gap:10px">
+          <span class="badge" style="background:rgba(0,0,0,.25);color:#fff;align-self:flex-start">Premium attivo</span>
+          <h3>Messaggi illimitati e annunci in evidenza</h3>
+          <p>Rinnovo a [PREZZO]/mese. Include i coupon nei locali convenzionati.</p>
+          <a class="btn btn-dark" href="luoghi.html" style="align-self:flex-start">Vedi i coupon</a>
+        </section>
+        <section class="card" style="display:flex;flex-direction:column;gap:4px">
+          <h2 style="font-size:22px;margin-bottom:6px">Account</h2>
+          <a href="#" style="padding:10px 0">Scarica i miei dati</a>
+          <a href="index.html" style="padding:10px 0">Esci</a>
+          <a href="#" style="padding:10px 0;color:var(--muted)">Elimina account</a>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Annunci</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="annunci">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html" aria-current="page">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-block:48px 96px">
+    <div class="section-head">
+      <div><h1 style="font-size:52px">Annunci</h1><p class="muted" style="margin-top:8px">Emilia-Romagna, <span id="ads-count"></span></p></div>
+      <div class="field-row">
+        <label class="field">Regione<select><option>Emilia-Romagna</option><option>Lombardia</option><option>Veneto</option><option>Marche</option></select></label>
+        <label class="field">Ordina<select><option>Più recenti</option><option>Più vicini</option><option>Solo verificati</option></select></label>
+      </div>
+    </div>
+    <div class="chips" id="ad-filters" role="group" aria-label="Filtra per categoria" style="margin-bottom:28px"></div>
+    <div class="grid grid-3" id="ads"></div>
+
+    <a class="promo" href="luoghi.html">
+      <span><strong style="font-family:var(--font-display);font-size:24px">Trovato con chi? Ora scegli dove.</strong><br><span style="color:#F5E1E8">Locali e strutture friendly vicino a te, con sconti per gli iscritti.</span></span>
+      <span class="badge" style="background:rgba(0,0,0,.25);color:#fff">Sponsorizzato</span>
+    </a>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

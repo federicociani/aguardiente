@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Iscrizione</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="iscrizione">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <span class="muted">Hai già un account? <a href="annunci.html"><strong>Accedi</strong></a></span>
+  </header>
+
+  <main class="container signup">
+    <div class="signup-intro">
+      <h1 style="font-size:52px">Entra in Aguardiente</h1>
+      <p class="lead">Scegli come vuoi iscriverti. Profilo personale e account aziendale restano separati.</p>
+      <ol class="steps">
+        <li class="done"><span class="n">1</span>Dati di accesso</li>
+        <li><span class="n">2</span><span id="step2">Verifica età e identità</span></li>
+        <li><span class="n">3</span><span id="step3">Completa il profilo</span></li>
+      </ol>
+    </div>
+
+    <div class="card signup-form">
+      <div class="tabs" role="tablist" aria-label="Tipo di account">
+        <button type="button" role="tab" data-type="utente" aria-selected="true">Utente</button>
+        <button type="button" role="tab" data-type="azienda" aria-selected="false">Azienda</button>
+      </div>
+
+      <form id="form-utente" action="annunci.html" style="display:flex;flex-direction:column;gap:20px">
+        <fieldset>
+          <legend>Il profilo è di</legend>
+          <div class="radio-tiles">
+            <label><input type="radio" name="tipo" checked> Coppia</label>
+            <label><input type="radio" name="tipo"> Lei</label>
+            <label><input type="radio" name="tipo"> Lui</label>
+            <label><input type="radio" name="tipo"> Trans</label>
+          </div>
+        </fieldset>
+        <label class="field">Nickname<input type="text" placeholder="Come ti vedranno gli altri"></label>
+        <div class="field-row">
+          <label class="field">Email<input type="email" placeholder="nome@email.it"></label>
+          <label class="field">Data di nascita<input type="date"></label>
+        </div>
+        <label class="field">Password<input type="password"></label>
+        <label class="check"><input type="checkbox"> Dichiaro di essere maggiorenne. Al passo successivo verificherò l’età con un documento o un servizio di verifica.</label>
+        <label class="check"><input type="checkbox"> Acconsento esplicitamente al trattamento dei dati relativi alla vita sessuale, come descritto nell’<a href="#">informativa privacy</a>.</label>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Continua con la verifica</button>
+      </form>
+
+      <form id="form-azienda" action="dashboard.html" hidden style="display:flex;flex-direction:column;gap:20px">
+        <label class="field">Tipo di attività<select><option>Boutique / sex shop</option><option>Struttura ricettiva (hotel, B&amp;B, agriturismo)</option><option>Club / locale privé</option><option>Spazio privato (host)</option></select></label>
+        <div class="field-row">
+          <label class="field">Ragione sociale<input type="text"></label>
+          <label class="field">Partita IVA<input type="text" inputmode="numeric"></label>
+        </div>
+        <label class="field">Indirizzo della sede o della struttura<input type="text" placeholder="Via, numero, comune"></label>
+        <div class="field-row">
+          <label class="field">Email aziendale<input type="email"></label>
+          <label class="field">Password<input type="password"></label>
+        </div>
+        <p class="notice">Prima della pubblicazione ti chiederemo visura camerale, documento del referente e, per le strutture ricettive, il codice CIN.</p>
+        <label class="check"><input type="checkbox"> Accetto i <a href="#">termini per le aziende</a> e le linee guida sui contenuti.</label>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Crea account aziendale</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

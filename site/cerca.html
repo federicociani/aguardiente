@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Cerca profili</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="cerca">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html" aria-current="page">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container with-sidebar">
+    <aside class="card sidebar" id="filters" aria-label="Filtri">
+      <h2 style="font-size:24px">Filtri</h2>
+      <fieldset id="filter-tipi" style="display:flex;flex-direction:column;gap:10px">
+        <legend>Cerco</legend>
+        <label class="check"><input type="checkbox" value="Coppia" checked> Coppia</label>
+        <label class="check"><input type="checkbox" value="Lei" checked> Lei</label>
+        <label class="check"><input type="checkbox" value="Lui" checked> Lui</label>
+        <label class="check"><input type="checkbox" value="Trans" checked> Trans</label>
+      </fieldset>
+      <label class="field">Regione<select><option>Emilia-Romagna</option><option>Lombardia</option><option>Veneto</option><option>Marche</option></select></label>
+      <label class="field">Provincia<select><option>Tutte</option><option>Ravenna</option><option>Forlì-Cesena</option><option>Rimini</option><option>Bologna</option></select></label>
+      <div class="field-row">
+        <label class="field">Età da<input type="number" value="25" min="18"></label>
+        <label class="field">a<input type="number" value="55" min="18"></label>
+      </div>
+      <div>
+        <div class="switch-row"><span>Solo online</span><button type="button" class="switch" role="switch" id="sw-online" aria-checked="false" aria-label="Solo online"></button></div>
+        <div class="switch-row"><span>Solo verificati</span><button type="button" class="switch" role="switch" id="sw-ver" aria-checked="false" aria-label="Solo verificati"></button></div>
+      </div>
+    </aside>
+
+    <section class="main-col">
+      <div class="section-head" style="margin:0">
+        <div><h1 style="font-size:48px">Cerca profili</h1><p class="muted" id="res-count" style="margin-top:6px"></p></div>
+        <label class="field">Ordina<select><option>Ultimo accesso</option><option>Più vicini</option><option>Nuovi iscritti</option></select></label>
+      </div>
+      <div class="grid grid-profiles" id="results"></div>
+    </section>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

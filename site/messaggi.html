@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Messaggi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="messaggi">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html" aria-current="page">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="chat">
+    <section class="chat-list" aria-label="Conversazioni">
+      <h1>Messaggi</h1>
+      <label class="field" style="padding:0 10px 12px">Cerca<input type="search" placeholder="Nickname o luogo"></label>
+      <div id="conv-list" style="display:flex;flex-direction:column;gap:4px"></div>
+    </section>
+
+    <section class="thread" aria-label="Conversazione">
+      <div class="thread-head">
+        <span class="ad-avatar" id="thread-ini" style="width:48px;height:48px;background:var(--grad-deep);color:#fff"></span>
+        <span style="flex-grow:1;display:flex;flex-direction:column"><strong id="thread-name" style="font-size:18px"></strong><span class="muted" id="thread-sub"></span></span>
+        <a class="btn btn-ghost" id="thread-link" href="#"></a>
+      </div>
+      <div class="thread-body" id="thread-msgs"></div>
+      <form class="composer" id="composer">
+        <label class="sr-only" for="msg-input">Scrivi un messaggio</label>
+        <input id="msg-input" type="text" placeholder="Scrivi un messaggio" autocomplete="off">
+        <button class="btn btn-primary btn-icon" type="submit" aria-label="Invia" style="width:52px;height:52px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <aside class="chat-aside" aria-label="Sicurezza">
+      <h2 style="font-size:20px">Sicurezza</h2>
+      <p class="muted">Puoi bloccare o segnalare in qualsiasi momento, senza che l’altra persona lo sappia.</p>
+      <button class="btn btn-ghost" type="button">Blocca</button>
+      <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
+    </aside>
+  </main>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

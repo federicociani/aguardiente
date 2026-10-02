@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Annunci per adulti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="home">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html">Cerca profili</a>
+      <a class="subtle" href="business.html">Per le aziende</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="iscrizione.html">Accedi</a>
+      <a class="btn btn-primary" href="iscrizione.html">Iscriviti</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <div class="hero-copy">
+        <span class="pre-badge"><span style="color:var(--accent);display:inline-flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>Solo maggiorenni, profili verificati</span>
+        <h1>Annunci per adulti.<br><span class="gradient-text">Tra persone vere.</span></h1>
+        <p class="lead">Coppie, single, curiosi: pubblica il tuo annuncio, cerca nella tua zona e chatta solo con chi ha verificato la propria identità.</p>
+        <div class="actions">
+          <a class="btn btn-primary btn-lg" href="iscrizione.html">Iscriviti gratis</a>
+          <a class="btn btn-ghost btn-lg" href="annunci.html">Sfoglia gli annunci</a>
+        </div>
+      </div>
+
+      <form class="card hero-search" action="cerca.html">
+        <h2 style="font-size:26px">Ricerca rapida</h2>
+        <div class="field-row">
+          <label class="field">Siamo / sono<select name="sono"><option>Coppia</option><option>Lei</option><option>Lui</option><option>Trans</option></select></label>
+          <label class="field">Cerco<select name="cerco"><option>Coppia</option><option>Lei</option><option>Lui</option><option>Trans</option></select></label>
+        </div>
+        <label class="field">Regione<select name="regione"><option>Emilia-Romagna</option><option>Lombardia</option><option>Veneto</option><option>Toscana</option><option>Marche</option></select></label>
+        <div class="field-row">
+          <label class="field">Età da<input type="number" name="da" value="25" min="18"></label>
+          <label class="field">a<input type="number" name="a" value="50" min="18"></label>
+        </div>
+        <label class="check"><input type="checkbox" name="online" checked> Solo online adesso</label>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Cerca</button>
+      </form>
+    </section>
+
+    <section class="container section" style="padding-top:24px">
+      <div class="section-head"><h2>Annunci per categoria</h2></div>
+      <div class="grid grid-cats">
+        <a class="cat-link" href="annunci.html">Coppia cerca coppia</a>
+        <a class="cat-link" href="annunci.html">Coppia cerca lei</a>
+        <a class="cat-link" href="annunci.html">Coppia cerca lui</a>
+        <a class="cat-link" href="annunci.html">Lei cerca lui</a>
+        <a class="cat-link" href="annunci.html">Lei cerca coppia</a>
+        <a class="cat-link" href="annunci.html">Lui cerca lei</a>
+        <a class="cat-link" href="annunci.html">Lui cerca coppia</a>
+        <a class="cat-link" href="annunci.html">Lei cerca lei</a>
+        <a class="cat-link" href="annunci.html">Lui cerca lui</a>
+        <a class="cat-link" href="annunci.html">Trans</a>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="container section">
+        <div class="section-head"><h2>Online adesso vicino a te</h2><a href="cerca.html">Vedi tutti</a></div>
+        <div class="online-strip" id="online-strip"></div>
+      </div>
+    </section>
+
+    <section class="container section">
+      <div class="section-head"><h2>Ultimi annunci</h2><a href="annunci.html">Tutti gli annunci</a></div>
+      <div class="grid grid-3" id="latest-ads"></div>
+    </section>
+
+    <section class="container section" style="padding-top:0">
+      <div class="section-head"><h2>Annunci per regione</h2></div>
+      <nav class="regions" id="regions" aria-label="Regioni"></nav>
+    </section>
+
+    <section class="container section">
+      <div class="grid grid-4">
+        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Chat e messaggi</h3><p class="muted">Scrivi a chi ti interessa, decidi tu chi può contattarti.</p></div>
+        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Profili verificati</h3><p class="muted">Età e identità controllate, badge visibile su ogni profilo.</p></div>
+        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Foto private</h3><p class="muted">Sfocate per tutti, nitide solo per i contatti che scegli.</p></div>
+        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Segnalazioni rapide</h3><p class="muted">Un tasto su ogni profilo e annuncio, moderazione umana.</p></div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
