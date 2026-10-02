@@ -49,11 +49,20 @@
 
     /* ---------- HOME ---------- */
     home() {
-      $('#online-strip').innerHTML = D.profili.filter((p) => p.online).map((p) => `
+      const online = D.profili.filter((p) => p.online);
+      $('#online-strip').innerHTML = online.map((p) => `
         <a class="online-item" href="cerca.html">
-          <span class="photo">${esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
+          <span class="photo">${p.foto
+            ? `<img src="${D.unsplash(p.foto.id)}" srcset="${D.unsplash(p.foto.id)} 1x, ${D.unsplash(p.foto.id, 800, 800)} 2x" alt="" loading="lazy" decoding="async">`
+            : esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
           <span><strong>${esc(p.nick)}</strong><br><span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span></span>
         </a>`).join('');
+      // Crediti Unsplash per le foto mostrate
+      const credits = online.filter((p) => p.foto).map((p) =>
+        `<a href="https://unsplash.com/@${p.foto.user}?utm_source=aguardiente&utm_medium=referral">${esc(p.foto.autore)}</a>`);
+      $('#online-credits').innerHTML = credits.length
+        ? `Foto di ${credits.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`
+        : '';
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
         <a class="card ad" href="annunci.html" style="color:inherit;text-decoration:none">
           <span class="cat-label">${esc(a.cat)}, ${esc(a.zona)}</span>
