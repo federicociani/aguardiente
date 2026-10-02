@@ -469,7 +469,7 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .cf-demo-copy .btn { margin-top: 28px; }
 
 /* 3. Cosa puoi / non puoi */
-.cf-dos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+.cf-dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 32px; }  /* sempre affiancati, per il confronto */
 .cf-dos h4 { margin: 0 0 16px; font-family: var(--font-display); font-size: 24px; }
 .cf-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
 .cf-list li { display: flex; gap: 12px; align-items: flex-start; }
@@ -907,4 +907,13 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .region-form { display: flex; flex-direction: column; gap: 14px; }
   .region-form .field { font-size: 15px; color: var(--text-2); }
   .region-form select { min-height: 56px; font-size: 17px; }
+
+  /* Puoi / Non trovi: affiancati anche su mobile, in versione compatta */
+  .cf-dos { gap: 8px; }
+  .cf-dos .card { padding: 16px 14px; border-radius: 28px; }
+  .cf-dos h4 { font-size: 18px; margin-bottom: 12px; }
+  .cf-dos .cf-list { gap: 12px; }
+  .cf-dos .cf-list li { gap: 8px; font-size: 14px; line-height: 1.35; }
+  .cf-dos .cf-list .ico { width: 22px; height: 22px; }
+  .cf-dos .cf-list .ico svg { width: 12px; height: 12px; }
 }
