@@ -39,6 +39,16 @@
     onChange(current);
   }
 
+  /* Menu a tendina su mobile (header pubblico e Business) */
+  $$('.menu-toggle').forEach((btn) => {
+    const menu = document.getElementById(btn.getAttribute('aria-controls'));
+    const header = btn.closest('.site-header');
+    const set = (open) => { btn.setAttribute('aria-expanded', open); btn.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu'); header.classList.toggle('menu-open', open); };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  });
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
@@ -184,6 +194,12 @@
           </article>`).join('') : '<p class="empty">Nessun profilo con questi filtri. Prova ad allargare la ricerca.</p>';
       };
       $('#filters').addEventListener('change', render);
+      const ft = $('.filters-toggle');
+      if (ft) ft.addEventListener('click', () => {
+        const open = ft.getAttribute('aria-expanded') !== 'true';
+        ft.setAttribute('aria-expanded', open); $('#filters').classList.toggle('is-open', open);
+        ft.textContent = open ? 'Chiudi filtri' : 'Filtri';
+      });
       $('#results').addEventListener('click', (e) => {
         const b = e.target.closest('.like'); if (!b) return;
         const n = b.dataset.nick; liked.has(n) ? liked.delete(n) : liked.add(n);
@@ -220,7 +236,9 @@
       $('#conv-list').addEventListener('click', (e) => {
         const b = e.target.closest('.conv'); if (!b) return;
         sel = +b.dataset.i; convs[sel].nuovi = 0; renderList(); renderThread();
+        $('.chat').classList.add('show-thread');   // su mobile si passa dalla lista alla conversazione
       });
+      $('.thread-back').addEventListener('click', () => $('.chat').classList.remove('show-thread'));
       $('#composer').addEventListener('submit', (e) => {
         e.preventDefault();
         const input = $('#composer input'); const t = input.value.trim(); if (!t) return;
@@ -311,6 +329,8 @@
         $('#cart-discount').textContent = tot ? `−${eur(tot * 0.1)}` : eur(0);
         $('#cart-pay').textContent = eur(tot * 0.9);
         $('#cart-checkout').toggleAttribute('disabled', !tot);
+        const bar = $('#cartbar');
+        if (bar) { bar.hidden = !n; $('#cartbar-n').textContent = `Carrello, ${n} ${n === 1 ? 'articolo' : 'articoli'}`; $('#cartbar-tot').textContent = eur(tot * 0.9); }
       };
       const renderList = (cat) => {
         const list = cat === 'Tutti' ? S.prodotti : S.prodotti.filter((p) => p.cat === cat);
