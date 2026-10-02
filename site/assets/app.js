@@ -124,6 +124,74 @@
     return `Foto di ${links.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`;
   }
 
+  /* ---------- HOME: tab Annunci / Eventi e prevendita biglietti ---------- */
+  function homeEvents() {
+    const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    const list = $('#latest-events'); if (!list) return;
+    list.innerHTML = D.eventi.map((e) => `
+      <article class="card ad has-cover event-card">
+        <div class="ad-cover">
+          <img src="${D.unsplash(e.cover, 800, 450)}" alt="" loading="lazy" decoding="async">
+          <span class="ad-cover-tag"><span class="muted">${esc(e.quando)}</span></span>
+          <span class="ad-cover-vis">−${eur(e.ingresso - e.prevendita)} in prevendita</span>
+        </div>
+        <div class="ad-body">
+          <div class="ad-head">
+            <span class="ad-avatar">${esc(e.ini)}</span>
+            <div class="ad-who"><strong><a class="ad-link-plain" href="${e.link}">${esc(e.locale)}</a></strong><span class="muted">${esc(e.citta)}</span></div>
+          </div>
+          <span class="ad-meta">${e.cert ? `<span class="meta-ver">${ICON_SEAL}Certificato</span>` : '<span class="muted">Locale</span>'}</span>
+          <span class="cat-label">${esc(e.tipo)}</span>
+          <h3>${esc(e.titolo)}</h3>
+          <p class="muted">${esc(e.testo)}</p>
+          <div class="ad-foot">
+            <span class="price">${eur(e.prevendita)} <s class="muted">${eur(e.ingresso)}</s></span>
+            <button class="btn btn-primary" type="button" data-ticket="${e.id}">Partecipa</button>
+          </div>
+        </div>
+      </article>`).join('');
+
+    // Tab Annunci / Eventi
+    const tabs = $$('.home-tabs [role="tab"]');
+    const copy = { annunci: ['Ultimi annunci', 'Tutti gli annunci', 'annunci.html'], eventi: ['Prossimi eventi', 'Tutti i locali', 'luoghi.html'] };
+    const select = (tab) => {
+      tabs.forEach((t) => t.setAttribute('aria-selected', t === tab));
+      const k = tab.dataset.tab;
+      $('#latest-ads').hidden = k !== 'annunci'; $('#latest-events').hidden = k !== 'eventi';
+      $('#bacheca-title').textContent = copy[k][0];
+      $('#bacheca-link').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => select(t)));
+    $('.home-tabs').addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+      const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); select(n);
+    });
+
+    // Partecipa: prevendita del biglietto
+    const dlg = $('#ticket-dialog'); let ev = null;
+    const total = () => { const q = +$('#tk-qty').value; $('#tk-total').textContent = eur(ev.prevendita * q); $('#tk-save').textContent = `Risparmi ${eur((ev.ingresso - ev.prevendita) * q)} rispetto all’ingresso`; };
+    list.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-ticket]'); if (!b) return;
+      ev = D.eventi.find((x) => x.id === b.dataset.ticket);
+      $('#tk-locale').textContent = `${ev.locale}, ${ev.citta}`;
+      $('#tk-title').textContent = ev.titolo;
+      $('#tk-when').textContent = ev.quando;
+      $('#tk-door').textContent = eur(ev.ingresso);
+      $('#tk-pre').textContent = eur(ev.prevendita);
+      $('#tk-step1').hidden = false; $('#tk-step2').hidden = true;
+      total(); dlg.showModal();
+    });
+    $('#tk-qty').addEventListener('change', total);
+    $('#tk-confirm').addEventListener('click', () => {
+      const code = 'EVT-' + Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+      $('#tk-code').textContent = code; $('#tk-qr').innerHTML = fakeQR(code);
+      $('#tk-step1').hidden = true; $('#tk-step2').hidden = false;
+    });
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', () => dlg.close()));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+
   /* ---------- RICERCA DA MOBILE: barra fissa + pannello dal basso ---------- */
   function searchSheet() {
     const fab = $('.search-fab'); const dlg = $('#search-sheet'); if (!fab || !dlg) return;
@@ -176,6 +244,19 @@
     paintRange(); summary();
   }
 
+  // QR finto ma stabile: serve solo a far capire il flusso nel prototipo
+  function fakeQR(seed) {
+    let h = 0; for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+    const n = 21, cell = 8, rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) / 2 ** 32);
+    let r = '';
+    const finder = (x, y) => `<rect x="${x * cell}" y="${y * cell}" width="${7 * cell}" height="${7 * cell}" fill="#14060A"/><rect x="${(x + 1) * cell}" y="${(y + 1) * cell}" width="${5 * cell}" height="${5 * cell}" fill="#fff"/><rect x="${(x + 2) * cell}" y="${(y + 2) * cell}" width="${3 * cell}" height="${3 * cell}" fill="#14060A"/>`;
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
+      if (!inFinder && rnd() > 0.5) r += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#14060A"/>`;
+    }
+    return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -188,6 +269,7 @@
             : esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
           <span><strong>${esc(p.nick)}</strong><br><span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span></span>
         </a>`).join('');
+      homeEvents();
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
         <a class="card ad latest${a.cover ? ' has-cover' : ''}" href="annunci.html" style="color:inherit;text-decoration:none">
           ${coverHTML(a, { compact: true })}
@@ -535,18 +617,6 @@
       $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', () => dlg.close()));
       dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 
-      // QR finto ma stabile: serve solo a far capire il flusso nel prototipo
-      function fakeQR(seed) {
-        let h = 0; for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-        const n = 21, cell = 8, rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) / 2 ** 32);
-        let r = '';
-        const finder = (x, y) => `<rect x="${x * cell}" y="${y * cell}" width="${7 * cell}" height="${7 * cell}" fill="#14060A"/><rect x="${(x + 1) * cell}" y="${(y + 1) * cell}" width="${5 * cell}" height="${5 * cell}" fill="#fff"/><rect x="${(x + 2) * cell}" y="${(y + 2) * cell}" width="${3 * cell}" height="${3 * cell}" fill="#14060A"/>`;
-        for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
-          const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
-          if (!inFinder && rnd() > 0.5) r += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#14060A"/>`;
-        }
-        return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR del coupon"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
-      }
     },
 
     /* ---------- LUOGHI ---------- */

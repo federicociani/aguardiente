@@ -6,7 +6,7 @@
   <title>Aguardiente · Annunci per adulti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021850">
+  <link rel="stylesheet" href="assets/style.css?v=202610021855">
 </head>
 <body data-page="home">
   <header class="site-header">
@@ -78,9 +78,19 @@
       </div>
     </section>
 
-    <section class="container section">
-      <div class="section-head"><h2>Ultimi annunci</h2><a href="annunci.html">Tutti gli annunci</a></div>
-      <div class="grid grid-3 grid-scroll" id="latest-ads"></div>
+    <section class="container section" id="bacheca">
+      <div class="section-head">
+        <div class="heading-group">
+          <h2 id="bacheca-title">Ultimi annunci</h2>
+        </div>
+        <a href="annunci.html" id="bacheca-link">Tutti gli annunci</a>
+      </div>
+      <div class="tabs home-tabs" role="tablist" aria-label="Cosa vuoi vedere">
+        <button type="button" role="tab" id="tab-annunci" aria-selected="true" aria-controls="latest-ads" data-tab="annunci">Annunci</button>
+        <button type="button" role="tab" id="tab-eventi" aria-selected="false" aria-controls="latest-events" data-tab="eventi">Eventi</button>
+      </div>
+      <div class="grid grid-3 grid-scroll" id="latest-ads" role="tabpanel" aria-labelledby="tab-annunci"></div>
+      <div class="grid grid-3 grid-scroll" id="latest-events" role="tabpanel" aria-labelledby="tab-eventi" hidden></div>
     </section>
 
     <section class="container section" style="padding-top:0">
@@ -264,6 +274,33 @@
     <span class="search-fab-edit" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>
   </button>
 
+  <dialog class="sheet" id="ticket-dialog" aria-labelledby="tk-title">
+    <div class="sheet-body" id="tk-step1">
+      <span class="cat-label" id="tk-locale"></span>
+      <h2 id="tk-title" style="font-size:26px"></h2>
+      <p class="muted" id="tk-when"></p>
+      <div class="tk-compare">
+        <div><span class="muted">All’ingresso</span><s id="tk-door"></s></div>
+        <div class="tk-best"><span>Prevendita</span><strong id="tk-pre"></strong></div>
+      </div>
+      <p class="tk-save" id="tk-save"></p>
+      <label class="field">Biglietti
+        <select id="tk-qty"><option value="1">1 persona</option><option value="2" selected>2 persone</option><option value="3">3 persone</option><option value="4">4 persone</option></select>
+      </label>
+      <ul class="totals"><li class="grand"><span>Totale</span><span id="tk-total"></span></li></ul>
+      <p class="muted" style="font-size:14px">Riservato ai maggiorenni verificati. Rimborsabile fino a 24 ore prima dell’evento.</p>
+      <div class="sheet-actions"><button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" id="tk-confirm">Paga</button></div>
+    </div>
+    <div class="sheet-body" id="tk-step2" hidden>
+      <span class="cat-label">Biglietto pronto</span>
+      <h2 style="font-size:26px">Ci vediamo all’ingresso</h2>
+      <div class="qr" id="tk-qr"></div>
+      <p class="qr-code" id="tk-code"></p>
+      <p class="muted" style="font-size:14px">Mostra il QR alla porta: lo staff lo convalida e salti la fila della cassa. Lo ritrovi nel tuo profilo. QR di esempio: nel prototipo non è valido.</p>
+      <div class="sheet-actions"><button class="btn btn-primary" type="button" data-close>Fatto</button></div>
+    </div>
+  </dialog>
+
   <dialog class="bottom-sheet" id="search-sheet" aria-labelledby="ss-title">
     <form class="bs-form" action="cerca.html" method="get">
       <div class="bs-head">
@@ -325,7 +362,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021850"></script>
-  <script src="assets/app.js?v=202610021850"></script>
+  <script src="assets/data.js?v=202610021855"></script>
+  <script src="assets/app.js?v=202610021855"></script>
 </body>
 </html>

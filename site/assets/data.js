@@ -92,6 +92,18 @@ window.DATA = {
     ]
   },
 
+  /* Eventi pubblicati dai locali: prevendita a prezzo ridotto rispetto all'ingresso (prezzi di esempio) */
+  eventi: [
+    { id: 'ev1', locale: 'Club Ventaglio', ini: 'CV', citta: 'Bologna', link: 'locale.html', cert: true, quando: 'Ven 9 ott, 23:00', tipo: 'Serata a tema',
+      titolo: 'Notte in rosso', testo: 'Dress code rosso e nero, DJ set fino a tardi e aree riservate aperte tutta la notte.', prevendita: 30, ingresso: 40, cover: '1468056961052-15507578a50d' },
+    { id: 'ev2', locale: 'Club Ventaglio', ini: 'CV', citta: 'Bologna', link: 'locale.html', cert: true, quando: 'Sab 10 ott, 22:30', tipo: 'Prima volta',
+      titolo: 'Prima volta al club', testo: 'Serata guidata: lo staff ti accompagna, spiega le regole del locale e ti presenta gli spazi.', prevendita: 25, ingresso: 35, cover: '1615887584283-91f1be7fdc34' },
+    { id: 'ev3', locale: 'Villa Ombrosa', ini: 'VO', citta: 'Brisighella (RA)', link: 'scheda.html', cert: true, quando: 'Sab 17 ott, 19:00', tipo: 'Aperitivo',
+      titolo: 'Aperitivo in piscina', testo: 'Aperitivo al tramonto riservato agli ospiti e agli iscritti, con musica dal vivo a bordo vasca.', prevendita: 20, ingresso: 28, cover: '1702725365144-6e8584ea54e4' },
+    { id: 'ev4', locale: 'Bar Lanterna', ini: 'BL', citta: 'Rimini', link: 'luoghi.html', cert: false, quando: 'Ven 23 ott, 22:00', tipo: 'Festa in maschera',
+      titolo: 'Masquerade', testo: 'Maschera obbligatoria, la trovi all’ingresso. Primo drink incluso con la prevendita.', prevendita: 18, ingresso: 25, cover: '1543007630-9710e4a00a20' }
+  ],
+
   /* Profilo di un locale: serate, coupon e servizi in vendita (prezzi di esempio) */
   locale: {
     nome: 'Club Ventaglio',
