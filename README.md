@@ -62,6 +62,14 @@ python3 -m http.server --directory site 8080
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
 - **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
 
+## Cache
+
+I file in `site/assets/` sono richiamati con `?v=AAAAMMGGHHMM` per forzare il browser a scaricare la versione nuova dopo ogni rilascio. Quando modifichi CSS o JS aggiorna il numero in tutte le pagine:
+
+```bash
+V=$(date +%Y%m%d%H%M); sed -i -E "s#assets/(style\.css|data\.js|app\.js)(\?v=[0-9]+)?\"#assets/\1?v=$V\"#g" site/*.html
+```
+
 ## Foto
 
 Le foto dei profili in "Online adesso" sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
