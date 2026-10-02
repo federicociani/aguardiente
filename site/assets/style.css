@@ -577,6 +577,19 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .map-card iframe { display: block; width: 100%; height: 220px; border: 0; filter: invert(.92) hue-rotate(180deg) saturate(.6) brightness(.95); }
 .map-card figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; font-size: 14px; }
 
+
+/* Navigazione utente a icone: outline a riposo, piena quando selezionata */
+.nav-icons { gap: 8px; }
+.nav .nav-icon { position: relative; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; border-radius: 999px; color: var(--text-2); transition: color .2s, background .2s; }
+.nav .nav-icon:hover { color: var(--text); background: var(--surface); }
+.nav .nav-icon[aria-current="page"] { color: var(--accent); }
+.nav-icon .fillable { fill: transparent; transition: fill .2s; }
+.nav-icon[aria-current="page"] .fillable { fill: currentColor; }
+.nav-icon[aria-current="page"] svg { stroke-width: 2; }
+.nav-dot { position: absolute; top: 10px; right: 10px; width: 9px; height: 9px; border-radius: 999px; background: var(--accent); border: 2px solid var(--bg); }
+.nav-tip { position: absolute; top: calc(100% + 6px); left: 50%; transform: translate(-50%, -4px); padding: 6px 10px; border-radius: 10px; background: var(--text); color: var(--bg); font-size: 12px; white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, transform .15s, visibility .15s; }
+.nav-icon:hover .nav-tip, .nav-icon:focus-visible .nav-tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
 @media (max-width: 720px) {
   .container { padding: 0 20px; }
   .marquees { margin-inline: -20px; }
