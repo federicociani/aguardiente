@@ -21,7 +21,7 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 ## Tipografia
 
 - **Bricolage Grotesque** (500, 700) per titoli e logo
-- **Instrument Sans** (400, 500, 600) per il testo
+- **Inter** (400, 500, 600) per il testo
 
 ## Componenti principali
 

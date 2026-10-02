@@ -19,7 +19,7 @@
 
   /* Tipografia */
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 
   --radius: 20px;
   --max: 1200px;
