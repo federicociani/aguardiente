@@ -23,6 +23,10 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
+## CTA (`.btn-primary`)
+
+Fondo quasi nero, bordo sottile e due scie di luce opposte (viola `#6400c9` → lilla `#B57BFF`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
+
 ## Testo
 
 `text-wrap: balance` su tutto il sito (impostato su `body`, che lo eredita a ogni elemento) e ripetuto su titoli, sottotitoli e paragrafi. I browser bilanciano solo blocchi di poche righe: sui testi lunghi l'effetto è nullo.
