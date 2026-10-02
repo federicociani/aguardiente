@@ -60,8 +60,11 @@ python3 -m http.server --directory site 8080
 
 ## Deploy
 
-Il workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) pubblica la cartella `site/` su GitHub Pages a ogni push su `main`.
-Per attivarlo: **Settings → Pages → Source: GitHub Actions**.
+Il workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) pubblica la cartella `site/` su GitHub Pages.
+Per attivarlo:
+1. **Settings → Pages → Source: GitHub Actions**
+2. Lancia il workflow da **Actions → Deploy su GitHub Pages → Run workflow**
+3. Per pubblicare automaticamente a ogni push su `main`, togli il commento al blocco `push` nel workflow.
 
 > Su un repository privato, GitHub Pages richiede un piano a pagamento e il sito pubblicato è comunque raggiungibile da chiunque abbia il link (salvo piani Enterprise). Valuta prima la visibilità.
 
