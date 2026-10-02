@@ -57,30 +57,35 @@
       ? `<span class="${cls}"><img src="${D.unsplash(prof.foto.id, 120, 120)}" alt="" loading="lazy"></span>`
       : `<span class="${cls}">${esc(a.ini)}</span>`;
   }
+  // "Oggi • Verificato": data di pubblicazione e, se c'è, la verifica del profilo
+  function metaHTML(a) {
+    return `<span class="muted">${esc(a.quando)}</span>${a.ver ? `<span class="meta-dot" aria-hidden="true"></span><span class="meta-ver">${ICON_CHECK}Verificato</span>` : ''}`;
+  }
   function coverHTML(a, { compact = false } = {}) {
     const src = a.coverSrc || (a.cover && D.unsplash(a.cover.id, 800, 450));
     if (!src) return '';
     const vis = a.coverVis || 'tutti';
     return `<div class="ad-cover${vis === 'sfocata' ? ' is-blurred' : ''}">
         <img src="${src}" alt="" loading="lazy" decoding="async">
-        ${compact ? '' : `<span class="ad-cover-tag">Foto dell’annuncio</span>`}
+        ${compact ? '' : `<span class="ad-cover-tag">${metaHTML(a)}</span>`}
         ${vis === 'sfocata' ? `<span class="ad-cover-lock">${ICON_LOCK}Visibile dopo il contatto</span>` : ''}
-        ${vis === 'verificati' ? `<span class="ad-cover-vis">${ICON_CHECK}Solo verificati</span>` : ''}
+        ${vis === 'verificati' ? `<span class="ad-cover-vis">${ICON_LOCK}Foto per i verificati</span>` : ''}
       </div>`;
   }
   function adCard(a, { preview = false } = {}) {
-    return `<article class="card ad${(a.cover || a.coverSrc) ? ' has-cover' : ''}">
+    const hasCover = !!(a.cover || a.coverSrc);
+    return `<article class="card ad${hasCover ? ' has-cover' : ''}">
         ${coverHTML(a)}
         <div class="ad-body">
           <div class="ad-head">
             ${avatarHTML(a)}
             <div class="ad-who"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
-            ${a.ver ? `<span class="badge">${ICON_CHECK}Verificato</span>` : ''}
           </div>
+          ${hasCover ? '' : `<span class="ad-meta">${metaHTML(a)}</span>`}
           <span class="cat-label">${esc(a.cat)}</span>
           <h3>${esc(a.titolo) || '<span class="muted">Il titolo del tuo annuncio</span>'}</h3>
           <p class="muted">${esc(a.testo) || 'Qui comparirà il testo dell’annuncio.'}</p>
-          <div class="ad-foot"><span class="muted">${esc(a.quando)}</span>${preview ? '<span class="btn btn-ghost" aria-hidden="true">Scrivi</span>' : '<a class="btn btn-ghost" href="messaggi.html">Scrivi</a>'}</div>
+          <div class="ad-foot ad-foot-end">${preview ? '<span class="btn btn-ghost" aria-hidden="true">Scrivi</span>' : '<a class="btn btn-ghost" href="messaggi.html">Scrivi</a>'}</div>
         </div>
       </article>`;
   }
