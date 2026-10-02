@@ -58,15 +58,22 @@ python3 -m http.server --directory site 8080
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
 - **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
 
-## Deploy
+## Branch e deploy
 
-Il workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) pubblica la cartella `site/` su GitHub Pages.
-Per attivarlo:
-1. **Settings → Pages → Source: GitHub Actions**
-2. Lancia il workflow da **Actions → Deploy su GitHub Pages → Run workflow**
-3. Per pubblicare automaticamente a ogni push su `main`, togli il commento al blocco `push` nel workflow.
+```
+feature/...  →  develop  →  staging  →  main
+ (lavoro)       (sviluppo)    (verifica)   (produzione)
+```
 
-> Su un repository privato, GitHub Pages richiede un piano a pagamento e il sito pubblicato è comunque raggiungibile da chiunque abbia il link (salvo piani Enterprise). Valuta prima la visibilità.
+| Branch | Ruolo | Online |
+|---|---|---|
+| `develop` | Sviluppo, branch predefinito | — |
+| `staging` | Verifica prima del rilascio | https://federicociani.github.io/aguardiente/staging/ |
+| `main` | Produzione | https://federicociani.github.io/aguardiente/ |
+
+- Si lavora su `develop` (o su branch `feature/...` che confluiscono lì).
+- `develop → staging → main` solo tramite pull request: `main` e `staging` sono protetti (niente push diretti, force push o cancellazioni).
+- Il workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) pubblica `main` alla radice e `staging` in `/staging/` (con `noindex`) a ogni push su uno dei due branch.
 
 ## Stato
 

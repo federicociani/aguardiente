@@ -1,12 +1,12 @@
 name: Deploy su GitHub Pages
 
-# Avvio manuale finché GitHub Pages non è attivo (Settings → Pages → Source: GitHub Actions).
-# Dopo l'attivazione, togli il commento al blocco "push" per pubblicare a ogni push su main.
+# main    → https://federicociani.github.io/aguardiente/
+# staging → https://federicociani.github.io/aguardiente/staging/
 on:
+  push:
+    branches: [main, staging]
+    paths: ['site/**', '.github/workflows/pages.yml']
   workflow_dispatch:
-  # push:
-  #   branches: [main]
-  #   paths: ['site/**', '.github/workflows/pages.yml']
 
 permissions:
   contents: read
@@ -24,10 +24,33 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+
+      - name: Checkout staging
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          path: staging
+        continue-on-error: true
+
+      - name: Componi il sito (main alla radice, staging in /staging/)
+        run: |
+          mkdir -p _site
+          cp -r main/site/. _site/
+          if [ -d staging/site ]; then
+            mkdir -p _site/staging
+            cp -r staging/site/. _site/staging/
+            # lo staging non deve finire nei motori di ricerca
+            sed -i 's#<head>#<head>\n  <meta name="robots" content="noindex">#' _site/staging/*.html
+          fi
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
