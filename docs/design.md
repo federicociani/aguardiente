@@ -23,6 +23,11 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
+## Bottoni e form
+
+- Bottoni, pill di filtro e tab: Inter 600, `.875rem`, maiuscolo, `letter-spacing: .06em` (token `--btn-size`, `--btn-tracking`). `.btn-lg` cambia solo altezza e padding, non la dimensione del testo.
+- Input, select e relative label: Inter.
+
 ## Componenti principali
 
 `.btn` (`-primary`, `-ghost`, `-dark`, `-lg`, `-block`, `-icon`), `.card`, `.card-deep`, `.badge`, `.chip`, `.pill`, `.switch`, `.tabs`, `.field`, `.check`, `.photo`.
