@@ -854,11 +854,15 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .plans { flex-direction: column; }
 
   /* Pillole e chip: sempre su una riga che scorre in orizzontale, come le card */
-  .chips:not(.chips-wrap), .detail-chips, .grid-cats { display: flex; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; margin-inline: -20px; padding: 2px 20px 8px; gap: 10px; scrollbar-width: none; scroll-snap-type: x proximity; }
-  .chips:not(.chips-wrap)::-webkit-scrollbar, .detail-chips::-webkit-scrollbar, .grid-cats::-webkit-scrollbar { display: none; }
-  .chips:not(.chips-wrap) > *, .detail-chips > *, .grid-cats > * { flex-shrink: 0; scroll-snap-align: start; white-space: nowrap; }
+  .chips:not(.chips-wrap), .grid-cats { display: flex; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; margin-inline: -20px; padding: 2px 20px 8px; gap: 10px; scrollbar-width: none; scroll-snap-type: x proximity; }
+  .chips:not(.chips-wrap)::-webkit-scrollbar, .grid-cats::-webkit-scrollbar { display: none; }
+  .chips:not(.chips-wrap) > *, .grid-cats > * { flex-shrink: 0; scroll-snap-align: start; white-space: nowrap; }
   .grid-cats .cat-link { min-height: 48px; padding: 0 18px; border-radius: 999px; }
-  .card .chips:not(.chips-wrap), .cf-detail .detail-chips { margin-inline: -20px; padding-inline: 20px; }
+  .card .chips:not(.chips-wrap) { margin-inline: -20px; padding-inline: 20px; }
+  /* I chip dei dettagli vanno a capo: devono essere tutti visibili per provare l'interazione */
+  .detail-chips { flex-wrap: wrap; gap: 8px; }
+  .detail-chip { min-height: 40px; padding: 0 14px; font-size: 14px; gap: 8px; }
+  .detail-chip .k { font-size: 11px; }
 
   /* Card di coupon/servizi: anche queste scorrono in orizzontale */
   .offers { display: flex; overflow-x: auto; margin-inline: -20px; padding: 2px 20px 10px; gap: 12px; scrollbar-width: none; scroll-snap-type: x mandatory; }
