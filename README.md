@@ -58,6 +58,10 @@ python3 -m http.server --directory site 8080
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
 - **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
 
+## Foto
+
+Le foto dei profili in "Online adesso" sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
+
 ## Branch e deploy
 
 ```

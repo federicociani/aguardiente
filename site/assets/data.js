@@ -16,15 +16,23 @@ window.DATA = {
   ],
 
   profili: [
-    { ini: 'LM', nick: 'Luna & Matteo', tipo: 'Coppia', eta: '34/36', citta: 'Ravenna', cerca: 'coppia', online: true, ver: true },
-    { ini: 'S', nick: 'Sole_83', tipo: 'Lei', eta: '41', citta: 'Cesena', cerca: 'coppia', online: true, ver: true },
+    { ini: 'LM', nick: 'Luna & Matteo', tipo: 'Coppia', eta: '34/36',
+      foto: { id: '1570135497084-0debfc780ed8', autore: 'Ivan Moncada', user: 'ivamoncadar', pagina: 'LiKS9KCaWOA' }, citta: 'Ravenna', cerca: 'coppia', online: true, ver: true },
+    { ini: 'S', nick: 'Sole_83', tipo: 'Lei', eta: '41',
+      foto: { id: '1586211082529-b7c6b640abff', autore: 'Jorge Salvador', user: 'jsshotz', pagina: 'vVINLKZtGOI' }, citta: 'Cesena', cerca: 'coppia', online: true, ver: true },
     { ini: 'D', nick: 'Davide_RA', tipo: 'Lui', eta: '38', citta: 'Lugo', cerca: 'coppia, lei', online: false, ver: true },
-    { ini: 'GE', nick: 'Giulia & Enri', tipo: 'Coppia', eta: '45/47', citta: 'Forlì', cerca: 'coppia', online: true, ver: true },
-    { ini: 'K', nick: 'Kira.rn', tipo: 'Lei', eta: '29', citta: 'Rimini', cerca: 'lui', online: true, ver: false },
+    { ini: 'GE', nick: 'Giulia & Enri', tipo: 'Coppia', eta: '45/47',
+      foto: { id: '1749855333713-0f4ad9d033e3', autore: 'Tim Mossholder', user: 'timmossholder', pagina: 'FBC2hoZaPuI' }, citta: 'Forlì', cerca: 'coppia', online: true, ver: true },
+    { ini: 'K', nick: 'Kira.rn', tipo: 'Lei', eta: '29',
+      foto: { id: '1606459310278-169d12230046', autore: 'Suvi Honkanen', user: 'suvihelena', pagina: 'oIi4sJZNSK8' }, citta: 'Rimini', cerca: 'lui', online: true, ver: false },
     { ini: 'AR', nick: 'Ale e Robi', tipo: 'Coppia', eta: '29/31', citta: 'Rimini', cerca: 'coppia, lei', online: false, ver: false },
-    { ini: 'N', nick: 'Nikki', tipo: 'Trans', eta: '32', citta: 'Bologna', cerca: 'lui, coppia', online: true, ver: true },
+    { ini: 'N', nick: 'Nikki', tipo: 'Trans', eta: '32',
+      foto: { id: '1617290337590-4c7d02c99a45', autore: 'Bobbi Wu', user: 'bobbiwu', pagina: '55LBec8jP9M' }, citta: 'Bologna', cerca: 'lui, coppia', online: true, ver: true },
     { ini: 'PA', nick: 'Paola & Andrea', tipo: 'Coppia', eta: '50/52', citta: 'Faenza', cerca: 'coppia', online: false, ver: true }
   ],
+
+  /* Foto Unsplash (licenza Unsplash, uso gratuito): silhouette senza volti riconoscibili */
+  unsplash: (id, w = 400, h = 400) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=entropy&auto=format&q=70`,
 
   conversazioni: [
     { ini: 'LM', nome: 'Luna & Matteo', sotto: 'Coppia, Ravenna, verificati', link: 'annunci.html', linkLabel: 'Vedi annuncio', ora: '21:14', nuovi: 2, msgs: [
