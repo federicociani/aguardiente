@@ -23,6 +23,10 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
+## Testo
+
+`text-wrap: balance` su tutto il sito (impostato su `body`, che lo eredita a ogni elemento) e ripetuto su titoli, sottotitoli e paragrafi. I browser bilanciano solo blocchi di poche righe: sui testi lunghi l'effetto è nullo.
+
 ## Bottoni e form
 
 - Bottoni, pill di filtro e tab: Inter 400, `.875rem`, maiuscolo, `letter-spacing: .06em` (token `--btn-size`, `--btn-tracking`). `.btn-lg` cambia solo altezza e padding, non la dimensione del testo.
