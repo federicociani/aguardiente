@@ -45,6 +45,53 @@
     sw.dispatchEvent(new Event('change', { bubbles: true }));
   }));
 
+  /* ---------- Annuncio: card condivisa (bacheca, home, anteprima) ----------
+     La foto di lancio (a.cover / a.coverSrc) è indipendente dalla foto profilo:
+     l'avatar in basso a sinistra viene sempre dal profilo dell'autore. */
+  const VIS_LABEL = { tutti: 'Visibile a tutti', verificati: 'Solo profili verificati', sfocata: 'Sfocata fino al contatto' };
+  const ICON_LOCK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  function profileOf(nick) { return (D.profili || []).find((p) => p.nick === nick); }
+  function avatarHTML(a, cls = 'ad-avatar') {
+    const prof = profileOf(a.nick);
+    return prof && prof.foto
+      ? `<span class="${cls}"><img src="${D.unsplash(prof.foto.id, 120, 120)}" alt="" loading="lazy"></span>`
+      : `<span class="${cls}">${esc(a.ini)}</span>`;
+  }
+  function coverHTML(a, { compact = false } = {}) {
+    const src = a.coverSrc || (a.cover && D.unsplash(a.cover.id, 800, 450));
+    if (!src) return '';
+    const vis = a.coverVis || 'tutti';
+    return `<div class="ad-cover${vis === 'sfocata' ? ' is-blurred' : ''}">
+        <img src="${src}" alt="" loading="lazy" decoding="async">
+        ${compact ? '' : `<span class="ad-cover-tag">Foto dell’annuncio</span>`}
+        ${vis === 'sfocata' ? `<span class="ad-cover-lock">${ICON_LOCK}Visibile dopo il contatto</span>` : ''}
+        ${vis === 'verificati' ? `<span class="ad-cover-vis">${ICON_CHECK}Solo verificati</span>` : ''}
+      </div>`;
+  }
+  function adCard(a, { preview = false } = {}) {
+    return `<article class="card ad${(a.cover || a.coverSrc) ? ' has-cover' : ''}">
+        ${coverHTML(a)}
+        <div class="ad-body">
+          <div class="ad-head">
+            ${avatarHTML(a)}
+            <div class="ad-who"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
+            ${a.ver ? `<span class="badge">${ICON_CHECK}Verificato</span>` : ''}
+          </div>
+          <span class="cat-label">${esc(a.cat)}</span>
+          <h3>${esc(a.titolo) || '<span class="muted">Il titolo del tuo annuncio</span>'}</h3>
+          <p class="muted">${esc(a.testo) || 'Qui comparirà il testo dell’annuncio.'}</p>
+          <div class="ad-foot"><span class="muted">${esc(a.quando)}</span>${preview ? '<span class="btn btn-ghost" aria-hidden="true">Scrivi</span>' : '<a class="btn btn-ghost" href="messaggi.html">Scrivi</a>'}</div>
+        </div>
+      </article>`;
+  }
+  function coverCredits(list) {
+    const seen = new Map();
+    list.forEach((a) => { const c = a.cover || a; if (c && c.user && !seen.has(c.user)) seen.set(c.user, c.autore); });
+    if (!seen.size) return '';
+    const links = [...seen].map(([u, n]) => `<a href="https://unsplash.com/@${u}?utm_source=aguardiente&utm_medium=referral">${esc(n)}</a>`);
+    return `Foto di ${links.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -64,10 +111,13 @@
         ? `Foto di ${credits.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`
         : '';
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
-        <a class="card ad" href="annunci.html" style="color:inherit;text-decoration:none">
-          <span class="cat-label">${esc(a.cat)}, ${esc(a.zona)}</span>
-          <h3>${esc(a.titolo)}</h3>
-          <p class="muted">${esc(a.testo)}</p>
+        <a class="card ad latest${a.cover ? ' has-cover' : ''}" href="annunci.html" style="color:inherit;text-decoration:none">
+          ${coverHTML(a, { compact: true })}
+          <div class="ad-body">
+            <span class="cat-label">${esc(a.cat)}, ${esc(a.zona)}</span>
+            <h3>${esc(a.titolo)}</h3>
+            <p class="muted">${esc(a.testo)}</p>
+          </div>
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
       comeFunziona();
@@ -94,18 +144,8 @@
       const render = (cat) => {
         const items = cat === 'Tutte' ? D.annunci : D.annunci.filter((a) => a.cat === cat);
         $('#ads-count').textContent = `${items.length} annunci`;
-        list.innerHTML = items.length ? items.map((a) => `
-          <article class="card ad">
-            <div class="ad-head">
-              <div class="ad-avatar">${esc(a.ini)}</div>
-              <div class="ad-who"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
-              ${a.ver ? `<span class="badge">${ICON_CHECK}Verificato</span>` : ''}
-            </div>
-            <span class="cat-label">${esc(a.cat)}</span>
-            <h3>${esc(a.titolo)}</h3>
-            <p class="muted">${esc(a.testo)}</p>
-            <div class="ad-foot"><span class="muted">${esc(a.quando)}</span><a class="btn btn-ghost" href="messaggi.html">Scrivi</a></div>
-          </article>`).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
+        list.innerHTML = items.length ? items.map((a) => adCard(a)).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
+        $('#ads-credits').innerHTML = coverCredits(items.filter((a) => a.cover));
       };
       pills($('#ad-filters'), ['Tutte', 'Coppia cerca coppia', 'Coppia cerca lei', 'Lei cerca lui', 'Lei cerca coppia', 'Lui cerca coppia'], render);
     },
@@ -182,6 +222,61 @@
         input.value = ''; renderList(); renderThread();
       });
       renderList(); renderThread();
+    },
+
+    /* ---------- PUBBLICA ANNUNCIO: foto di lancio separata dalla foto profilo ---------- */
+    pubblica() {
+      const form = $('#pub-form');
+      const me = { nick: 'Ombra & Mare', ini: 'OM', tipo: 'Coppia', eta: '35 / 33', ver: true, quando: 'Anteprima' };
+      let uploaded = null;   // dataURL della foto caricata
+      let sample = null;     // foto scelta tra gli esempi
+
+      // Galleria esempi
+      $('#cover-samples').innerHTML = D.coverEsempi.map((c, i) => `
+        <label class="sample">
+          <input type="radio" name="sample" value="${i}" class="sr-only">
+          <img src="${D.unsplash(c.id, 240, 160)}" alt="${esc(c.alt)}" loading="lazy">
+        </label>`).join('');
+
+      const showSource = () => {
+        const src = form.fonte.value;
+        $('#src-upload').hidden = src !== 'carica';
+        $('#src-samples').hidden = src !== 'esempi';
+        $('#vis-group').hidden = src === 'nessuna';
+      };
+
+      const update = () => {
+        const fd = new FormData(form);
+        const fonte = fd.get('fonte');
+        const a = Object.assign({}, me, {
+          cat: fd.get('cat'), zona: fd.get('zona') || 'Ravenna',
+          titolo: fd.get('titolo').trim(), testo: fd.get('testo').trim(),
+          coverVis: fd.get('vis')
+        });
+        if (fonte === 'carica' && uploaded) a.coverSrc = uploaded;
+        if (fonte === 'esempi' && sample) a.cover = sample;
+        $('#pub-preview').innerHTML = adCard(a, { preview: true });
+        $('#title-count').textContent = `${a.titolo.length}/60`;
+        $('#pub-credits').innerHTML = fonte === 'esempi' && sample ? coverCredits([sample]) : '';
+      };
+
+      $('#cover-file').addEventListener('change', (e) => {
+        const f = e.target.files[0]; if (!f) return;
+        if (!/^image\//.test(f.type)) { $('#upload-msg').textContent = 'Scegli un’immagine (JPG, PNG o WEBP).'; return; }
+        if (f.size > 8 * 1024 * 1024) { $('#upload-msg').textContent = 'L’immagine supera 8 MB: scegline una più leggera.'; return; }
+        const r = new FileReader();
+        r.onload = () => { uploaded = r.result; $('#upload-msg').textContent = `${f.name} caricata. La vedi nell’anteprima.`; update(); };
+        r.readAsDataURL(f);
+      });
+      $('#cover-samples').addEventListener('change', (e) => { sample = D.coverEsempi[+e.target.value]; update(); });
+      form.addEventListener('input', () => { showSource(); update(); });
+      form.addEventListener('change', () => { showSource(); update(); });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        $('#pub-done').hidden = false;
+        $('#pub-done').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      });
+      showSource(); update();
     },
 
     /* ---------- LUOGHI ---------- */

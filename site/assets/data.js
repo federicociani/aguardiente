@@ -2,14 +2,19 @@
 window.DATA = {
   annunci: [
     { ini: 'LM', nick: 'Luna & Matteo', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '34 / 36', zona: 'Ravenna', ver: true, quando: 'Oggi',
+      cover: { id: '1702725365144-6e8584ea54e4', autore: 'Francesco Liotti', user: 'francesco_liotti' }, coverVis: 'tutti',
       titolo: 'Prima un aperitivo, poi si vedrà', testo: 'Coppia curiosa, alle prime esperienze. Cerchiamo persone affini con cui conoscerci senza fretta.' },
     { ini: 'S', nick: 'Sole_83', cat: 'Lei cerca coppia', tipo: 'Lei', eta: '41', zona: 'Cesena', ver: true, quando: 'Ieri',
+      cover: { id: '1468056961052-15507578a50d', autore: 'Steve Allison', user: 'steveallison' }, coverVis: 'tutti',
       titolo: 'Serata al club il prossimo sabato', testo: 'Cerco una coppia simpatica per accompagnarmi alla serata a tema. Ci scriviamo prima per conoscerci.' },
     { ini: 'AR', nick: 'Ale e Robi', cat: 'Coppia cerca lei', tipo: 'Coppia', eta: '29 / 31', zona: 'Rimini', ver: false, quando: '2 giorni fa',
+      cover: { id: '1543007630-9710e4a00a20', autore: 'qui nguyen', user: 'quinguyen' }, coverVis: 'sfocata',
       titolo: 'Cerchiamo lei, complice e solare', testo: 'Coppia giovane e sportiva, ci piacerebbe conoscere una ragazza simpatica. Si parte da un caffè.' },
     { ini: 'D', nick: 'Davide_RA', cat: 'Lui cerca coppia', tipo: 'Lui', eta: '38', zona: 'Lugo', ver: true, quando: '3 giorni fa',
+      cover: { id: '1640902106532-47dd3a2e833e', autore: 'Andrea De Santis', user: 'santesson89' }, coverVis: 'verificati',
       titolo: 'Discreto, educato, senza fretta', testo: 'Disponibile per conoscere coppie. Rispetto dei tempi e dei limiti di tutti prima di ogni cosa.' },
     { ini: 'GE', nick: 'Giulia & Enri', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '45 / 47', zona: 'Forlì', ver: true, quando: '4 giorni fa',
+      cover: { id: '1597075687490-8f673c6c17f6', autore: 'Ambitious Studio | Rick Barrett', user: 'weareambitious' }, coverVis: 'tutti',
       titolo: 'Amici prima di tutto', testo: 'Coppia navigata cerca nuove amicizie per cene e serate in compagnia. Solo profili verificati.' },
     { ini: 'M', nick: 'Marta.bo', cat: 'Lei cerca lui', tipo: 'Lei', eta: '33', zona: 'Bologna', ver: false, quando: '1 settimana fa',
       titolo: 'Nuova in città', testo: 'Mi sono appena trasferita e vorrei conoscere persone aperte. Iniziamo con due chiacchiere in chat.' }
@@ -33,6 +38,16 @@ window.DATA = {
 
   /* Foto Unsplash (licenza Unsplash, uso gratuito): silhouette senza volti riconoscibili */
   unsplash: (id, w = 400, h = 400) => `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&crop=entropy&auto=format&q=70`,
+
+  /* Foto di lancio proposte nel form "Pubblica annuncio" (Unsplash, nessun volto) */
+  coverEsempi: [
+    { id: '1702725365144-6e8584ea54e4', autore: 'Francesco Liotti', user: 'francesco_liotti', alt: 'Due drink su un tavolino' },
+    { id: '1468056961052-15507578a50d', autore: 'Steve Allison', user: 'steveallison', alt: 'Insegna luminosa di un bar' },
+    { id: '1543007630-9710e4a00a20', autore: 'qui nguyen', user: 'quinguyen', alt: 'Lampadine sopra un bancone' },
+    { id: '1640902106532-47dd3a2e833e', autore: 'Andrea De Santis', user: 'santesson89', alt: 'Bar in penombra' },
+    { id: '1597075687490-8f673c6c17f6', autore: 'Ambitious Studio | Rick Barrett', user: 'weareambitious', alt: 'Martini su un tavolo di legno' },
+    { id: '1615887584283-91f1be7fdc34', autore: 'Ambitious Studio | Rick Barrett', user: 'weareambitious', alt: 'Poltrona blu accanto a un tavolino' }
+  ],
 
   conversazioni: [
     { ini: 'LM', nome: 'Luna & Matteo', sotto: 'Coppia, Ravenna, verificati', link: 'annunci.html', linkLabel: 'Vedi annuncio', ora: '21:14', nuovi: 2, msgs: [
