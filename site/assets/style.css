@@ -224,6 +224,8 @@ p { margin: 0; }
 .regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 4px 16px; }
 .regions a { padding: 10px 0; color: var(--text-2); text-decoration: none; border-bottom: 1px solid var(--surface-2); }
 .regions a:hover { color: var(--accent); }
+.region-form { display: none; }
+.godi { font-size: 1.4em; line-height: .95; }
 
 .site-footer { border-top: 1px solid var(--line); }
 .site-footer .container { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; padding-block: 36px; color: var(--muted); font-size: 15px; }
@@ -883,4 +885,10 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .grid-scroll::-webkit-scrollbar { display: none; }
   .grid-scroll > * { flex: 0 0 82%; scroll-snap-align: start; }
   .grid-scroll .ad-cover { aspect-ratio: 16 / 10; }
+
+  /* Annunci per regione: su mobile select + bottone al posto dell'elenco */
+  .regions { display: none; }
+  .region-form { display: flex; flex-direction: column; gap: 14px; }
+  .region-form .field { font-size: 15px; color: var(--text-2); }
+  .region-form select { min-height: 56px; font-size: 17px; }
 }
