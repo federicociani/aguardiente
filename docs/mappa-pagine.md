@@ -17,8 +17,8 @@
 
 | Pagina | Scopo | Porta a |
 |---|---|---|
-| `business.html` | Home Aguardiente Business: categorie, come funziona, sezione per i locali (profilo, coupon, servizi), come guadagni, piani | iscrizione?tipo=azienda, dashboard, scheda |
-| `dashboard.html` | Area azienda: checklist di verifica, statistiche, piani | scheda |
+| `business.html` | Home Aguardiente Business: categorie, come funziona, sezione per i locali (profilo, coupon, servizi), eventi in prevendita, come guadagni, piani | iscrizione?tipo=azienda, dashboard, scheda |
+| `dashboard.html` | Area azienda: checklist di verifica, statistiche, eventi in prevendita, coupon e servizi, extra, shop, piani | scheda |
 | `locale.html` | Profilo di un locale (Club Ventaglio): serate, regole, coupon e servizi acquistabili con QR da mostrare all'ingresso | messaggi |
 | `luoghi.html` | Elenco attività come lo vedono gli utenti | scheda |
 | `scheda.html` | Scheda di una singola attività, offerta, richiesta disponibilità | prenotazione, messaggi |
