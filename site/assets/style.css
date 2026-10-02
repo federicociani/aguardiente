@@ -876,4 +876,7 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   @keyframes bs-up { from { transform: translateY(100%); } }
   @keyframes bs-down { to { transform: translateY(100%); } }
   @media (prefers-reduced-motion: reduce) { .bottom-sheet[open], .bottom-sheet.is-closing { animation: none; } }
+
+  /* Già presente nella barra in alto: in hero non serve */
+  .hide-mobile { display: none !important; }
 }
