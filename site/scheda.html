@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aguardiente · Villa Ombrosa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=202610021413">
 </head>
 <body data-page="scheda">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
-    <nav class="nav" aria-label="Principale">
-      <a href="annunci.html">Annunci</a>
-      <a href="cerca.html">Cerca</a>
-      <a href="messaggi.html">Messaggi</a>
+    <nav class="nav nav-icons" aria-label="Principale">
+      <a class="nav-icon" href="annunci.html" aria-label="Annunci"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l6.2 4.1a.8.8 0 0 0 1.3-.7V5.6a.8.8 0 0 0-1.3-.7L7 9H4.5A1.5 1.5 0 0 0 3 10.5z"/><path d="M18 9a4 4 0 0 1 0 6M7 15l1.2 4.2a1 1 0 0 0 1 .8H10"/></svg><span class="nav-tip" aria-hidden="true">Annunci</span></a>
+      <a class="nav-icon" href="cerca.html" aria-label="Cerca"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="fillable" cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span class="nav-tip" aria-hidden="true">Cerca</span></a>
+      <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
     </nav>
     <div class="header-actions">
-      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="btn btn-primary" href="pubblica.html">Pubblica annuncio</a>
       <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
     </div>
   </header>
@@ -33,7 +33,7 @@
     <div class="two-col">
       <div class="main">
         <section style="display:flex;flex-direction:column;gap:14px">
-          <div class="chips"><span class="badge" style="background:transparent;border:1px solid var(--line-2);color:var(--text-2)">Struttura friendly</span><span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Attività verificata</span></div>
+          <div class="chips"><span class="badge" style="background:transparent;border:1px solid var(--line-2);color:var(--text-2)">Struttura friendly</span><span class="cert" tabindex="0" aria-describedby="cert-tip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2.9 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-.9 2.8-3-.2L12 21l-2.4-1.8-3 .2-.9-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7.9-2.8 3 .2z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>Certificato<span class="cert-tip" role="tooltip" id="cert-tip">I luoghi certificati da Aguardiente si impegnano a fornire tutti i dettagli e l’attendibilità del luogo.</span></span></div>
           <h1 style="font-size:56px">Villa Ombrosa</h1>
           <span class="muted" style="font-size:17px">B&amp;B adults only, Brisighella (RA)</span>
           <p style="color:var(--text-2);font-size:18px;line-height:1.6;max-width:680px">Una casa colonica sulle colline faentine con sei camere, piscina e giardino riservati agli ospiti maggiorenni. Atmosfera discreta, colazione servita fino a tardi.</p>
@@ -53,7 +53,7 @@
           <h3 style="font-size:30px">-15% sul soggiorno</h3>
           <p>Codice generato alla prenotazione. Valido da domenica a giovedì.</p>
         </div>
-        <form class="card" action="messaggi.html" style="display:flex;flex-direction:column;gap:18px;padding:28px">
+        <form class="card" action="prenotazione.html" style="display:flex;flex-direction:column;gap:18px;padding:28px">
           <h3>Da [PREZZO] a notte</h3>
           <div class="field-row">
             <label class="field">Arrivo<input type="date"></label>
@@ -62,9 +62,17 @@
           <label class="field">Ospiti<select><option>2 adulti</option><option>3 adulti</option><option>4 adulti</option></select></label>
           <button class="btn btn-primary btn-lg btn-block" type="submit">Richiedi disponibilità</button>
           <a class="btn btn-ghost btn-block" href="messaggi.html">Scrivi alla struttura</a>
+          <p class="muted" style="font-size:14px">Dopo la richiesta puoi aggiungere extra da trovare in camera: kit protezione, bollicine, allestimento.</p>
           <p class="muted" style="font-size:14px">Gli ospiti vengono registrati dalla struttura come previsto dalla legge. Il tuo nickname resta privato.</p>
         </form>
-        <div class="photo" style="height:180px;border-radius:20px"><span class="photo-label">[MAPPA]</span></div>
+        <figure class="map-card">
+          <iframe title="Mappa della zona: Brisighella (RA)" loading="lazy" referrerpolicy="no-referrer"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=11.7416%2C44.2053%2C11.8016%2C44.2373&amp;layer=mapnik&amp;marker=44.2213%2C11.7716"></iframe>
+          <figcaption>
+            <span><strong>Brisighella (RA)</strong><br><span class="muted">Indirizzo esatto dopo la conferma</span></span>
+            <a href="https://www.openstreetmap.org/?mlat=44.2213&amp;mlon=11.7716#map=14/44.2213/11.7716" target="_blank" rel="noopener">Apri la mappa</a>
+          </figcaption>
+        </figure>
       </aside>
     </div>
   </main>
@@ -80,7 +88,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js"></script>
-  <script src="assets/app.js"></script>
+  <script src="assets/data.js?v=202610021413"></script>
+  <script src="assets/app.js?v=202610021413"></script>
 </body>
 </html>

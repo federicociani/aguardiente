@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Aguardiente · Annunci per adulti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=202610021413">
 </head>
 <body data-page="home">
   <header class="site-header">
@@ -14,6 +14,7 @@
     <nav class="nav" aria-label="Principale">
       <a href="annunci.html">Annunci</a>
       <a href="cerca.html">Cerca profili</a>
+      <a href="#come-funziona">Come funziona</a>
       <a class="subtle" href="business.html">Per le aziende</a>
     </nav>
     <div class="header-actions">
@@ -26,7 +27,7 @@
     <section class="container hero">
       <div class="hero-copy">
         <span class="pre-badge"><span style="color:var(--accent);display:inline-flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>Solo maggiorenni, profili verificati</span>
-        <h1>Annunci per adulti.<br><span class="gradient-text">Tra persone vere.</span></h1>
+        <h1>Di cosa hai voglia oggi?<br><span class="gradient-text">Scegli. Organizza. Godi.</span></h1>
         <p class="lead">Coppie, single, curiosi: pubblica il tuo annuncio, cerca nella tua zona e chatta solo con chi ha verificato la propria identità.</p>
         <div class="actions">
           <a class="btn btn-primary btn-lg" href="iscrizione.html">Iscriviti gratis</a>
@@ -83,12 +84,175 @@
       <nav class="regions" id="regions" aria-label="Regioni"></nav>
     </section>
 
-    <section class="container section">
-      <div class="grid grid-4">
-        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Chat e messaggi</h3><p class="muted">Scrivi a chi ti interessa, decidi tu chi può contattarti.</p></div>
-        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Profili verificati</h3><p class="muted">Età e identità controllate, badge visibile su ogni profilo.</p></div>
-        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Foto private</h3><p class="muted">Sfocate per tutti, nitide solo per i contatti che scegli.</p></div>
-        <div><h3 style="font-family:var(--font-body);font-size:18px;margin-bottom:8px">Segnalazioni rapide</h3><p class="muted">Un tasto su ogni profilo e annuncio, moderazione umana.</p></div>
+    <section class="come-funziona" id="come-funziona">
+      <div class="container">
+        <div class="cf-head reveal">
+          <h2>Come funziona</h2>
+          <div class="cf-switch" role="tablist" aria-label="Scegli il tuo profilo">
+            <span class="cf-switch-thumb" aria-hidden="true"></span>
+            <button type="button" role="tab" id="cf-tab-privati" aria-controls="cf-privati" aria-selected="true" data-mode="privati">Privati</button>
+            <button type="button" role="tab" id="cf-tab-business" aria-controls="cf-business" aria-selected="false" data-mode="business">Business</button>
+          </div>
+        </div>
+
+      <div class="cf-panel" id="cf-privati" role="tabpanel" aria-labelledby="cf-tab-privati">
+
+        <!-- 1. Copertura: righe che scorrono + titolo -->
+        <div class="cf-block cf-reach reveal">
+          <div class="marquees" aria-hidden="true">
+          <div class="marquee">
+            <ul class="marquee-track"><li>Coppia cerca coppia</li><li>Lei cerca lui</li><li>Lui cerca coppia</li><li>Coppia cerca lei</li><li>Lei cerca coppia</li><li>Lui cerca lei</li><li>Lei cerca lei</li><li>Trans</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Coppia cerca coppia</li><li>Lei cerca lui</li><li>Lui cerca coppia</li><li>Coppia cerca lei</li><li>Lei cerca coppia</li><li>Lui cerca lei</li><li>Lei cerca lei</li><li>Trans</li></ul>
+          </div>
+          <div class="marquee reverse">
+            <ul class="marquee-track"><li>Ravenna</li><li>Bologna</li><li>Rimini</li><li>Milano</li><li>Torino</li><li>Firenze</li><li>Roma</li><li>Napoli</li><li>Bari</li><li>Verona</li><li>Padova</li><li>Pescara</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Ravenna</li><li>Bologna</li><li>Rimini</li><li>Milano</li><li>Torino</li><li>Firenze</li><li>Roma</li><li>Napoli</li><li>Bari</li><li>Verona</li><li>Padova</li><li>Pescara</li></ul>
+          </div>
+          <div class="marquee">
+            <ul class="marquee-track"><li>Aperitivo</li><li>Serata al club</li><li>Weekend fuori</li><li>Solo chat</li><li>Amicizia</li><li>Cena</li><li>Viaggio</li><li>Prima esperienza</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Aperitivo</li><li>Serata al club</li><li>Weekend fuori</li><li>Solo chat</li><li>Amicizia</li><li>Cena</li><li>Viaggio</li><li>Prima esperienza</li></ul>
+          </div>
+          </div>
+          <div class="cf-reach-copy">
+            <h3 class="cf-title">Tutta Italia, un solo profilo.</h3>
+            <p class="cf-sub">Pubblichi una volta e scegli tu dove farti trovare: categoria, regione, età e cosa cerchi.</p>
+            <ul class="cf-facts"><li><span>Profili</span><strong>Coppie, lei, lui, trans</strong></li><li><span>Zone</span><strong>20 regioni</strong></li><li><span>Accesso</span><strong>Solo maggiorenni verificati</strong></li></ul>
+          </div>
+        </div>
+
+        <!-- 2. Demo animata -->
+        <div class="cf-block cf-demo-wrap reveal">
+          <div class="cf-demo" data-demo aria-label="Esempio di conversazione">
+            <div class="demo-head"><span class="demo-av">LM</span><span><strong>Luna &amp; Matteo</strong><span class="demo-ver">Verificati</span></span></div>
+            <div class="demo-msg" data-step>Ciao! Abbiamo letto il vostro annuncio, ci sembrate in sintonia con noi.</div>
+            <div class="demo-msg mine" data-step>Grazie! Anche a noi il vostro profilo è piaciuto molto.</div>
+            <div class="demo-msg" data-step>Un aperitivo la prossima settimana, così ci conosciamo con calma?</div>
+            <div class="demo-typing" data-step data-typing><span></span><span></span><span></span></div>
+            <div class="demo-msg mine" data-step>Volentieri, giovedì a Ravenna?</div>
+          </div>
+          <div class="cf-demo-copy">
+            <h3 class="cf-title">Scrivi solo a chi è verificato.</h3>
+            <p class="cf-sub">Ogni profilo che ti contatta ha superato il controllo di età e identità. Le foto restano sfocate finché non accetti il contatto.</p>
+            <button type="button" class="btn btn-ghost" data-replay>Rivedi l’esempio</button>
+          </div>
+        </div>
+
+        <!-- 3. Cosa puoi fare, cosa no -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Cosa puoi fare, cosa no.</h3>
+          <div class="cf-dos">
+            <div class="card"><h4>Puoi</h4><ul class="cf-list yes"><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Pubblicare annunci per categoria e regione</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Chattare in privato</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Decidere chi vede le tue foto</li></ul></div>
+            <div class="card"><h4>Non trovi</h4><ul class="cf-list no"><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Profili non verificati</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Annunci a pagamento o di prostituzione</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Pubblicità tra i messaggi</li></ul></div>
+          </div>
+          <p class="cf-note">Un profilo ti sembra falso? Segnalalo: lo controlla una persona, non un algoritmo.</p>
+        </div>
+
+        <!-- 4. Interattivo: togli un dettaglio e guarda cosa cambia -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Più dettagli, contatti migliori.</h3>
+          <p class="cf-sub">Un annuncio preciso attira le persone giuste. Prova a togliere un dettaglio.</p>
+          <div class="cf-detail" data-detail>
+            <div class="detail-chips"><button type="button" class="detail-chip" aria-pressed="true" data-part="dove"><span class="k">Dove</span>Ravenna</button><button type="button" class="detail-chip" aria-pressed="true" data-part="chi"><span class="k">Chi</span>coppia 35/33</button><button type="button" class="detail-chip" aria-pressed="true" data-part="cosa"><span class="k">Cosa</span>aperitivo per conoscersi</button></div>
+            <blockquote class="detail-text">Siamo una <mark data-part="chi">coppia di 35 e 33 anni</mark> che <mark data-part="dove">vive a Ravenna</mark>: cerchiamo una coppia affine per <mark data-part="cosa">un aperitivo e due chiacchiere</mark>, senza fretta.</blockquote>
+            <p class="detail-hint" data-hint>Annuncio completo: chi legge capisce subito se è la persona giusta.</p>
+            <template data-hints>Senza la zona, ti scrive anche chi è a 500 km.|Senza dire chi siete, le risposte arrivano a caso.|Senza dire cosa cercate, ognuno immagina qualcosa di diverso.</template>
+          </div>
+        </div>
+
+        <!-- 5. Domande -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Domande frequenti</h3>
+          <div class="faq">
+          <details class="faq-item"><summary>È gratis?</summary><p>Iscrizione, profilo e annunci sono gratuiti. Premium aggiunge messaggi illimitati, annunci in evidenza e i coupon nei locali convenzionati.</p></details>
+          <details class="faq-item"><summary>Chi vede il mio profilo?</summary><p>Solo utenti iscritti e, se lo scegli, solo quelli verificati. Le foto sono sfocate per chi non è tra i tuoi contatti.</p></details>
+          <details class="faq-item"><summary>Come funziona la verifica?</summary><p>Controlliamo la maggiore età e l’identità con un documento o un servizio di verifica. Il badge compare sul profilo; il documento non viene mostrato a nessuno.</p></details>
+          <details class="faq-item"><summary>Posso cancellarmi?</summary><p>Sì, dal profilo, in un clic. Puoi anche scaricare prima tutti i tuoi dati.</p></details>
+          </div>
+        </div>
+
+        <div class="cf-cta reveal">
+          <a class="btn btn-primary btn-lg" href="iscrizione.html">Crea il tuo profilo</a>
+        </div>
+      </div>
+
+      <div class="cf-panel" id="cf-business" role="tabpanel" aria-labelledby="cf-tab-business" hidden>
+
+        <!-- 1. Copertura: righe che scorrono + titolo -->
+        <div class="cf-block cf-reach reveal">
+          <div class="marquees" aria-hidden="true">
+          <div class="marquee">
+            <ul class="marquee-track"><li>Boutique</li><li>Lingerie</li><li>Hotel friendly</li><li>B&amp;B adults only</li><li>Agriturismo</li><li>Club privé</li><li>Serate a tema</li><li>Spazi privati</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Boutique</li><li>Lingerie</li><li>Hotel friendly</li><li>B&amp;B adults only</li><li>Agriturismo</li><li>Club privé</li><li>Serate a tema</li><li>Spazi privati</li></ul>
+          </div>
+          <div class="marquee reverse">
+            <ul class="marquee-track"><li>Ravenna</li><li>Bologna</li><li>Rimini</li><li>Milano</li><li>Torino</li><li>Firenze</li><li>Roma</li><li>Napoli</li><li>Bari</li><li>Verona</li><li>Padova</li><li>Pescara</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Ravenna</li><li>Bologna</li><li>Rimini</li><li>Milano</li><li>Torino</li><li>Firenze</li><li>Roma</li><li>Napoli</li><li>Bari</li><li>Verona</li><li>Padova</li><li>Pescara</li></ul>
+          </div>
+          <div class="marquee">
+            <ul class="marquee-track"><li>Coupon iscritti</li><li>Shop online</li><li>Extra in camera</li><li>Richieste di disponibilità</li><li>Eventi</li><li>Scheda verificata</li><li>Recensioni</li><li>Statistiche</li><li>Annunci sponsorizzati</li></ul>
+            <ul class="marquee-track" aria-hidden="true"><li>Coupon iscritti</li><li>Shop online</li><li>Extra in camera</li><li>Richieste di disponibilità</li><li>Eventi</li><li>Scheda verificata</li><li>Recensioni</li><li>Statistiche</li><li>Annunci sponsorizzati</li></ul>
+          </div>
+          </div>
+          <div class="cf-reach-copy">
+            <h3 class="cf-title">Una vetrina per chi la cerca davvero.</h3>
+            <p class="cf-sub">La tua attività compare a chi sta già organizzando un incontro nella tua zona.</p>
+            <ul class="cf-facts"><li><span>Attività</span><strong>Shop, strutture, club, spazi</strong></li><li><span>Visibilità</span><strong>Locali, messaggi, bacheca</strong></li><li><span>Accesso</span><strong>Solo attività verificate</strong></li></ul>
+          </div>
+        </div>
+
+        <!-- 2. Demo animata -->
+        <div class="cf-block cf-demo-wrap reveal">
+          <div class="cf-demo" data-demo aria-label="Esempio di richiesta in arrivo">
+            <div class="demo-head"><span class="demo-av biz">VO</span><span><strong>Villa Ombrosa</strong><span class="demo-ver">Area aziende</span></span></div>
+            <div class="demo-card" data-step><span class="demo-k">Nuova richiesta</span><strong>Luna &amp; Matteo, coppia verificata</strong><span>Weekend 17–19, 2 adulti, suite con terrazza</span></div>
+            <div class="demo-card" data-step><span class="demo-k">Coupon</span><strong>-15% iscritti Premium</strong><span>Applicato in automatico alla richiesta</span></div>
+            <div class="demo-typing" data-step data-typing><span></span><span></span><span></span></div>
+            <div class="demo-msg mine" data-step>Buongiorno! La suite è libera, vi mando la conferma.</div>
+          </div>
+          <div class="cf-demo-copy">
+            <h3 class="cf-title">Le richieste arrivano già pronte.</h3>
+            <p class="cf-sub">Date, ospiti e offerta applicata: rispondi dalla dashboard o in chat, senza rincorrere nessuno.</p>
+            <button type="button" class="btn btn-ghost" data-replay>Rivedi l’esempio</button>
+          </div>
+        </div>
+
+        <!-- 3. Cosa puoi fare, cosa no -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Cosa puoi fare, cosa no.</h3>
+          <div class="cf-dos">
+            <div class="card"><h4>Puoi</h4><ul class="cf-list yes"><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Pubblicare scheda, foto e servizi</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Creare coupon per gli iscritti</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Ricevere richieste e rispondere in chat</li></ul></div>
+            <div class="card"><h4>Non puoi</h4><ul class="cf-list no"><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Scrivere per primo agli utenti</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Andare online senza verifica</li><li><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>Vedere i dati personali degli iscritti</li></ul></div>
+          </div>
+          <p class="cf-note">Gli utenti scelgono se contattarti: niente spam, solo persone interessate.</p>
+        </div>
+
+        <!-- 4. Interattivo: togli un dettaglio e guarda cosa cambia -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Un’offerta chiara converte di più.</h3>
+          <p class="cf-sub">Più è precisa, più è facile sceglierla. Prova a togliere un dettaglio.</p>
+          <div class="cf-detail" data-detail>
+            <div class="detail-chips"><button type="button" class="detail-chip" aria-pressed="true" data-part="sconto"><span class="k">Sconto</span>-15%</button><button type="button" class="detail-chip" aria-pressed="true" data-part="quando"><span class="k">Quando</span>dom–gio</button><button type="button" class="detail-chip" aria-pressed="true" data-part="chi"><span class="k">Per chi</span>iscritti Premium</button></div>
+            <blockquote class="detail-text"><mark data-part="sconto">Il 15% di sconto</mark> sul soggiorno <mark data-part="quando">da domenica a giovedì</mark>, riservato agli <mark data-part="chi">iscritti Premium</mark> di Aguardiente.</blockquote>
+            <p class="detail-hint" data-hint>Offerta completa: chi la legge sa quanto risparmia, quando e se vale per lui.</p>
+            <template data-hints>Senza lo sconto, l’offerta non dice perché scegliere te.|Senza i giorni, arrivano richieste che non puoi accettare.|Senza dire per chi, nessuno sa se l’offerta lo riguarda.</template>
+          </div>
+        </div>
+
+        <!-- 5. Domande -->
+        <div class="cf-block reveal">
+          <h3 class="cf-title">Domande frequenti</h3>
+          <div class="faq">
+          <details class="faq-item"><summary>Quanto costa?</summary><p>Il piano Base è gratuito. Plus e In evidenza hanno un canone mensile e si disdicono quando vuoi.</p></details>
+          <details class="faq-item"><summary>Che documenti servono?</summary><p>Visura camerale, documento del referente e, per le strutture ricettive, il codice CIN.</p></details>
+          <details class="faq-item"><summary>Posso avere anche un profilo personale?</summary><p>Sì, ma resta separato: l’account aziendale non è collegato al tuo profilo privato.</p></details>
+          <details class="faq-item"><summary>Come ricevo le richieste?</summary><p>In dashboard e via email. Rispondi in chat senza condividere il tuo numero.</p></details>
+          </div>
+        </div>
+
+        <div class="cf-cta reveal">
+          <a class="btn btn-primary btn-lg" href="iscrizione.html?tipo=azienda">Registra la tua attività</a>
+        </div>
+      </div>
       </div>
     </section>
   </main>
@@ -104,7 +268,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js"></script>
-  <script src="assets/app.js"></script>
+  <script src="assets/data.js?v=202610021413"></script>
+  <script src="assets/app.js?v=202610021413"></script>
 </body>
 </html>

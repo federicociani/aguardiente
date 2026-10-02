@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aguardiente · Locali e strutture</title>
+  <title>Aguardiente · Velluto Boutique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/style.css?v=202610021413">
 </head>
-<body data-page="luoghi">
+<body data-page="shop">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
     <nav class="nav nav-icons" aria-label="Principale">
@@ -22,17 +22,37 @@
     </div>
   </header>
 
-  <main class="container" style="padding-block:48px 96px;display:flex;flex-direction:column;gap:28px">
-    <div>
-      <h1 style="font-size:52px">Locali e strutture friendly</h1>
-      <p class="lead" style="margin-top:12px">Attività verificate che conoscono la community. Gli iscritti Premium vedono le offerte riservate.</p>
+  <main class="container shop">
+    <a href="luoghi.html" style="display:inline-block;padding:12px 0">Tutti i locali</a>
+    <div class="shop-head">
+      <div>
+        <div class="chips" style="margin-bottom:12px"><span class="badge">Boutique verificata</span><span class="badge badge-grad">-10% iscritti</span></div>
+        <h1>Velluto Boutique</h1>
+        <p class="lead" style="margin-top:12px">Shop online da Rimini. Spedizione in pacco anonimo, senza nome del negozio sull’etichetta.</p>
+      </div>
+      <a class="btn btn-ghost" href="messaggi.html">Chiedi un consiglio</a>
     </div>
-    <div class="field-row" style="align-items:flex-end">
-      <label class="field" style="flex:1 1 280px">Dove<input type="search" value="Ravenna" placeholder="Città o provincia"></label>
-      <label class="field" style="flex:0 1 140px">Raggio<select><option>30 km</option><option>50 km</option><option>100 km</option></select></label>
+
+    <div class="shop-grid">
+      <section>
+        <div class="chips" id="shop-filters" role="group" aria-label="Categoria" style="margin-bottom:24px"></div>
+        <div class="grid grid-3" id="products"></div>
+      </section>
+
+      <aside class="card cart" aria-label="Carrello">
+        <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:24px">Carrello</h2><span class="badge" id="cart-count"></span></div>
+        <ul class="cart-list" id="cart-items"></ul>
+        <ul class="totals">
+          <li><span>Sconto iscritti 10%</span><span id="cart-discount"></span></li>
+          <li><span>Spedizione discreta</span><span>Gratis</span></li>
+          <li class="grand"><span>Totale</span><span id="cart-pay"></span></li>
+        </ul>
+        <span class="sr-only">Subtotale <span id="cart-total"></span></span>
+        <button class="btn btn-primary btn-lg btn-block" id="cart-checkout" type="button" disabled>Vai al pagamento</button>
+        <p class="muted" style="font-size:14px;display:flex;gap:8px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Acquisto riservato ai maggiorenni verificati. In estratto conto compare un nome neutro.</span></p>
+        <p id="cart-done" class="notice" hidden role="status">Nel prototipo il pagamento si ferma qui. Qui andrà il checkout con un processore abilitato ai prodotti per adulti.</p>
+      </aside>
     </div>
-    <div class="chips" id="place-filters" role="group" aria-label="Categoria"></div>
-    <div class="grid grid-3" id="places"></div>
   </main>
   <footer class="site-footer">
     <div class="container">
@@ -45,7 +65,6 @@
       </nav>
     </div>
   </footer>
-
   <script src="assets/data.js?v=202610021413"></script>
   <script src="assets/app.js?v=202610021413"></script>
 </body>

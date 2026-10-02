@@ -32,11 +32,15 @@ python3 -m http.server --directory site 8080
 │  ├─ index.html            home utenti
 │  ├─ iscrizione.html       iscrizione Utente / Azienda (?tipo=azienda)
 │  ├─ annunci.html          bacheca annunci con filtri per categoria
+│  ├─ annuncio.html         annuncio singolo (?id=…)
+│  ├─ pubblica.html         pubblica un annuncio con foto di lancio
 │  ├─ cerca.html            ricerca profili
 │  ├─ messaggi.html         chat
 │  ├─ profilo.html          profilo utente
 │  ├─ luoghi.html           locali e strutture (vista utente)
 │  ├─ scheda.html           scheda azienda (vista utente)
+│  ├─ prenotazione.html     richiesta inviata + extra in camera (upselling)
+│  ├─ shop.html             shop online di un'attività
 │  ├─ business.html         home Aguardiente Business
 │  ├─ dashboard.html        area azienda
 │  └─ assets/
@@ -57,6 +61,30 @@ python3 -m http.server --directory site 8080
 - **Pagine**: ogni HTML dichiara `<body data-page="...">`; `app.js` avvia solo il modulo di quella pagina.
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
 - **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
+
+## Cache
+
+I file in `site/assets/` sono richiamati con `?v=AAAAMMGGHHMM` per forzare il browser a scaricare la versione nuova dopo ogni rilascio. Quando modifichi CSS o JS aggiorna il numero in tutte le pagine:
+
+```bash
+V=$(date +%Y%m%d%H%M); sed -i -E "s#assets/(style\.css|data\.js|app\.js)(\?v=[0-9]+)?\"#assets/\1?v=$V\"#g" site/*.html
+```
+
+## Foto
+
+Le foto dei profili in "Online adesso" sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
+
+## Foto di lancio degli annunci
+
+Ogni annuncio può avere una **foto di lancio** indipendente dalla foto profilo: l'avatar accanto al nickname resta quello del profilo, la foto in testa alla card è dell'annuncio. In `pubblica.html` l'utente può caricarla, sceglierla tra alcune atmosfere o pubblicare senza foto, e decidere chi la vede:
+
+| Valore `coverVis` | Comportamento |
+|---|---|
+| `tutti` | visibile a tutti gli iscritti |
+| `verificati` | visibile solo ai profili verificati (etichetta sulla foto) |
+| `sfocata` | sfocata fino a quando l'autore accetta il contatto |
+
+Nei dati (`data.js`) la foto è nel campo `cover` dell'annuncio; nel prototipo il caricamento resta nel browser (anteprima con `FileReader`), niente viene inviato.
 
 ## Branch e deploy
 
