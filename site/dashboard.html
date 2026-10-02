@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente Business · Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="dashboard" class="business">
+  <div class="dash">
+    <aside class="dash-side">
+      <span style="display:inline-flex;align-items:center;gap:10px;padding:0 12px"><a class="logo" href="business.html" style="font-size:24px">aguardiente</a></span>
+      <nav aria-label="Area azienda">
+        <a href="dashboard.html" aria-current="page">Panoramica</a>
+        <a href="scheda.html">Scheda pubblica</a>
+        <a href="#">Offerte e coupon</a>
+        <a href="#">Richieste</a>
+        <a href="#">Recensioni</a>
+        <a href="#">Abbonamento</a>
+        <a href="#">Impostazioni</a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+      <div class="section-head" style="margin:0">
+        <div><p class="muted">Villa Ombrosa, struttura friendly</p><h1 style="font-size:44px;margin-top:6px">Benvenuto nell’area aziende</h1></div>
+        <a class="btn btn-ghost" href="scheda.html">Anteprima scheda</a>
+      </div>
+
+      <section class="card" style="display:flex;flex-direction:column;gap:20px;padding:28px">
+        <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:26px">Completa la verifica per andare online</h2><span class="badge" id="progress-label"></span></div>
+        <div class="progress"><span id="progress-bar"></span></div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+          <li class="task"><button type="button" aria-pressed="true" aria-label="Segna come completato: Dati aziendali e P.IVA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span style="display:flex;flex-direction:column"><strong>Dati aziendali e P.IVA</strong><span class="muted" style="font-size:14px">Ragione sociale, sede e referente</span></span></li>
+          <li class="task"><button type="button" aria-pressed="false" aria-label="Segna come completato: Visura camerale e documento del referente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span style="display:flex;flex-direction:column"><strong>Visura camerale e documento del referente</strong><span class="muted" style="font-size:14px">PDF o foto leggibile, max 10 MB</span></span></li>
+          <li class="task"><button type="button" aria-pressed="false" aria-label="Segna come completato: Codice CIN della struttura"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span style="display:flex;flex-direction:column"><strong>Codice CIN della struttura</strong><span class="muted" style="font-size:14px">Obbligatorio per le strutture ricettive</span></span></li>
+          <li class="task"><button type="button" aria-pressed="false" aria-label="Segna come completato: Scheda pubblica"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button><span style="display:flex;flex-direction:column"><strong>Scheda pubblica</strong><span class="muted" style="font-size:14px">Foto, descrizione, servizi e prima offerta</span></span></li>
+        </ul>
+      </section>
+
+      <section style="display:flex;gap:16px;flex-wrap:wrap">
+        <div class="card stat"><span class="muted">Visite alla scheda</span><strong>—</strong></div>
+        <div class="card stat"><span class="muted">Richieste ricevute</span><strong>—</strong></div>
+        <div class="card stat"><span class="muted">Coupon utilizzati</span><strong>—</strong></div>
+        <p class="muted" style="flex-basis:100%;font-size:14px">I dati compaiono dopo la pubblicazione della scheda.</p>
+      </section>
+
+      <section>
+        <h2 style="font-size:28px;margin-bottom:20px">Scegli il piano</h2>
+        <div class="plans">
+        <div class="card plan">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>Base</h3></div>
+          <span class="price">Gratis</span>
+          <ul><li>Scheda con 3 foto</li><li>Contatto via messaggi</li></ul>
+          <a class="btn btn-ghost" href="iscrizione.html?tipo=azienda">Inizia</a>
+        </div>
+        <div class="card plan featured">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>Plus</h3><span class="badge badge-grad">Consigliato</span></div>
+          <span class="price">[PREZZO]/mese</span>
+          <ul><li>Galleria completa</li><li>Coupon per gli iscritti</li><li>Richieste di disponibilità</li><li>Statistiche</li></ul>
+          <a class="btn btn-primary" href="iscrizione.html?tipo=azienda">Scegli Plus</a>
+        </div>
+        <div class="card plan">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>In evidenza</h3></div>
+          <span class="price">[PREZZO]/mese</span>
+          <ul><li>Tutto di Plus</li><li>Primi posti nella tua zona</li><li>Spazio sponsorizzato in bacheca</li></ul>
+          <a class="btn btn-ghost" href="iscrizione.html?tipo=azienda">Scegli</a>
+        </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

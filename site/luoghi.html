@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Locali e strutture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="luoghi">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-block:48px 96px;display:flex;flex-direction:column;gap:28px">
+    <div>
+      <h1 style="font-size:52px">Locali e strutture friendly</h1>
+      <p class="lead" style="margin-top:12px">Attività verificate che conoscono la community. Gli iscritti Premium vedono le offerte riservate.</p>
+    </div>
+    <div class="field-row" style="align-items:flex-end">
+      <label class="field" style="flex:1 1 280px">Dove<input type="search" value="Ravenna" placeholder="Città o provincia"></label>
+      <label class="field" style="flex:0 1 140px">Raggio<select><option>30 km</option><option>50 km</option><option>100 km</option></select></label>
+    </div>
+    <div class="chips" id="place-filters" role="group" aria-label="Categoria"></div>
+    <div class="grid grid-3" id="places"></div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

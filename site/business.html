@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente Business</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="business" class="business">
+  <header class="site-header">
+    <span style="display:inline-flex;align-items:center;gap:12px">
+      <a class="logo" href="business.html">aguardiente</a>
+      <span class="logo-tag">Business</span>
+    </span>
+    <nav class="nav" aria-label="Business">
+      <a href="#come">Come funziona</a>
+      <a href="#guadagni">Come guadagni</a>
+      <a href="#piani">Piani</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-ghost" href="dashboard.html">Area aziende</a>
+      <a class="btn btn-primary" href="iscrizione.html?tipo=azienda">Registra l’attività</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="container" style="padding-block:88px 64px;display:flex;flex-direction:column;gap:28px;align-items:flex-start">
+      <h1 style="max-width:900px">Porta la tua attività dove la community si incontra.</h1>
+      <p class="lead" style="max-width:620px">Un’area separata per chi offre prodotti, ospitalità ed eventi agli iscritti di Aguardiente. Gli utenti ti trovano nella sezione locali, nei messaggi e negli spazi sponsorizzati della bacheca.</p>
+      <div class="actions">
+        <a class="btn btn-primary btn-lg" href="iscrizione.html?tipo=azienda">Inizia gratis</a>
+        <a class="btn btn-ghost btn-lg" href="scheda.html">Vedi una scheda di esempio</a>
+      </div>
+    </section>
+
+    <section class="container" style="padding-bottom:72px">
+      <div class="grid grid-4" style="gap:16px">
+        <div class="card"><h3 style="margin-bottom:8px">Boutique e shop</h3><p class="muted">Negozi fisici e online di lingerie e accessori.</p></div>
+        <div class="card"><h3 style="margin-bottom:8px">Strutture ricettive</h3><p class="muted">Hotel, B&amp;B e agriturismi aperti alla community.</p></div>
+        <div class="card"><h3 style="margin-bottom:8px">Club ed eventi</h3><p class="muted">Locali privé e organizzatori di serate a tema.</p></div>
+        <div class="card"><h3 style="margin-bottom:8px">Spazi privati</h3><p class="muted">Host verificati con check-in registrato.</p></div>
+      </div>
+    </section>
+
+    <section class="band" id="come">
+      <div class="container section">
+        <h2 style="margin-bottom:36px">Come funziona</h2>
+        <ol class="steps-big">
+          <li><span class="n">1</span><strong style="font-size:19px">Registri l’attività</strong><p class="muted">Account aziendale separato dal profilo personale, con P.IVA e referente.</p></li>
+          <li><span class="n">2</span><strong style="font-size:19px">Verifichiamo i documenti</strong><p class="muted">Visura, documento del referente e, per le strutture, codice CIN.</p></li>
+          <li><span class="n">3</span><strong style="font-size:19px">Pubblichi scheda e offerte</strong><p class="muted">Foto, servizi, coupon per gli iscritti e richieste di disponibilità.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="container section" id="guadagni">
+      <h2 style="margin-bottom:32px">Come guadagni</h2>
+      <div class="plans">
+        <div class="card-deep plan"><h3>Clienti dalla community</h3><p>Gli utenti ti scoprono tra i locali consigliati e ti contattano direttamente.</p></div>
+        <div class="card plan"><h3>Prenotazioni e richieste</h3><p class="muted">Ricevi richieste di disponibilità per camere, spazi e serate.</p></div>
+        <div class="card plan"><h3>Coupon ed eventi</h3><p class="muted">Sconti riservati agli iscritti e promozione delle tue serate.</p></div>
+      </div>
+    </section>
+
+    <section class="container section" id="piani" style="padding-bottom:88px">
+      <h2 style="margin-bottom:28px">Piani</h2>
+      <div class="plans">
+        <div class="card plan">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>Base</h3></div>
+          <span class="price">Gratis</span>
+          <ul><li>Scheda con 3 foto</li><li>Contatto via messaggi</li></ul>
+          <a class="btn btn-ghost" href="iscrizione.html?tipo=azienda">Inizia</a>
+        </div>
+        <div class="card plan featured">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>Plus</h3><span class="badge badge-grad">Consigliato</span></div>
+          <span class="price">[PREZZO]/mese</span>
+          <ul><li>Galleria completa</li><li>Coupon per gli iscritti</li><li>Richieste di disponibilità</li><li>Statistiche</li></ul>
+          <a class="btn btn-primary" href="iscrizione.html?tipo=azienda">Scegli Plus</a>
+        </div>
+        <div class="card plan">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h3>In evidenza</h3></div>
+          <span class="price">[PREZZO]/mese</span>
+          <ul><li>Tutto di Plus</li><li>Primi posti nella tua zona</li><li>Spazio sponsorizzato in bacheca</li></ul>
+          <a class="btn btn-ghost" href="iscrizione.html?tipo=azienda">Scegli</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Aguardiente Business, solo attività verificate</span>
+      <nav aria-label="Footer business"><a href="#">Termini per le aziende</a><a class="strong" href="index.html">Torna al sito utenti</a></nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

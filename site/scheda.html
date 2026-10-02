@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Villa Ombrosa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="scheda">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="profilo.html#nuovo-annuncio">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-block:24px 96px">
+    <a href="luoghi.html" style="display:inline-block;padding:12px 0;margin-bottom:16px">Tutti i locali</a>
+    <div class="gallery">
+      <div class="photo"><span class="photo-label">[FOTO PRINCIPALE]</span></div>
+      <div class="photo"><span class="photo-label">[FOTO]</span></div>
+      <div class="photo"><span class="photo-label">[FOTO]</span></div>
+    </div>
+
+    <div class="two-col">
+      <div class="main">
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div class="chips"><span class="badge" style="background:transparent;border:1px solid var(--line-2);color:var(--text-2)">Struttura friendly</span><span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Attività verificata</span></div>
+          <h1 style="font-size:56px">Villa Ombrosa</h1>
+          <span class="muted" style="font-size:17px">B&amp;B adults only, Brisighella (RA)</span>
+          <p style="color:var(--text-2);font-size:18px;line-height:1.6;max-width:680px">Una casa colonica sulle colline faentine con sei camere, piscina e giardino riservati agli ospiti maggiorenni. Atmosfera discreta, colazione servita fino a tardi.</p>
+        </section>
+        <section><h2 style="font-size:28px;margin-bottom:14px">Servizi</h2>
+          <div class="chips"><span class="chip">Piscina riservata</span><span class="chip">Spa con sauna</span><span class="chip">Parcheggio privato</span><span class="chip">Check-in flessibile</span><span class="chip">Solo maggiorenni</span></div></section>
+        <section><h2 style="font-size:28px;margin-bottom:14px">Recensioni degli iscritti</h2>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="card"><strong>Luna &amp; Matteo</strong> <span class="muted">coppia verificata</span><p class="muted" style="margin-top:8px">Posto tranquillo e personale molto discreto. La piscina la sera è stata il momento migliore del weekend.</p></div>
+            <div class="card"><strong>Sole_83</strong> <span class="muted">profilo verificato</span><p class="muted" style="margin-top:8px">Camere curate e colazione ottima. Lo sconto iscritti è stato applicato senza problemi.</p></div>
+          </div></section>
+      </div>
+
+      <aside>
+        <div class="card-deep" style="display:flex;flex-direction:column;gap:8px">
+          <span style="font-size:14px;font-weight:600">Offerta iscritti Premium</span>
+          <h3 style="font-size:30px">-15% sul soggiorno</h3>
+          <p>Codice generato alla prenotazione. Valido da domenica a giovedì.</p>
+        </div>
+        <form class="card" action="messaggi.html" style="display:flex;flex-direction:column;gap:18px;padding:28px">
+          <h3>Da [PREZZO] a notte</h3>
+          <div class="field-row">
+            <label class="field">Arrivo<input type="date"></label>
+            <label class="field">Partenza<input type="date"></label>
+          </div>
+          <label class="field">Ospiti<select><option>2 adulti</option><option>3 adulti</option><option>4 adulti</option></select></label>
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Richiedi disponibilità</button>
+          <a class="btn btn-ghost btn-block" href="messaggi.html">Scrivi alla struttura</a>
+          <p class="muted" style="font-size:14px">Gli ospiti vengono registrati dalla struttura come previsto dalla legge. Il tuo nickname resta privato.</p>
+        </form>
+        <div class="photo" style="height:180px;border-radius:20px"><span class="photo-label">[MAPPA]</span></div>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
