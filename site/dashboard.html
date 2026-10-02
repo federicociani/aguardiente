@@ -6,7 +6,7 @@
   <title>Aguardiente Business · Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021420">
+  <link rel="stylesheet" href="assets/style.css?v=202610021715">
 </head>
 <body data-page="dashboard" class="business">
   <div class="dash">
@@ -15,6 +15,7 @@
       <nav aria-label="Area azienda">
         <a href="dashboard.html" aria-current="page">Panoramica</a>
         <a href="scheda.html">Scheda pubblica</a>
+        <a href="#coupon">Coupon e servizi</a>
         <a href="#shop">Shop online</a>
         <a href="#extra">Extra in prenotazione</a>
         <a href="#">Offerte e coupon</a>
@@ -47,6 +48,22 @@
         <div class="card stat"><span class="muted">Richieste ricevute</span><strong>—</strong></div>
         <div class="card stat"><span class="muted">Coupon utilizzati</span><strong>—</strong></div>
         <p class="muted" style="flex-basis:100%;font-size:14px">I dati compaiono dopo la pubblicazione della scheda.</p>
+      </section>
+
+      <section id="coupon" class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
+        <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:26px">Coupon e servizi in vendita</h2><a class="btn btn-ghost" href="locale.html">Vedi come li vede il cliente</a></div>
+        <p class="muted">Decidi prezzo, quantità e validità. Il cliente paga in anticipo e mostra il QR all’ingresso.</p>
+        <div>
+          <div class="switch-row"><span>Ingresso coppia + 2 drink, 40 €</span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ingresso coppia + 2 drink, 40 €"></button></div>
+          <div class="switch-row"><span>Ingresso singola, omaggio per le verificate</span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ingresso singola, omaggio per le verificate"></button></div>
+          <div class="switch-row"><span>Tavolo riservato, 120 €</span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Tavolo riservato, 120 €"></button></div>
+          <div class="switch-row"><span>Privé per la serata, 200 €</span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Privé per la serata, 200 €"></button></div>
+        </div>
+        <div class="validate">
+          <label class="field" style="flex:1 1 220px">Convalida un coupon<input type="text" placeholder="AGU-XXXX-XXXX" autocomplete="off"></label>
+          <button class="btn btn-primary" type="button">Convalida</button>
+          <button class="btn btn-ghost" type="button">Scansiona QR</button>
+        </div>
       </section>
 
       <section id="extra" class="card" style="padding:28px;display:flex;flex-direction:column;gap:12px">
@@ -100,7 +117,7 @@
     </main>
   </div>
 
-  <script src="assets/data.js?v=202610021420"></script>
-  <script src="assets/app.js?v=202610021420"></script>
+  <script src="assets/data.js?v=202610021715"></script>
+  <script src="assets/app.js?v=202610021715"></script>
 </body>
 </html>

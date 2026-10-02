@@ -55,7 +55,7 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 
 - **Utente loggato**: le icone Annunci, Cerca, Messaggi diventano una tab bar fissa in basso, con il tasto centrale "+" per pubblicare; in alto restano logo e avatar.
 - **Home pubblica e Business**: menu a tendina (hamburger) con tutte le voci; in alto restano logo e il CTA principale.
-- **Filtri a pillola**: una sola riga che scorre in orizzontale.
+- **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.
 - **Cerca**: i filtri si aprono con il tasto "Filtri"; profili su due colonne.
 - **Shop**: prodotti su due colonne e barra del carrello flottante con il totale.
