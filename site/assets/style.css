@@ -91,16 +91,14 @@ p { margin: 0; }
 .logo:hover { color: var(--text); }
 .logo-tag { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--text-2); }
 
-/* Fiammella animata */
-.flame { overflow: visible; transform-origin: 50% 100%; animation: flicker 1.6s ease-in-out infinite; }
-.flame-core { transform-box: fill-box; transform-origin: 50% 100%; animation: flicker .9s ease-in-out infinite reverse; }
-@keyframes flicker {
-  0%, 100% { transform: scale(1, 1) skewX(0); }
-  20% { transform: scale(.94, 1.07) skewX(-4deg); }
-  45% { transform: scale(1.05, .95) skewX(3deg); }
-  70% { transform: scale(.97, 1.05) skewX(-2deg); }
+/* Logo: un bagliore che passa ogni 6 secondi */
+.logo { animation: logo-glow 6s ease-in-out infinite; }
+@keyframes logo-glow {
+  0%, 78%, 100% { text-shadow: 0 0 0 rgba(255,107,143,0); }
+  86% { text-shadow: 0 0 8px rgba(255,107,143,.9), 0 0 22px rgba(214,30,82,.7), 0 0 44px rgba(158,18,56,.5); color: #fff; }
+  92% { text-shadow: 0 0 4px rgba(255,107,143,.4), 0 0 12px rgba(214,30,82,.3); }
 }
-@media (prefers-reduced-motion: reduce) { .flame, .flame-core { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .logo { animation: none; } }
 
 .nav { display: flex; gap: 28px; flex-wrap: wrap; }
 .nav a { color: var(--text); text-decoration: none; padding: 12px 0; }

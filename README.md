@@ -61,7 +61,7 @@ python3 -m http.server --directory site 8080
 - **Design token**: colori, gradiente e font sono variabili CSS in cima a `site/assets/style.css`.
 - **Pagine**: ogni HTML dichiara `<body data-page="...">`; `app.js` avvia solo il modulo di quella pagina.
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
-- **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
+- **Logo**: solo testo, con un bagliore che passa ogni 6 secondi (`@keyframes logo-glow` in `style.css`); fermo con `prefers-reduced-motion`.
 
 ## Cache
 

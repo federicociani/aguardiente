@@ -68,4 +68,4 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 - Target touch di almeno 44px
 - Focus visibile (`:focus-visible`)
 - Interruttori con `role="switch"` e `aria-checked`; filtri con `aria-pressed`
-- Animazione del logo disattivata con `prefers-reduced-motion`
+- Bagliore del logo disattivato con `prefers-reduced-motion`
