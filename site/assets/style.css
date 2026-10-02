@@ -879,4 +879,10 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 
   /* Già presente nella barra in alto: in hero non serve */
   .hide-mobile { display: none !important; }
+
+  /* Ultimi annunci e annunci simili: card che scorrono in orizzontale */
+  .grid-scroll { display: flex; overflow-x: auto; overscroll-behavior-x: contain; margin-inline: -20px; padding: 2px 20px 12px; gap: 12px; scrollbar-width: none; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; }
+  .grid-scroll::-webkit-scrollbar { display: none; }
+  .grid-scroll > * { flex: 0 0 82%; scroll-snap-align: start; }
+  .grid-scroll .ad-cover { aspect-ratio: 16 / 10; }
 }
