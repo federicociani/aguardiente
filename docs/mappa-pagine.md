@@ -4,7 +4,7 @@
 
 | Pagina | Scopo | Porta a |
 |---|---|---|
-| `index.html` | Home pubblica: ricerca rapida, categorie, online adesso, ultimi annunci, regioni | annunci, cerca, iscrizione, business |
+| `index.html` | Home pubblica: ricerca rapida, categorie, online adesso, ultimi annunci, regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
 | `annunci.html` | Bacheca filtrabile per categoria ("Coppia cerca coppia", "Lei cerca lui"…) | messaggi, luoghi (banner sponsorizzato) |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
