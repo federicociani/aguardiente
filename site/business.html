@@ -2,11 +2,11 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Aguardiente Business</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021413">
+  <link rel="stylesheet" href="assets/style.css?v=202610021420">
 </head>
 <body data-page="business" class="business">
   <header class="site-header">
@@ -14,11 +14,17 @@
       <a class="logo" href="business.html">aguardiente</a>
       <span class="logo-tag">Business</span>
     </span>
-    <nav class="nav" aria-label="Business">
+    <nav class="nav" id="site-menu" aria-label="Business">
       <a href="#come">Come funziona</a>
       <a href="#guadagni">Come guadagni</a>
       <a href="#piani">Piani</a>
+      <a class="menu-only" href="iscrizione.html?tipo=azienda">Registra l’attività</a>
+      <a class="menu-only" href="dashboard.html">Area aziende</a>
+      <a class="menu-only" href="index.html">Sito utenti</a>
     </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Apri il menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="mt-top" d="M4 7h16"/><path class="mt-mid" d="M4 12h16"/><path class="mt-bot" d="M4 17h16"/></svg>
+    </button>
     <div class="header-actions">
       <a class="btn btn-ghost" href="dashboard.html">Area aziende</a>
       <a class="btn btn-primary" href="iscrizione.html?tipo=azienda">Registra l’attività</a>
@@ -101,7 +107,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021413"></script>
-  <script src="assets/app.js?v=202610021413"></script>
+  <script src="assets/data.js?v=202610021420"></script>
+  <script src="assets/app.js?v=202610021420"></script>
 </body>
 </html>
