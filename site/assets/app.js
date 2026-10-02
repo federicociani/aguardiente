@@ -116,6 +116,58 @@
     return `Foto di ${links.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`;
   }
 
+  /* ---------- RICERCA DA MOBILE: barra fissa + pannello dal basso ---------- */
+  function searchSheet() {
+    const fab = $('.search-fab'); const dlg = $('#search-sheet'); if (!fab || !dlg) return;
+    const form = $('form', dlg);
+    const range = $('[data-range]', dlg);
+    const [rMin, rMax] = $$('input[type="range"]', range);
+    const sw = $('[data-online]', dlg); const onlineInput = $('input[name="online"]', dlg);
+
+    const summary = () => {
+      const sono = form.sono.value || 'Chiunque';
+      const cerco = $$('input[name="cerco"]:checked', form).map((i) => i.value.toLowerCase());
+      const regione = (form.regione.value || 'Ovunque');
+      const eta = `${rMin.value}–${rMax.value >= 70 ? '70+' : rMax.value} anni`;
+      const online = sw.getAttribute('aria-checked') === 'true';
+      $('[data-sum="chi"]', fab).textContent = `${sono} cerca ${cerco.length ? cerco.join(', ') : 'chiunque'}`;
+      $('[data-sum="dove"]', fab).textContent = [regione, eta, online ? 'online' : ''].filter(Boolean).join(', ');
+      $('[data-age]', dlg).textContent = eta;
+      $('button[type="submit"]', dlg).textContent = cerco.length ? 'Mostra profili' : 'Scegli chi cerchi';
+      $('button[type="submit"]', dlg).disabled = !cerco.length;
+    };
+    const paintRange = () => {
+      // i due cursori non possono incrociarsi
+      if (+rMin.value > +rMax.value - 1) { if (document.activeElement === rMin) rMin.value = +rMax.value - 1; else rMax.value = +rMin.value + 1; }
+      const pct = (v) => (v - rMin.min) / (rMin.max - rMin.min);
+      range.style.setProperty('--a', pct(rMin.value));
+      range.style.setProperty('--b', pct(rMax.value));
+    };
+
+    const open = () => { dlg.showModal(); document.documentElement.classList.add('sheet-open'); const sel = $('input[name="regione"]:checked', dlg); if (sel) sel.closest('.opt').scrollIntoView({ inline: 'center', block: 'nearest' }); };
+    const close = () => {
+      if (!dlg.open) return;
+      dlg.classList.add('is-closing');
+      setTimeout(() => { dlg.classList.remove('is-closing'); dlg.style.transform = ''; dlg.close(); }, reduceMotion ? 0 : 220);
+    };
+    dlg.addEventListener('close', () => { document.documentElement.classList.remove('sheet-open'); fab.focus(); });
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    fab.addEventListener('click', open);
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', close));
+
+    // Trascina verso il basso per chiudere (dalla maniglia o dal titolo)
+    const head = $('.bs-head', dlg); let y0 = null, dy = 0;
+    head.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; y0 = e.clientY; dy = 0; head.setPointerCapture(e.pointerId); dlg.style.transition = 'none'; });
+    head.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); dlg.style.transform = `translateY(${dy}px)`; });
+    head.addEventListener('pointerup', () => { if (y0 === null) return; dlg.style.transition = ''; y0 = null; if (dy > 90) close(); else dlg.style.transform = ''; });
+
+    sw.addEventListener('change', () => { onlineInput.value = sw.getAttribute('aria-checked') === 'true' ? '1' : ''; summary(); });
+    form.addEventListener('input', () => { paintRange(); summary(); });
+    form.addEventListener('reset', () => setTimeout(() => { sw.setAttribute('aria-checked', 'true'); onlineInput.value = '1'; paintRange(); summary(); }));
+    paintRange(); summary();
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -139,6 +191,7 @@
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
       comeFunziona();
+      searchSheet();
     },
 
     /* ---------- ISCRIZIONE: switch Utente / Azienda ---------- */
@@ -193,6 +246,10 @@
             </div>
           </article>`).join('') : '<p class="empty">Nessun profilo con questi filtri. Prova ad allargare la ricerca.</p>';
       };
+      // Parametri arrivati dalla ricerca in home (?cerco=Coppia&cerco=Lei&online=1)
+      const q = new URLSearchParams(location.search);
+      if (q.getAll('cerco').length) $$('#filter-tipi input').forEach((i) => { i.checked = q.getAll('cerco').includes(i.value); });
+      if (q.get('online')) $('#sw-online').setAttribute('aria-checked', 'true');
       $('#filters').addEventListener('change', render);
       const ft = $('.filters-toggle');
       if (ft) ft.addEventListener('click', () => {
