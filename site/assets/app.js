@@ -15,16 +15,6 @@
   const ICON_HEART = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
   const ICON_PIN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 
-  /* ---------- Logo: fiammella animata inserita in ogni .logo ---------- */
-  const FLAME = `
-    <svg class="flame" width="22" height="30" viewBox="0 0 24 32" aria-hidden="true">
-      <defs><linearGradient id="flg" x1="0" y1="1" x2="0.3" y2="0">
-        <stop offset="0" stop-color="#7B2FF7"/><stop offset="0.6" stop-color="#D61E52"/><stop offset="1" stop-color="#FF6B8F"/>
-      </linearGradient></defs>
-      <path d="M12 1C13.2 7 19.5 10.5 19.5 19.5a7.5 7.5 0 0 1-15 0c0-4.2 2.2-6.6 3.8-8.6 0 3 1.4 4.6 3 5.2C11 12 9.2 7 12 1z" fill="url(#flg)"/>
-      <path class="flame-core" d="M12 15.5c1.6 2 3.1 3.3 3.1 5.6a3.1 3.1 0 0 1-6.2 0c0-1.9 1.3-3.2 3.1-5.6z" fill="#FFC9D6"/>
-    </svg>`;
-  $$('.logo').forEach((el) => el.insertAdjacentHTML('afterbegin', FLAME));
 
   /* Utility: gruppo di pill che filtrano una lista */
   function pills(container, labels, onChange) {
