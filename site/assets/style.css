@@ -14,8 +14,8 @@
   --muted:     #BC9DA8;
   --accent:    #FF6B8F;   /* testo/icone in evidenza */
   --online:    #3DDC97;
-  --grad:      linear-gradient(120deg, #1a0043 0%, #6400c9 100%);
-  --grad-deep: linear-gradient(135deg, #4E1A9E 0%, #9E1238 100%);
+  --grad:      linear-gradient(120deg, #9E1238 0%, #500000 100%);
+  --grad-deep: linear-gradient(135deg, #500000 0%, #9E1238 100%);
 
   /* Tipografia */
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
