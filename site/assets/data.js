@@ -1,22 +1,22 @@
 /* Dati di esempio: in produzione arriveranno dalle API */
 window.DATA = {
   annunci: [
-    { ini: 'LM', nick: 'Luna & Matteo', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '34 / 36', zona: 'Ravenna', ver: true, quando: 'Oggi',
+    { ini: 'LM', id: 'lm', nick: 'Luna & Matteo', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '34 / 36', zona: 'Ravenna', ver: true, quando: 'Oggi',
       cover: { id: '1702725365144-6e8584ea54e4', autore: 'Francesco Liotti', user: 'francesco_liotti' }, coverVis: 'tutti',
       titolo: 'Prima un aperitivo, poi si vedrà', testo: 'Coppia curiosa, alle prime esperienze. Cerchiamo persone affini con cui conoscerci senza fretta.' },
-    { ini: 'S', nick: 'Sole_83', cat: 'Lei cerca coppia', tipo: 'Lei', eta: '41', zona: 'Cesena', ver: true, quando: 'Ieri',
+    { ini: 'S', id: 'sole', nick: 'Sole_83', cat: 'Lei cerca coppia', tipo: 'Lei', eta: '41', zona: 'Cesena', ver: true, quando: 'Ieri',
       cover: { id: '1468056961052-15507578a50d', autore: 'Steve Allison', user: 'steveallison' }, coverVis: 'tutti',
       titolo: 'Serata al club il prossimo sabato', testo: 'Cerco una coppia simpatica per accompagnarmi alla serata a tema. Ci scriviamo prima per conoscerci.' },
-    { ini: 'AR', nick: 'Ale e Robi', cat: 'Coppia cerca lei', tipo: 'Coppia', eta: '29 / 31', zona: 'Rimini', ver: false, quando: '2 giorni fa',
+    { ini: 'AR', id: 'ar', nick: 'Ale e Robi', cat: 'Coppia cerca lei', tipo: 'Coppia', eta: '29 / 31', zona: 'Rimini', ver: false, quando: '2 giorni fa',
       cover: { id: '1543007630-9710e4a00a20', autore: 'qui nguyen', user: 'quinguyen' }, coverVis: 'sfocata',
       titolo: 'Cerchiamo lei, complice e solare', testo: 'Coppia giovane e sportiva, ci piacerebbe conoscere una ragazza simpatica. Si parte da un caffè.' },
-    { ini: 'D', nick: 'Davide_RA', cat: 'Lui cerca coppia', tipo: 'Lui', eta: '38', zona: 'Lugo', ver: true, quando: '3 giorni fa',
+    { ini: 'D', id: 'davide', nick: 'Davide_RA', cat: 'Lui cerca coppia', tipo: 'Lui', eta: '38', zona: 'Lugo', ver: true, quando: '3 giorni fa',
       cover: { id: '1640902106532-47dd3a2e833e', autore: 'Andrea De Santis', user: 'santesson89' }, coverVis: 'verificati',
       titolo: 'Discreto, educato, senza fretta', testo: 'Disponibile per conoscere coppie. Rispetto dei tempi e dei limiti di tutti prima di ogni cosa.' },
-    { ini: 'GE', nick: 'Giulia & Enri', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '45 / 47', zona: 'Forlì', ver: true, quando: '4 giorni fa',
+    { ini: 'GE', id: 'ge', nick: 'Giulia & Enri', cat: 'Coppia cerca coppia', tipo: 'Coppia', eta: '45 / 47', zona: 'Forlì', ver: true, quando: '4 giorni fa',
       cover: { id: '1597075687490-8f673c6c17f6', autore: 'Ambitious Studio | Rick Barrett', user: 'weareambitious' }, coverVis: 'tutti',
       titolo: 'Amici prima di tutto', testo: 'Coppia navigata cerca nuove amicizie per cene e serate in compagnia. Solo profili verificati.' },
-    { ini: 'M', nick: 'Marta.bo', cat: 'Lei cerca lui', tipo: 'Lei', eta: '33', zona: 'Bologna', ver: false, quando: '1 settimana fa',
+    { ini: 'M', id: 'marta', nick: 'Marta.bo', cat: 'Lei cerca lui', tipo: 'Lei', eta: '33', zona: 'Bologna', ver: false, quando: '1 settimana fa',
       titolo: 'Nuova in città', testo: 'Mi sono appena trasferita e vorrei conoscere persone aperte. Iniziamo con due chiacchiere in chat.' }
   ],
 
@@ -50,12 +50,12 @@ window.DATA = {
   ],
 
   conversazioni: [
-    { ini: 'LM', nome: 'Luna & Matteo', sotto: 'Coppia, Ravenna, verificati', link: 'annunci.html', linkLabel: 'Vedi annuncio', ora: '21:14', nuovi: 2, msgs: [
+    { ini: 'LM', nome: 'Luna & Matteo', sotto: 'Coppia, Ravenna, verificati', link: 'annuncio.html?id=lm', linkLabel: 'Vedi annuncio', ora: '21:14', nuovi: 2, msgs: [
       { mine: false, testo: 'Ciao! Abbiamo letto il vostro profilo, ci sembrate in sintonia con noi.', ora: '20:52' },
       { mine: true, testo: 'Ciao! Grazie, anche a noi il vostro annuncio è piaciuto molto.', ora: '20:58' },
       { mine: false, testo: 'Che ne dite di un aperitivo la prossima settimana, così ci conosciamo con calma?', ora: '21:10' },
       { mine: false, testo: 'Fateci sapere quando siete liberi.', ora: '21:14' } ] },
-    { ini: 'S', nome: 'Sole_83', sotto: 'Lei, Cesena, verificata', link: 'annunci.html', linkLabel: 'Vedi annuncio', ora: 'Ieri', nuovi: 0, msgs: [
+    { ini: 'S', nome: 'Sole_83', sotto: 'Lei, Cesena, verificata', link: 'annuncio.html?id=sole', linkLabel: 'Vedi annuncio', ora: 'Ieri', nuovi: 0, msgs: [
       { mine: false, testo: 'Allora confermato sabato al club?', ora: '18:30' },
       { mine: true, testo: 'Sì, ci vediamo all’ingresso alle 22.', ora: '18:41' } ] },
     { ini: 'VO', nome: 'Villa Ombrosa', sotto: 'Attività verificata, Brisighella', link: 'scheda.html', linkLabel: 'Vedi scheda', ora: 'Lun', nuovi: 0, msgs: [

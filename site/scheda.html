@@ -33,7 +33,7 @@
     <div class="two-col">
       <div class="main">
         <section style="display:flex;flex-direction:column;gap:14px">
-          <div class="chips"><span class="badge" style="background:transparent;border:1px solid var(--line-2);color:var(--text-2)">Struttura friendly</span><span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Attività verificata</span></div>
+          <div class="chips"><span class="badge" style="background:transparent;border:1px solid var(--line-2);color:var(--text-2)">Struttura friendly</span><span class="cert" tabindex="0" aria-describedby="cert-tip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2.9 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-.9 2.8-3-.2L12 21l-2.4-1.8-3 .2-.9-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7.9-2.8 3 .2z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>Certificato<span class="cert-tip" role="tooltip" id="cert-tip">I luoghi certificati da Aguardiente si impegnano a fornire tutti i dettagli e l’attendibilità del luogo.</span></span></div>
           <h1 style="font-size:56px">Villa Ombrosa</h1>
           <span class="muted" style="font-size:17px">B&amp;B adults only, Brisighella (RA)</span>
           <p style="color:var(--text-2);font-size:18px;line-height:1.6;max-width:680px">Una casa colonica sulle colline faentine con sei camere, piscina e giardino riservati agli ospiti maggiorenni. Atmosfera discreta, colazione servita fino a tardi.</p>
@@ -65,7 +65,14 @@
           <p class="muted" style="font-size:14px">Dopo la richiesta puoi aggiungere extra da trovare in camera: kit protezione, bollicine, allestimento.</p>
           <p class="muted" style="font-size:14px">Gli ospiti vengono registrati dalla struttura come previsto dalla legge. Il tuo nickname resta privato.</p>
         </form>
-        <div class="photo" style="height:180px;border-radius:40px"><span class="photo-label">[MAPPA]</span></div>
+        <figure class="map-card">
+          <iframe title="Mappa della zona: Brisighella (RA)" loading="lazy" referrerpolicy="no-referrer"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=11.7416%2C44.2053%2C11.8016%2C44.2373&amp;layer=mapnik&amp;marker=44.2213%2C11.7716"></iframe>
+          <figcaption>
+            <span><strong>Brisighella (RA)</strong><br><span class="muted">Indirizzo esatto dopo la conferma</span></span>
+            <a href="https://www.openstreetmap.org/?mlat=44.2213&amp;mlon=11.7716#map=14/44.2213/11.7716" target="_blank" rel="noopener">Apri la mappa</a>
+          </figcaption>
+        </figure>
       </aside>
     </div>
   </main>

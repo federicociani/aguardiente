@@ -32,6 +32,7 @@ python3 -m http.server --directory site 8080
 │  ├─ index.html            home utenti
 │  ├─ iscrizione.html       iscrizione Utente / Azienda (?tipo=azienda)
 │  ├─ annunci.html          bacheca annunci con filtri per categoria
+│  ├─ annuncio.html         annuncio singolo (?id=…)
 │  ├─ pubblica.html         pubblica un annuncio con foto di lancio
 │  ├─ cerca.html            ricerca profili
 │  ├─ messaggi.html         chat
