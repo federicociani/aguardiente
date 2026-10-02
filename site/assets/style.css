@@ -589,6 +589,9 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .nav-icon .fillable { fill: transparent; transition: fill .2s; }
 .nav-icon[aria-current="page"] .fillable { fill: currentColor; }
 .nav-icon[aria-current="page"] svg { stroke-width: 2; }
+/* Il segno dentro un'icona piena (es. il + di Pubblica) diventa del colore dello sfondo, così resta leggibile */
+.nav-icon .cut { transition: stroke .2s; }
+.nav-icon[aria-current="page"] .cut { stroke: var(--bg); }
 .nav-dot { position: absolute; top: 10px; right: 10px; width: 9px; height: 9px; border-radius: 999px; background: var(--accent); border: 2px solid var(--bg); }
 .nav-tip { position: absolute; top: calc(100% + 6px); left: 50%; transform: translate(-50%, -4px); padding: 6px 10px; border-radius: 10px; background: var(--text); color: var(--bg); font-size: 12px; white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, transform .15s, visibility .15s; }
 .nav-icon:hover .nav-tip, .nav-icon:focus-visible .nav-tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
@@ -730,8 +733,6 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .nav-tip { position: static; opacity: 1; visibility: visible; transform: none; background: none; color: inherit; padding: 0; font-size: 11px; }
   .nav-dot { top: 6px; right: 16px; }
   .nav .nav-add { display: grid; }
-  .nav .nav-add svg { width: 40px; height: 40px; padding: 8px; border-radius: 999px; background: var(--grad); color: #fff; }
-  .nav .nav-add[aria-current="page"] svg { box-shadow: 0 0 0 2px var(--accent); }
   body:has(.nav-icons) { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
   .site-header:has(.nav-icons) .header-actions .btn-primary { display: none; }
   /* backdrop-filter crea un contenitore per i figli "fixed": su questi header lo togliamo, così la tab bar si aggancia allo schermo */
