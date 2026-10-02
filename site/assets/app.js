@@ -150,7 +150,6 @@
         const items = cat === 'Tutte' ? D.annunci : D.annunci.filter((a) => a.cat === cat);
         $('#ads-count').textContent = `${items.length} annunci`;
         list.innerHTML = items.length ? items.map((a) => adCard(a)).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
-        $('#ads-credits').innerHTML = coverCredits(items.filter((a) => a.cover));
       };
       pills($('#ad-filters'), ['Tutte', 'Coppia cerca coppia', 'Coppia cerca lei', 'Lei cerca lui', 'Lei cerca coppia', 'Lui cerca coppia'], render);
     },
