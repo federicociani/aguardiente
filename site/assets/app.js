@@ -48,6 +48,13 @@
   /* ---------- Annuncio: card condivisa (bacheca, home, anteprima) ----------
      La foto di lancio (a.cover / a.coverSrc) è indipendente dalla foto profilo:
      l'avatar in basso a sinistra viene sempre dal profilo dell'autore. */
+  const CERT_TIP = 'I luoghi certificati da Aguardiente si impegnano a fornire tutti i dettagli e l’attendibilità del luogo.';
+  const ICON_SEAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2.9 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-.9 2.8-3-.2L12 21l-2.4-1.8-3 .2-.9-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7.9-2.8 3 .2z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>';
+  // Badge "Certificato" con tooltip; focusable=false dentro i link (niente elementi interattivi annidati)
+  function certHTML(focusable = true) {
+    const id = 'tip-' + Math.random().toString(36).slice(2, 8);
+    return `<span class="cert"${focusable ? ` tabindex="0" aria-describedby="${id}"` : ''}>${ICON_SEAL}Certificato<span class="cert-tip" role="tooltip" id="${id}">${CERT_TIP}</span></span>`;
+  }
   const VIS_LABEL = { tutti: 'Visibile a tutti', verificati: 'Solo profili verificati', sfocata: 'Sfocata fino al contatto' };
   const ICON_LOCK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
   function profileOf(nick) { return (D.profili || []).find((p) => p.nick === nick); }
@@ -83,7 +90,9 @@
           </div>
           ${hasCover ? '' : `<span class="ad-meta">${metaHTML(a)}</span>`}
           <span class="cat-label">${esc(a.cat)}</span>
-          <h3>${esc(a.titolo) || '<span class="muted">Il titolo del tuo annuncio</span>'}</h3>
+          <h3>${preview || !a.id
+            ? (esc(a.titolo) || '<span class="muted">Il titolo del tuo annuncio</span>')
+            : `<a class="ad-link" href="annuncio.html?id=${encodeURIComponent(a.id)}">${esc(a.titolo)}</a>`}</h3>
           <p class="muted">${esc(a.testo) || 'Qui comparirà il testo dell’annuncio.'}</p>
           <div class="ad-foot ad-foot-end">${preview ? '<span class="btn btn-ghost" aria-hidden="true">Scrivi</span>' : '<a class="btn btn-ghost" href="messaggi.html">Scrivi</a>'}</div>
         </div>
@@ -109,12 +118,6 @@
             : esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
           <span><strong>${esc(p.nick)}</strong><br><span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span></span>
         </a>`).join('');
-      // Crediti Unsplash per le foto mostrate
-      const credits = online.filter((p) => p.foto).map((p) =>
-        `<a href="https://unsplash.com/@${p.foto.user}?utm_source=aguardiente&utm_medium=referral">${esc(p.foto.autore)}</a>`);
-      $('#online-credits').innerHTML = credits.length
-        ? `Foto di ${credits.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`
-        : '';
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
         <a class="card ad latest${a.cover ? ' has-cover' : ''}" href="annunci.html" style="color:inherit;text-decoration:none">
           ${coverHTML(a, { compact: true })}
@@ -356,6 +359,50 @@
       update();
     },
 
+    /* ---------- ANNUNCIO SINGOLO (annuncio.html?id=...) ---------- */
+    annuncio() {
+      const id = new URLSearchParams(location.search).get('id');
+      const a = D.annunci.find((x) => x.id === id);
+      const root = $('#ad-detail');
+      if (!a) {
+        root.innerHTML = `<p class="empty">Questo annuncio non c’è più: l’autore l’ha rimosso o è scaduto. <a href="annunci.html">Torna agli annunci</a></p>`;
+        return;
+      }
+      document.title = `Aguardiente · ${a.titolo}`;
+      const prof = profileOf(a.nick);
+      root.innerHTML = `
+        ${(a.cover) ? `<div class="detail-cover">${coverHTML(a, { compact: true })}</div>` : ''}
+        <div class="two-col" style="padding-top:32px">
+          <article class="main">
+            <span class="ad-meta">${metaHTML(a)}</span>
+            <span class="cat-label" style="font-size:15px">${esc(a.cat)}</span>
+            <h1 style="font-size:clamp(36px,5vw,56px)">${esc(a.titolo)}</h1>
+            <p style="color:var(--text-2);font-size:19px;line-height:1.6;max-width:62ch">${esc(a.testo)}</p>
+            <div class="chips"><span class="chip">${esc(a.zona)}</span><span class="chip">${esc(a.tipo)}, ${esc(a.eta)}</span></div>
+          </article>
+          <aside>
+            <section class="card author">
+              ${avatarHTML(a, 'ad-avatar author-av')}
+              <div><strong style="font-size:20px">${esc(a.nick)}</strong><br><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
+              ${prof && prof.online ? '<span class="tag-inline"><span class="online-dot"></span>Online ora</span>' : ''}
+              <a class="btn btn-primary btn-lg btn-block" href="messaggi.html">Scrivi a ${esc(a.nick)}</a>
+              <div class="author-actions">
+                <button class="btn btn-ghost" type="button" data-save aria-pressed="false">Salva</button>
+                <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
+              </div>
+            </section>
+          </aside>
+        </div>`;
+      $('[data-save]', root).addEventListener('click', (e) => {
+        const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+        e.currentTarget.setAttribute('aria-pressed', on);
+        e.currentTarget.textContent = on ? 'Salvato' : 'Salva';
+      });
+      const simili = D.annunci.filter((x) => x.id !== a.id && (x.cat === a.cat || x.zona === a.zona)).slice(0, 3);
+      const others = simili.length ? simili : D.annunci.filter((x) => x.id !== a.id).slice(0, 3);
+      $('#ad-similar').innerHTML = others.map((x) => adCard(x)).join('');
+    },
+
     /* ---------- LUOGHI ---------- */
     luoghi() {
       const render = (cat) => {
@@ -364,7 +411,7 @@
           <a class="card place" href="${p.link || 'scheda.html'}">
             <div class="photo"><span class="photo-label">[FOTO]</span>${p.offerta ? `<span class="badge badge-grad">${esc(p.offerta)}</span>` : ''}</div>
             <div class="body">
-              <div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-size:14px">${esc(p.cat)}</span><span class="badge">${ICON_CHECK}${p.shop ? 'Shop online' : 'Verificata'}</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-size:14px">${esc(p.cat)}</span>${p.shop ? `<span class="badge">${ICON_CHECK}Shop online</span>` : certHTML(false)}</div>
               <h3>${esc(p.nome)}</h3>
               <p class="muted">${esc(p.descr)}</p>
               <span class="muted" style="display:inline-flex;gap:6px;align-items:center;font-size:14px">${ICON_PIN}${esc(p.citta)}</span>

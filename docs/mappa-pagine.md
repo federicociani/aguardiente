@@ -7,9 +7,10 @@
 | `index.html` | Home pubblica: ricerca rapida, categorie, online adesso, ultimi annunci, regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
 | `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
+| `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
-| `messaggi.html` | Lista conversazioni + chat + pannello sicurezza | annunci, scheda |
+| `messaggi.html` | Lista conversazioni + chat + pannello sicurezza | annuncio ("Vedi annuncio"), scheda |
 | `profilo.html` | Profilo personale, foto con visibilità, privacy, Premium | annunci, luoghi |
 
 ## Lato aziende

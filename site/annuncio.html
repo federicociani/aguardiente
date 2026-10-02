@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aguardiente · Annuncio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="annuncio">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="annunci.html" aria-current="page">Annunci</a>
+      <a href="cerca.html">Cerca</a>
+      <a href="messaggi.html">Messaggi</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="pubblica.html">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-block:24px 96px">
+    <a href="annunci.html" style="display:inline-block;padding:12px 0;margin-bottom:12px">Tutti gli annunci</a>
+    <div id="ad-detail"></div>
+    <section style="margin-top:24px">
+      <div class="section-head"><h2>Annunci simili</h2><a href="annunci.html">Vedi tutti</a></div>
+      <div class="grid grid-3" id="ad-similar"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="assets/data.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
