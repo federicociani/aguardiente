@@ -18,6 +18,13 @@ Questo documento elenca i punti emersi in fase di progettazione. **Non è una co
 - Legge Merlin: rischio di favoreggiamento se gli spazi vengono usati per prostituzione. Valutare se mantenere la categoria "Spazi privati".
 - Affitti brevi: codice CIN, comunicazione degli ospiti alla Questura, fiscalità.
 
+## Shop online ed extra in prenotazione
+- Vendita di prodotti per adulti solo a maggiorenni verificati, anche nel checkout.
+- I preservativi sono dispositivi medici: solo prodotti con marcatura CE e fornitori tracciabili.
+- Diritto di recesso: per i prodotti sigillati che non si possono restituire per motivi igienici una volta aperti vale l'eccezione del Codice del Consumo; va spiegato chiaramente prima dell'acquisto.
+- Extra venduti da un negozio partner dentro la prenotazione di una struttura: chiarire chi è il venditore, chi emette lo scontrino/fattura e come si divide la commissione.
+- Confezione anonima e nome neutro in estratto conto sono scelte di privacy, non obblighi: vanno comunque indicate nell'informativa.
+
 ## Pagamenti e distribuzione
 - I processori tradizionali escludono i servizi per adulti: servono processori "high risk".
 - Gli store Apple e Google non accettano app di questo tipo: puntare su web/PWA.

@@ -19,7 +19,9 @@
 | `business.html` | Home Aguardiente Business: categorie, come funziona, come guadagni, piani | iscrizione?tipo=azienda, dashboard, scheda |
 | `dashboard.html` | Area azienda: checklist di verifica, statistiche, piani | scheda |
 | `luoghi.html` | Elenco attività come lo vedono gli utenti | scheda |
-| `scheda.html` | Scheda di una singola attività, offerta, richiesta disponibilità | messaggi |
+| `scheda.html` | Scheda di una singola attività, offerta, richiesta disponibilità | prenotazione, messaggi |
+| `prenotazione.html` | Richiesta inviata + extra da trovare in camera (upselling), anche forniti da negozi partner | messaggi |
+| `shop.html` | Shop online di un'attività: catalogo per categoria, carrello, sconto iscritti, spedizione discreta | messaggi |
 
 ## Punti di contatto tra i due lati
 

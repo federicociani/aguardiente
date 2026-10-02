@@ -143,6 +143,7 @@ p { margin: 0; }
 .btn-dark { background: var(--bg); color: var(--text); }
 .btn-lg { min-height: 52px; padding: 0 28px; }
 .btn-block { width: 100%; }
+.btn { text-align: center; }
 .btn-icon { width: 44px; padding: 0; flex-shrink: 0; }
 
 /* Testo dei controlli: Inter, .875rem, maiuscolo con leggera spaziatura */
@@ -493,6 +494,50 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .cf-facts { grid-column: 1; grid-row: auto; }
   .cf-switch { min-width: 0; width: 100%; }
   .cf-panel { gap: 80px; }
+}
+
+
+/* ---------- Shop online ---------- */
+.shop { padding-block: 24px 96px; }
+.shop-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin: 16px 0 36px; }
+.shop-head h1 { font-size: clamp(36px, 5vw, 56px); }
+.shop-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; align-items: start; }
+.shop-grid .grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.product { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.product-visual { aspect-ratio: 4 / 3; display: grid; place-items: center; color: #fff; background: var(--grad-deep); }
+.product-visual[data-cat="Protezione"] { background: linear-gradient(135deg, #2C0E18, #6B2A42); }
+.product-visual[data-cat="Benessere"] { background: linear-gradient(135deg, #3B0A1E, #9E1238); }
+.product-visual[data-cat="Lingerie"] { background: linear-gradient(135deg, #1E0A2E, #500000); }
+.product-body { padding: 20px; display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
+.product-body h3 { font-size: 19px; }
+.price { font-size: 18px; }
+.cart { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+.cart-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.cart-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.qty { display: flex; gap: 6px; }
+.qty .btn { width: 36px; min-height: 36px; font-size: 18px; }
+.totals { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.totals li { display: flex; justify-content: space-between; gap: 12px; color: var(--text-2); }
+.totals li.grand { color: var(--text); font-size: 20px; font-weight: 600; padding-top: 12px; border-top: 1px solid var(--line); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; animation: none; }
+
+/* ---------- Prenotazione + extra ---------- */
+.pren { padding-block: 48px 96px; display: flex; flex-direction: column; gap: 48px; }
+.pren-done { display: flex; gap: 20px; align-items: flex-start; padding: 32px; }
+.pren-done h1 { font-size: clamp(30px, 4vw, 44px); }
+.pren-check { width: 56px; height: 56px; flex-shrink: 0; border-radius: 999px; background: var(--grad); display: grid; place-items: center; }
+.pren-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; align-items: start; }
+.extras { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+.extra { display: flex; align-items: center; gap: 16px; padding: 20px 22px; border-radius: 32px; background: var(--surface); border: 1px solid var(--line); cursor: pointer; transition: border-color .2s, background .2s; }
+.extra:has(input:checked) { border-color: var(--accent); background: #2A0C16; }
+.extra input { width: 22px; height: 22px; accent-color: #D61E52; flex-shrink: 0; }
+.extra-text { display: flex; flex-direction: column; gap: 2px; flex-grow: 1; }
+.extra-by { font-size: 13px; color: var(--accent); }
+.extra-price { font-weight: 600; white-space: nowrap; }
+.pren-sum { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+@media (max-width: 960px) {
+  .shop-grid, .pren-grid { grid-template-columns: 1fr; }
+  .cart, .pren-sum { position: static; }
 }
 
 @media (max-width: 720px) {

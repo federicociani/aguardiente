@@ -279,15 +279,88 @@
       showSource(); update();
     },
 
+    /* ---------- SHOP ONLINE di un'attività ---------- */
+    shop() {
+      const S = D.shop; const cart = new Map();
+      const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+      const ICONS = {
+        'Protezione': '<path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/>',
+        'Benessere': '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+        'Giochi': '<path d="M12 3l2.2 5.2L20 9l-4.3 3.8L17 18.5 12 15.6 7 18.5l1.3-5.7L4 9l5.8-.8z"/>',
+        'Kit coppia': '<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13M12 8s-1.5-5-4.5-5a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
+        'Lingerie': '<path d="M12 4a2 2 0 0 1 2 2c0 1-1 1.5-2 2.2L3 14h18l-9-5.8"/>'
+      };
+      const icon = (c) => `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[c] || ''}</svg>`;
+      const renderCart = () => {
+        const items = [...cart].map(([id, q]) => ({ p: S.prodotti.find((x) => x.id === id), q }));
+        const tot = items.reduce((t, { p, q }) => t + p.prezzo * q, 0);
+        const n = items.reduce((t, { q }) => t + q, 0);
+        $('#cart-count').textContent = n ? `${n} ${n === 1 ? 'articolo' : 'articoli'}` : 'Vuoto';
+        $('#cart-items').innerHTML = items.length ? items.map(({ p, q }) => `
+          <li class="cart-row"><span><strong>${esc(p.nome)}</strong><br><span class="muted">${q} × ${eur(p.prezzo)}</span></span>
+            <span class="qty"><button type="button" class="btn btn-ghost btn-icon" data-dec="${p.id}" aria-label="Togli uno">−</button><button type="button" class="btn btn-ghost btn-icon" data-inc="${p.id}" aria-label="Aggiungi uno">+</button></span></li>`).join('')
+          : '<li class="muted">Il carrello è vuoto. Aggiungi un prodotto per vederlo qui.</li>';
+        $('#cart-total').textContent = eur(tot);
+        $('#cart-discount').textContent = tot ? `−${eur(tot * 0.1)}` : eur(0);
+        $('#cart-pay').textContent = eur(tot * 0.9);
+        $('#cart-checkout').toggleAttribute('disabled', !tot);
+      };
+      const renderList = (cat) => {
+        const list = cat === 'Tutti' ? S.prodotti : S.prodotti.filter((p) => p.cat === cat);
+        $('#products').innerHTML = list.map((p) => `
+          <article class="card product">
+            <div class="product-visual" data-cat="${esc(p.cat)}">${icon(p.cat)}</div>
+            <div class="product-body">
+              <span class="cat-label">${esc(p.cat)}</span>
+              <h3>${esc(p.nome)}</h3>
+              <p class="muted">${esc(p.det)}</p>
+              <div class="ad-foot"><strong class="price">${eur(p.prezzo)}</strong><button type="button" class="btn btn-ghost" data-inc="${p.id}">Aggiungi</button></div>
+            </div>
+          </article>`).join('');
+      };
+      document.addEventListener('click', (e) => {
+        const inc = e.target.closest('[data-inc]'); const dec = e.target.closest('[data-dec]');
+        if (inc) { cart.set(inc.dataset.inc, (cart.get(inc.dataset.inc) || 0) + 1); renderCart(); }
+        if (dec) { const q = (cart.get(dec.dataset.dec) || 0) - 1; q > 0 ? cart.set(dec.dataset.dec, q) : cart.delete(dec.dataset.dec); renderCart(); }
+      });
+      $('#cart-checkout').addEventListener('click', () => { $('#cart-done').hidden = false; });
+      pills($('#shop-filters'), ['Tutti', 'Protezione', 'Benessere', 'Giochi', 'Kit coppia', 'Lingerie'], renderList);
+      renderCart();
+    },
+
+    /* ---------- PRENOTAZIONE: richiesta inviata + extra (upselling) ---------- */
+    prenotazione() {
+      const X = D.extraSoggiorno; const sel = new Set();
+      const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+      $('#extras').innerHTML = X.extra.map((x) => `
+        <label class="extra">
+          <input type="checkbox" value="${x.id}">
+          <span class="extra-text"><strong>${esc(x.nome)}</strong><span class="muted">${esc(x.det)}</span>
+            <span class="extra-by">${x.tipo === 'shop' ? 'Fornito da ' : 'Dalla struttura, '}${esc(x.da)}</span></span>
+          <span class="extra-price">${eur(x.prezzo)}</span>
+        </label>`).join('');
+      const update = () => {
+        const chosen = X.extra.filter((x) => sel.has(x.id));
+        const tot = chosen.reduce((t, x) => t + x.prezzo, 0);
+        $('#extra-summary').innerHTML = chosen.length
+          ? chosen.map((x) => `<li><span>${esc(x.nome)}</span><span>${eur(x.prezzo)}</span></li>`).join('')
+          : '<li class="muted">Nessun extra aggiunto</li>';
+        $('#extra-total').textContent = eur(tot);
+        $('#extra-confirm').textContent = chosen.length ? `Aggiungi ${chosen.length} ${chosen.length === 1 ? 'extra' : 'extra'} al soggiorno` : 'Continua senza extra';
+      };
+      $('#extras').addEventListener('change', (e) => { e.target.checked ? sel.add(e.target.value) : sel.delete(e.target.value); update(); });
+      update();
+    },
+
     /* ---------- LUOGHI ---------- */
     luoghi() {
       const render = (cat) => {
         const items = cat === 'Tutti' ? D.luoghi : D.luoghi.filter((p) => p.cat === cat);
         $('#places').innerHTML = items.map((p) => `
-          <a class="card place" href="scheda.html">
+          <a class="card place" href="${p.link || 'scheda.html'}">
             <div class="photo"><span class="photo-label">[FOTO]</span>${p.offerta ? `<span class="badge badge-grad">${esc(p.offerta)}</span>` : ''}</div>
             <div class="body">
-              <div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-size:14px">${esc(p.cat)}</span><span class="badge">${ICON_CHECK}Verificata</span></div>
+              <div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-size:14px">${esc(p.cat)}</span><span class="badge">${ICON_CHECK}${p.shop ? 'Shop online' : 'Verificata'}</span></div>
               <h3>${esc(p.nome)}</h3>
               <p class="muted">${esc(p.descr)}</p>
               <span class="muted" style="display:inline-flex;gap:6px;align-items:center;font-size:14px">${ICON_PIN}${esc(p.citta)}</span>
