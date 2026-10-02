@@ -6,7 +6,7 @@
   <title>Aguardiente · Villa Ombrosa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021846">
+  <link rel="stylesheet" href="assets/style.css?v=202610021847">
 </head>
 <body data-page="scheda">
   <header class="site-header">
@@ -57,8 +57,8 @@
         <form class="card" action="prenotazione.html" style="display:flex;flex-direction:column;gap:18px;padding:28px">
           <h3>Da [PREZZO] a notte</h3>
           <div class="field-row">
-            <label class="field">Arrivo<input type="date"></label>
-            <label class="field">Partenza<input type="date"></label>
+            <label class="field">Arrivo<input type="date" name="arrivo" data-placeholder="Scegli il giorno" data-future></label>
+            <label class="field">Partenza<input type="date" name="partenza" data-placeholder="Scegli il giorno" data-future></label>
           </div>
           <label class="field">Ospiti<select><option>2 adulti</option><option>3 adulti</option><option>4 adulti</option></select></label>
           <button class="btn btn-primary btn-lg btn-block" type="submit">Richiedi disponibilità</button>
@@ -89,7 +89,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021846"></script>
-  <script src="assets/app.js?v=202610021846"></script>
+  <script src="assets/data.js?v=202610021847"></script>
+  <script src="assets/app.js?v=202610021847"></script>
 </body>
 </html>
