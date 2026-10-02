@@ -207,6 +207,12 @@
         $('#ads-count').textContent = `${items.length} annunci`;
         list.innerHTML = items.length ? items.map((a) => adCard(a)).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
       };
+      // Regione arrivata dalla home (?regione=...) o scelta qui
+      const regSel = $('#ads-region-select');
+      const reg = new URLSearchParams(location.search).get('regione');
+      if (reg && [...regSel.options].some((o) => o.value === reg)) regSel.value = reg;
+      const showReg = () => { $('#ads-region').textContent = regSel.value; };
+      regSel.addEventListener('change', showReg); showReg();
       pills($('#ad-filters'), ['Tutte', 'Coppia cerca coppia', 'Coppia cerca lei', 'Lei cerca lui', 'Lei cerca coppia', 'Lui cerca coppia'], render);
     },
 

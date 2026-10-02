@@ -6,7 +6,7 @@
   <title>Aguardiente · Annunci per adulti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021834">
+  <link rel="stylesheet" href="assets/style.css?v=202610021839">
 </head>
 <body data-page="home">
   <header class="site-header">
@@ -31,7 +31,7 @@
     <section class="container hero">
       <div class="hero-copy">
         <span class="pre-badge"><span style="color:var(--accent);display:inline-flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>Solo maggiorenni, profili verificati</span>
-        <h1><span class="gradient-text">Scegli. Organizza.<br>Godi.</span></h1>
+        <h1><span class="gradient-text">Scegli. Organizza.<br><span class="godi">Godi.</span></span></h1>
         <p class="lead">Chiunque tu sia o qualunque cosa stiate cercando, questo è il posto giusto.</p>
         <div class="actions">
           <a class="btn btn-primary btn-lg hide-mobile" href="iscrizione.html">Iscriviti gratis</a>
@@ -86,6 +86,12 @@
     <section class="container section" style="padding-top:0">
       <div class="section-head"><h2>Annunci per regione</h2></div>
       <nav class="regions" id="regions" aria-label="Regioni"></nav>
+      <form class="region-form" action="annunci.html" method="get">
+        <label class="field">In quale regione cerchi?
+          <select name="regione"><option>Abruzzo</option><option>Basilicata</option><option>Calabria</option><option>Campania</option><option selected>Emilia-Romagna</option><option>Friuli-Venezia Giulia</option><option>Lazio</option><option>Liguria</option><option>Lombardia</option><option>Marche</option><option>Molise</option><option>Piemonte</option><option>Puglia</option><option>Sardegna</option><option>Sicilia</option><option>Toscana</option><option>Trentino-Alto Adige</option><option>Umbria</option><option>Valle d’Aosta</option><option>Veneto</option></select>
+        </label>
+        <button class="btn btn-primary btn-lg" type="submit">Vedi gli annunci della zona</button>
+      </form>
     </section>
 
     <section class="come-funziona" id="come-funziona">
@@ -329,7 +335,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021834"></script>
-  <script src="assets/app.js?v=202610021834"></script>
+  <script src="assets/data.js?v=202610021839"></script>
+  <script src="assets/app.js?v=202610021839"></script>
 </body>
 </html>
