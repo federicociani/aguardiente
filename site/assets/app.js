@@ -4,6 +4,8 @@
    parte solo il modulo che le serve.
    ========================================================== */
 (function () {
+  document.documentElement.classList.add('js');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -59,6 +61,7 @@
           <p class="muted">${esc(a.testo)}</p>
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
+      comeFunziona();
     },
 
     /* ---------- ISCRIZIONE: switch Utente / Azienda ---------- */
@@ -202,6 +205,77 @@
       update();
     }
   };
+
+  /* ---------- COME FUNZIONA (home) ---------- */
+  function comeFunziona() {
+    const root = $('#come-funziona'); if (!root) return;
+    const sw = $('.cf-switch', root);
+
+    // Rivelazione dei blocchi quando entrano nello schermo
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-visible');
+      const demo = $('[data-demo]', e.target);
+      if (demo) playDemo(demo);
+      io.unobserve(e.target);
+    }), { threshold: 0.2 });
+    const observe = (scope) => $$('.reveal:not(.is-visible)', scope).forEach((el) => io.observe(el));
+
+    // Demo: i messaggi compaiono uno alla volta; i puntini "sta scrivendo" spariscono quando arriva la risposta
+    const timers = new WeakMap();
+    function playDemo(demo) {
+      (timers.get(demo) || []).forEach(clearTimeout);
+      const steps = $$('[data-step]', demo);
+      steps.forEach((s) => s.classList.remove('is-shown', 'is-done'));
+      if (reduceMotion) { steps.forEach((s) => s.classList.add(s.hasAttribute('data-typing') ? 'is-done' : 'is-shown')); return; }
+      const list = []; let t = 300;
+      steps.forEach((s, i) => {
+        list.push(setTimeout(() => s.classList.add('is-shown'), t));
+        if (s.hasAttribute('data-typing')) { t += 1400; list.push(setTimeout(() => s.classList.add('is-done'), t)); }
+        else t += 900;
+      });
+      timers.set(demo, list);
+    }
+    $$('[data-replay]', root).forEach((b) => b.addEventListener('click', () => playDemo($('[data-demo]', b.closest('.cf-demo-wrap')))));
+
+    // Dettagli: ogni chip accende o spegne una parte della frase
+    $$('[data-detail]', root).forEach((box) => {
+      const hint = $('[data-hint]', box);
+      const full = hint.textContent;
+      const hints = $('template[data-hints]', box).innerHTML.split('|');
+      const chipsEl = $$('.detail-chip', box);
+      box.addEventListener('click', (e) => {
+        const chip = e.target.closest('.detail-chip'); if (!chip) return;
+        const on = chip.getAttribute('aria-pressed') !== 'true';
+        chip.setAttribute('aria-pressed', on);
+        $$(`mark[data-part="${chip.dataset.part}"]`, box).forEach((m) => m.classList.toggle('is-off', !on));
+        const off = chipsEl.findIndex((c) => c.getAttribute('aria-pressed') === 'false');
+        hint.innerHTML = off === -1 ? full : hints[off];
+      });
+    });
+
+    // Switch Privati / Business
+    $$('[role="tab"]', sw).forEach((tab) => tab.addEventListener('click', () => {
+      const mode = tab.dataset.mode;
+      sw.dataset.active = mode;
+      $$('[role="tab"]', sw).forEach((t) => t.setAttribute('aria-selected', t === tab));
+      $$('.cf-panel', root).forEach((p) => {
+        const show = p.id === `cf-${mode}`;
+        p.hidden = !show;
+        if (show) {
+          p.classList.remove('is-entering'); void p.offsetWidth; p.classList.add('is-entering');
+          // i blocchi già sullo schermo compaiono subito, gli altri allo scroll
+          $$('.reveal', p).forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < innerHeight && r.bottom > 0) { el.classList.add('is-visible'); const d = $('[data-demo]', el); if (d) playDemo(d); }
+          });
+          observe(p);
+        }
+      });
+    }));
+
+    observe(root);
+  }
 
   const page = document.body.dataset.page;
   if (pages[page]) pages[page]();

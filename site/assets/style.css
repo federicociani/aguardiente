@@ -126,6 +126,7 @@ p { margin: 0; }
   font-family: var(--font-body);
   font-size: var(--btn-size);
   line-height: 1;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: var(--btn-tracking);
 }
@@ -311,8 +312,119 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .steps-big li { display: flex; flex-direction: column; gap: 12px; }
 .steps-big .n { width: 44px; height: 44px; border-radius: 999px; background: var(--grad); color: #fff; display: grid; place-items: center; font-weight: 700; }
 
+/* ==========================================================
+   Come funziona (home) — switch Privati / Business
+   ========================================================== */
+.come-funziona { border-top: 1px solid var(--line); padding: 88px 0 104px; scroll-margin-top: 72px; }
+.cf-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-bottom: 64px; }
+.cf-head h2 { font-size: clamp(36px, 5vw, 64px); }
+
+/* Switch segmentato con indicatore che scorre */
+.cf-switch { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 6px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); min-width: 300px; }
+.cf-switch button { position: relative; z-index: 1; min-height: 48px; padding: 0 28px; border: 0; background: none; color: var(--text-2); cursor: pointer; border-radius: 999px; font-family: var(--font-body); font-size: var(--btn-size); font-weight: 400; text-transform: uppercase; letter-spacing: var(--btn-tracking); transition: color .3s; }
+.cf-switch button[aria-selected="true"] { color: #fff; }
+.cf-switch-thumb { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc(50% - 6px); border-radius: 999px; background: var(--grad); transition: transform .45s cubic-bezier(.7,0,.2,1); }
+.cf-switch[data-active="business"] .cf-switch-thumb { transform: translateX(100%); }
+
+.cf-panel { display: flex; flex-direction: column; gap: 112px; }
+.cf-panel.is-entering { animation: cf-in .5s ease both; }
+@keyframes cf-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.cf-title { font-size: clamp(30px, 4vw, 52px); letter-spacing: -0.03em; max-width: 16ch; }
+.cf-sub { color: var(--text-2); font-size: 18px; max-width: 52ch; margin-top: 16px; }
+
+/* Rivelazione allo scroll */
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* 1. Righe che scorrono */
+.cf-reach { display: flex; flex-direction: column; gap: 48px; }
+.marquees { display: flex; flex-direction: column; gap: 12px; margin-inline: -32px; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.marquee { display: flex; overflow: hidden; }
+.marquee-track { display: flex; gap: 12px; padding: 0 6px; margin: 0; list-style: none; flex-shrink: 0; animation: marquee 48s linear infinite; }
+.marquee.reverse .marquee-track { animation-direction: reverse; animation-duration: 56s; }
+.marquee-track li { white-space: nowrap; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text-2); }
+.marquee:nth-child(2) .marquee-track li { background: transparent; }
+.marquee:nth-child(3) .marquee-track li { border-color: #4A1F5E; color: #D9C2FF; }
+.marquees:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-100%); } }
+.cf-reach-copy { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px 48px; align-items: end; }
+.cf-reach-copy .cf-sub { grid-column: 1; margin-top: 0; }
+.cf-reach-copy .cf-title { grid-column: 1; }
+.cf-facts { grid-column: 2; grid-row: 1 / span 2; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.cf-facts li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.cf-facts span { color: var(--muted); }
+.cf-facts strong { font-weight: 500; text-align: right; }
+
+/* 2. Demo animata */
+.cf-demo-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: center; }
+.cf-demo { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-height: 420px; box-shadow: 0 40px 80px -40px rgba(123,47,247,.35); }
+.demo-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.demo-head > span:last-child { display: flex; flex-direction: column; }
+.demo-av { width: 44px; height: 44px; border-radius: 999px; background: var(--grad-deep); color: #fff; display: grid; place-items: center; font-weight: 600; }
+.demo-ver { font-size: 13px; color: var(--accent); }
+.demo-msg { max-width: 80%; padding: 12px 16px; border-radius: 18px 18px 18px 4px; background: var(--bg); border: 1px solid var(--line); align-self: flex-start; }
+.demo-msg.mine { align-self: flex-end; background: var(--grad); border: 0; color: #fff; border-radius: 18px 18px 4px 18px; }
+.demo-card { display: flex; flex-direction: column; gap: 2px; padding: 16px; border-radius: 16px; background: var(--bg); border: 1px solid var(--line); }
+.demo-card span:last-child { color: var(--muted); font-size: 14px; }
+.demo-k { font-size: 12px; text-transform: uppercase; letter-spacing: var(--btn-tracking); color: var(--accent); }
+.demo-typing { align-self: flex-start; display: flex; gap: 4px; padding: 14px 16px; border-radius: 18px; background: var(--bg); border: 1px solid var(--line); }
+.demo-typing span { width: 7px; height: 7px; border-radius: 999px; background: var(--muted); animation: dot 1s infinite ease-in-out; }
+.demo-typing span:nth-child(2) { animation-delay: .15s; } .demo-typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes dot { 0%, 60%, 100% { transform: none; opacity: .4; } 30% { transform: translateY(-4px); opacity: 1; } }
+.js [data-step] { opacity: 0; transform: translateY(12px) scale(.98); transition: opacity .4s ease, transform .4s ease; }
+.js [data-step].is-shown { opacity: 1; transform: none; }
+[data-typing].is-done { display: none; }
+.cf-demo-copy .btn { margin-top: 28px; }
+
+/* 3. Cosa puoi / non puoi */
+.cf-dos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+.cf-dos h4 { margin: 0 0 16px; font-family: var(--font-display); font-size: 24px; }
+.cf-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.cf-list li { display: flex; gap: 12px; align-items: flex-start; }
+.cf-list .ico { width: 28px; height: 28px; flex-shrink: 0; border-radius: 999px; display: grid; place-items: center; }
+.cf-list.yes .ico { background: var(--grad); color: #fff; }
+.cf-list.no .ico { background: var(--line); color: var(--text-2); }
+.cf-note { margin-top: 20px; color: var(--muted); }
+
+/* 4. Dettagli interattivi */
+.cf-detail { margin-top: 32px; padding: 32px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 24px; }
+.detail-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.detail-chip { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: var(--text-2); font-family: var(--font-body); font-size: 15px; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
+.detail-chip .k { font-size: 12px; text-transform: uppercase; letter-spacing: var(--btn-tracking); color: var(--muted); }
+.detail-chip[aria-pressed="true"] { background: #3A1230; border-color: var(--accent); color: var(--text); }
+.detail-chip[aria-pressed="true"] .k { color: var(--accent); }
+.detail-chip[aria-pressed="false"] { text-decoration: line-through; }
+.detail-text { margin: 0; font-family: var(--font-display); font-size: clamp(22px, 2.6vw, 32px); line-height: 1.3; letter-spacing: -0.01em; max-width: 34ch; }
+.detail-text mark { color: var(--text); background: linear-gradient(120deg, rgba(123,47,247,.45), rgba(214,30,82,.45)); padding: 0 .15em; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; transition: opacity .35s, filter .35s, background .35s; }
+.detail-text mark.is-off { background: transparent; color: var(--muted); opacity: .35; filter: blur(2px); text-decoration: line-through; }
+.detail-hint { margin: 0; color: var(--text-2); min-height: 1.5em; }
+
+/* 5. FAQ */
+.faq { margin-top: 32px; border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 0; font-size: 19px; font-weight: 500; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: ""; width: 14px; height: 14px; flex-shrink: 0; background: linear-gradient(var(--accent), var(--accent)) center / 100% 2px no-repeat, linear-gradient(var(--accent), var(--accent)) center / 2px 100% no-repeat; transition: transform .3s; }
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p { margin: 0 0 24px; color: var(--text-2); max-width: 64ch; }
+.cf-cta { display: flex; justify-content: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .js .reveal, .js [data-step] { opacity: 1; transform: none; transition: none; }
+  .cf-switch-thumb, .cf-panel.is-entering { transition: none; animation: none; }
+}
+@media (max-width: 860px) {
+  .cf-reach-copy, .cf-demo-wrap { grid-template-columns: 1fr; }
+  .cf-facts { grid-column: 1; grid-row: auto; }
+  .cf-switch { min-width: 0; width: 100%; }
+  .cf-panel { gap: 80px; }
+}
+
 @media (max-width: 720px) {
   .container { padding: 0 20px; }
+  .marquees { margin-inline: -20px; }
   .site-header { padding: 12px 20px; position: static; }
   .sidebar { position: static; max-width: none; }
   .chat-list, .chat-aside { max-width: none; border: 0; }

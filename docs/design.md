@@ -25,12 +25,23 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 
 ## Bottoni e form
 
-- Bottoni, pill di filtro e tab: Inter 600, `.875rem`, maiuscolo, `letter-spacing: .06em` (token `--btn-size`, `--btn-tracking`). `.btn-lg` cambia solo altezza e padding, non la dimensione del testo.
+- Bottoni, pill di filtro e tab: Inter 400, `.875rem`, maiuscolo, `letter-spacing: .06em` (token `--btn-size`, `--btn-tracking`). `.btn-lg` cambia solo altezza e padding, non la dimensione del testo.
 - Input, select e relative label: Inter.
 
 ## Componenti principali
 
 `.btn` (`-primary`, `-ghost`, `-dark`, `-lg`, `-block`, `-icon`), `.card`, `.card-deep`, `.badge`, `.chip`, `.pill`, `.switch`, `.tabs`, `.field`, `.check`, `.photo`.
+
+## Sezione "Come funziona" (home)
+
+Switch Privati / Business con indicatore che scorre; per ciascun profilo:
+1. righe di etichette che scorrono in direzioni alterne (si fermano al passaggio del mouse) + titolo e dati chiave;
+2. demo animata (chat o richiesta) che parte quando entra nello schermo, con "Rivedi l'esempio";
+3. cosa puoi / non puoi fare;
+4. frase interattiva: i chip accendono e spengono parti del testo e cambia il suggerimento;
+5. FAQ ad accordion.
+
+I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte le animazioni sono disattivate.
 
 ## Accessibilità
 
