@@ -2,21 +2,25 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Aguardiente · Annunci per adulti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021413">
+  <link rel="stylesheet" href="assets/style.css?v=202610021715">
 </head>
 <body data-page="home">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
-    <nav class="nav" aria-label="Principale">
+    <nav class="nav" id="site-menu" aria-label="Principale">
       <a href="annunci.html">Annunci</a>
       <a href="cerca.html">Cerca profili</a>
       <a href="#come-funziona">Come funziona</a>
       <a class="subtle" href="business.html">Per le aziende</a>
+      <a class="menu-only" href="iscrizione.html">Accedi</a>
     </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Apri il menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="mt-top" d="M4 7h16"/><path class="mt-mid" d="M4 12h16"/><path class="mt-bot" d="M4 17h16"/></svg>
+    </button>
     <div class="header-actions">
       <a class="btn btn-ghost" href="iscrizione.html">Accedi</a>
       <a class="btn btn-primary" href="iscrizione.html">Iscriviti</a>
@@ -268,7 +272,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021413"></script>
-  <script src="assets/app.js?v=202610021413"></script>
+  <script src="assets/data.js?v=202610021715"></script>
+  <script src="assets/app.js?v=202610021715"></script>
 </body>
 </html>

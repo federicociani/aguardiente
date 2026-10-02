@@ -41,6 +41,7 @@ python3 -m http.server --directory site 8080
 │  ├─ scheda.html           scheda azienda (vista utente)
 │  ├─ prenotazione.html     richiesta inviata + extra in camera (upselling)
 │  ├─ shop.html             shop online di un'attività
+│  ├─ locale.html           profilo locale: serate, coupon e servizi con QR
 │  ├─ business.html         home Aguardiente Business
 │  ├─ dashboard.html        area azienda
 │  └─ assets/

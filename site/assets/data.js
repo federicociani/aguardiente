@@ -66,7 +66,7 @@ window.DATA = {
   luoghi: [
     { nome: 'Villa Ombrosa', cat: 'Struttura friendly', citta: 'Brisighella (RA)', descr: 'B&B adults only in collina, 6 camere, piscina riservata agli ospiti.', offerta: '-15% iscritti' },
     { nome: 'Velluto Boutique', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Rimini', descr: 'Lingerie, accessori e giochi, con consulenza in negozio e spedizione discreta.', offerta: '-10% iscritti' },
-    { nome: 'Club Ventaglio', cat: 'Club', citta: 'Bologna', descr: 'Locale privé con serate a tema il venerdì e il sabato.', offerta: 'Ingresso coppie omaggio' },
+    { nome: 'Club Ventaglio', link: 'locale.html', cat: 'Club', citta: 'Bologna', descr: 'Locale privé con serate a tema il venerdì e il sabato.', offerta: 'Ingresso coppie omaggio' },
     { nome: 'Loft sul Canale', cat: 'Spazio privato', citta: 'Ravenna', descr: 'Appartamento di un host verificato, check-in registrato.', offerta: '' },
     { nome: 'Agriturismo Le Fosse', cat: 'Struttura friendly', citta: 'Bertinoro (FC)', descr: 'Suite indipendenti e cena su prenotazione.', offerta: 'Late check-out' },
     { nome: 'Desiderio Store', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Online', descr: 'Shop online con codice sconto dedicato alla community.', offerta: '-20% primo ordine' }
@@ -89,6 +89,27 @@ window.DATA = {
       { id: 'p10', cat: 'Kit coppia', nome: 'Kit weekend', det: 'Tutto il kit prima serata più olio e anello vibrante', prezzo: 79.0 },
       { id: 'p11', cat: 'Lingerie', nome: 'Completo in pizzo', det: 'Taglie dalla XS alla XL', prezzo: 45.0 },
       { id: 'p12', cat: 'Lingerie', nome: 'Kimono in raso', det: 'Taglia unica, bordeaux', prezzo: 38.0 }
+    ]
+  },
+
+  /* Profilo di un locale: serate, coupon e servizi in vendita (prezzi di esempio) */
+  locale: {
+    nome: 'Club Ventaglio',
+    citta: 'Bologna',
+    foto: ['1468056961052-15507578a50d', '1597075687490-8f673c6c17f6', '1615887584283-91f1be7fdc34'],
+    orari: 'Ven e sab, 22:00 – 4:00',
+    regole: ['Solo maggiorenni con documento', 'Ingresso coppie e singole; singoli su lista', 'Dress code elegante, niente sneakers', 'Il consenso viene prima di tutto: chi non lo rispetta esce'],
+    serate: [
+      { id: 's1', giorno: 'Ven 9', titolo: 'Notte in rosso', det: 'Dress code rosso e nero, DJ set dalle 23' },
+      { id: 's2', giorno: 'Sab 10', titolo: 'Prima volta al club', det: 'Serata guidata per chi viene per la prima volta' },
+      { id: 's3', giorno: 'Sab 17', titolo: 'Masquerade', det: 'Maschera obbligatoria, la trovi all’ingresso' }
+    ],
+    offerte: [
+      { id: 'c1', tipo: 'Coupon', nome: 'Ingresso coppia + 2 drink', det: 'Valido in qualsiasi serata del mese', prezzo: 40, listino: 50 },
+      { id: 'c2', tipo: 'Coupon', nome: 'Ingresso singola', det: 'Venerdì e sabato, entro mezzanotte', prezzo: 0, listino: 15, nota: 'Omaggio per le iscritte verificate' },
+      { id: 'c3', tipo: 'Servizio', nome: 'Tavolo riservato', det: 'Fino a 4 persone, con bottiglia', prezzo: 120 },
+      { id: 'c4', tipo: 'Servizio', nome: 'Privé per la serata', det: 'Area riservata per 2 coppie, ingresso incluso', prezzo: 200 },
+      { id: 'c5', tipo: 'Servizio', nome: 'Pacchetto prima volta', det: 'Ingresso, drink e giro del locale con lo staff', prezzo: 55 }
     ]
   },
 

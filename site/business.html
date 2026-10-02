@@ -2,11 +2,11 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Aguardiente Business</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021413">
+  <link rel="stylesheet" href="assets/style.css?v=202610021715">
 </head>
 <body data-page="business" class="business">
   <header class="site-header">
@@ -14,11 +14,18 @@
       <a class="logo" href="business.html">aguardiente</a>
       <span class="logo-tag">Business</span>
     </span>
-    <nav class="nav" aria-label="Business">
+    <nav class="nav" id="site-menu" aria-label="Business">
       <a href="#come">Come funziona</a>
+      <a href="#locali">Per i locali</a>
       <a href="#guadagni">Come guadagni</a>
       <a href="#piani">Piani</a>
+      <a class="menu-only" href="iscrizione.html?tipo=azienda">Registra l’attività</a>
+      <a class="menu-only" href="dashboard.html">Area aziende</a>
+      <a class="menu-only" href="index.html">Sito utenti</a>
     </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Apri il menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="mt-top" d="M4 7h16"/><path class="mt-mid" d="M4 12h16"/><path class="mt-bot" d="M4 17h16"/></svg>
+    </button>
     <div class="header-actions">
       <a class="btn btn-ghost" href="dashboard.html">Area aziende</a>
       <a class="btn btn-primary" href="iscrizione.html?tipo=azienda">Registra l’attività</a>
@@ -55,12 +62,47 @@
       </div>
     </section>
 
+    <section class="band" id="locali">
+      <div class="container section">
+        <div class="locali-grid">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <span class="cat-label">Per bar, club e locali</span>
+            <h2 style="max-width:16ch">Carica il profilo del locale e vendi coupon e servizi.</h2>
+            <p class="lead">I tuoi clienti comprano in anticipo, tu sai chi arriva e incassi prima della serata.</p>
+            <ol class="steps-big" style="grid-template-columns:1fr;gap:20px;margin-top:8px">
+              <li><span class="n">1</span><strong style="font-size:19px">Il profilo del locale</strong><p class="muted">Foto, orari, serate in programma, regole d’ingresso e dress code. Con la certificazione Aguardiente.</p></li>
+              <li><span class="n">2</span><strong style="font-size:19px">Coupon e servizi in vendita</strong><p class="muted">Ingresso coppia con drink, ingressi omaggio per chi vuoi, tavoli, privé, pacchetti per chi viene la prima volta. Prezzi e quantità li decidi tu.</p></li>
+              <li><span class="n">3</span><strong style="font-size:19px">Convalida all’ingresso</strong><p class="muted">Il cliente mostra il QR, lo staff lo scansiona dall’area aziende. L’incasso ti arriva al netto della commissione.</p></li>
+            </ol>
+            <div class="actions"><a class="btn btn-primary btn-lg" href="iscrizione.html?tipo=azienda">Registra il tuo locale</a><a class="btn btn-ghost btn-lg" href="locale.html">Vedi un profilo di esempio</a></div>
+          </div>
+
+          <div class="coupon-demo" aria-hidden="true">
+            <div class="coupon coupon-back">
+              <span class="cat-label">Servizio</span>
+              <strong class="coupon-title">Tavolo riservato</strong>
+              <span class="muted">Fino a 4 persone</span>
+            </div>
+            <div class="coupon">
+              <span class="cat-label">Coupon</span>
+              <strong class="coupon-title">Ingresso coppia + 2 drink</strong>
+              <span class="muted">Club Ventaglio, Bologna</span>
+              <div class="coupon-row"><span class="price">40 €</span><s class="muted">50 €</s></div>
+              <div class="coupon-cut"></div>
+              <div class="coupon-qr"></div>
+              <span class="muted" style="font-size:13px">Mostra il QR all’ingresso</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="container section" id="guadagni">
       <h2 style="margin-bottom:32px">Come guadagni</h2>
       <div class="plans">
         <div class="card-deep plan"><h3>Clienti dalla community</h3><p>Gli utenti ti scoprono tra i locali consigliati e ti contattano direttamente.</p></div>
         <div class="card plan"><h3>Prenotazioni e richieste</h3><p class="muted">Ricevi richieste di disponibilità per camere, spazi e serate.</p></div>
-        <div class="card plan"><h3>Coupon ed eventi</h3><p class="muted">Sconti riservati agli iscritti e promozione delle tue serate.</p></div>
+        <div class="card plan"><h3>Coupon e servizi</h3><p class="muted">Vendi in anticipo ingressi, drink, tavoli e privé; il cliente paga prima e mostra il QR all’ingresso.</p></div>
       </div>
       <div class="plans" style="margin-top:16px">
         <div class="card plan"><h3>Shop online</h3><p class="muted">Vendi preservativi, lubrificanti, giochi, lingerie e kit direttamente sulla tua scheda, con carrello, sconto iscritti e spedizione discreta.</p></div>
@@ -101,7 +143,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021413"></script>
-  <script src="assets/app.js?v=202610021413"></script>
+  <script src="assets/data.js?v=202610021715"></script>
+  <script src="assets/app.js?v=202610021715"></script>
 </body>
 </html>
