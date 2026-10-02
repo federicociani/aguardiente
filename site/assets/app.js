@@ -423,6 +423,61 @@
       $('#ad-similar').innerHTML = others.map((x) => adCard(x)).join('');
     },
 
+    /* ---------- PROFILO LOCALE: serate, coupon e servizi acquistabili ---------- */
+    locale() {
+      const L = D.locale;
+      const eur = (n) => n === 0 ? 'Gratis' : n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+      $('#loc-gallery').innerHTML = L.foto.map((id, i) => `<div class="photo"><img src="${D.unsplash(id, i ? 600 : 1200, i ? 400 : 800)}" alt="" loading="${i ? 'lazy' : 'eager'}"></div>`).join('');
+      $('#loc-rules').innerHTML = L.regole.map((r) => `<li><span class="ico">${ICON_CHECK}</span>${esc(r)}</li>`).join('');
+      $('#loc-events').innerHTML = L.serate.map((e) => `
+        <li class="event"><span class="event-day">${esc(e.giorno)}</span><span class="event-text"><strong>${esc(e.titolo)}</strong><span class="muted">${esc(e.det)}</span></span></li>`).join('');
+      $('#loc-offers').innerHTML = L.offerte.map((o) => `
+        <article class="card offer">
+          <span class="cat-label">${esc(o.tipo)}</span>
+          <h3>${esc(o.nome)}</h3>
+          <p class="muted">${esc(o.det)}</p>
+          ${o.nota ? `<p class="offer-note">${esc(o.nota)}</p>` : ''}
+          <div class="ad-foot">
+            <span class="price">${eur(o.prezzo)}${o.listino ? ` <s class="muted">${eur(o.listino)}</s>` : ''}</span>
+            <button class="btn btn-primary" type="button" data-buy="${o.id}">${o.prezzo === 0 ? 'Riserva' : 'Acquista'}</button>
+          </div>
+        </article>`).join('');
+
+      // Acquisto: finestra di conferma, poi il coupon con QR da mostrare all'ingresso
+      const dlg = $('#buy-dialog');
+      let current = null;
+      document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-buy]'); if (!b) return;
+        current = L.offerte.find((o) => o.id === b.dataset.buy);
+        $('#buy-title').textContent = current.nome;
+        $('#buy-det').textContent = current.det;
+        $('#buy-total').textContent = eur(current.prezzo);
+        $('#buy-step1').hidden = false; $('#buy-step2').hidden = true;
+        dlg.showModal();
+      });
+      $('#buy-confirm').addEventListener('click', () => {
+        const code = 'AGU-' + Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+        $('#buy-code').textContent = code;
+        $('#buy-qr').innerHTML = fakeQR(code);
+        $('#buy-step1').hidden = true; $('#buy-step2').hidden = false;
+      });
+      $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', () => dlg.close()));
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+      // QR finto ma stabile: serve solo a far capire il flusso nel prototipo
+      function fakeQR(seed) {
+        let h = 0; for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+        const n = 21, cell = 8, rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) / 2 ** 32);
+        let r = '';
+        const finder = (x, y) => `<rect x="${x * cell}" y="${y * cell}" width="${7 * cell}" height="${7 * cell}" fill="#14060A"/><rect x="${(x + 1) * cell}" y="${(y + 1) * cell}" width="${5 * cell}" height="${5 * cell}" fill="#fff"/><rect x="${(x + 2) * cell}" y="${(y + 2) * cell}" width="${3 * cell}" height="${3 * cell}" fill="#14060A"/>`;
+        for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+          const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
+          if (!inFinder && rnd() > 0.5) r += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#14060A"/>`;
+        }
+        return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR del coupon"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
+      }
+    },
+
     /* ---------- LUOGHI ---------- */
     luoghi() {
       const render = (cat) => {
