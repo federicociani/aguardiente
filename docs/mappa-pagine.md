@@ -4,7 +4,7 @@
 
 | Pagina | Scopo | Porta a |
 |---|---|---|
-| `index.html` | Home pubblica: ricerca rapida, categorie, online adesso, ultimi annunci, regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
+| `index.html` | Home pubblica: ricerca rapida, categorie, online ora, tab Annunci/Eventi (eventi dei locali con prevendita del biglietto), regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
 | `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
