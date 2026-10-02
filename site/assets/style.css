@@ -53,6 +53,10 @@ body.business {
     var(--bg);
 }
 
+/* Righe bilanciate ovunque (la proprietà si eredita); titoli e sottotitoli dichiarati anche in modo esplicito */
+body { text-wrap: balance; }
+h1, h2, h3, h4, .lead, .cf-sub, .cf-title, .detail-text, .detail-hint, .cf-note, .muted, p, li, summary, label, legend, .btn, .badge { text-wrap: balance; }
+
 a { color: var(--accent); }
 a:hover { color: #FF9BB3; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
