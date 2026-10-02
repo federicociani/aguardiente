@@ -6,7 +6,7 @@
   <title>Aguardiente · Iscrizione</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021846">
+  <link rel="stylesheet" href="assets/style.css?v=202610021847">
 </head>
 <body data-page="iscrizione">
   <header class="site-header">
@@ -44,11 +44,11 @@
         <label class="field">Nickname<input type="text" placeholder="Come ti vedranno gli altri"></label>
         <div class="field-row">
           <label class="field">Email<input type="email" placeholder="nome@email.it"></label>
-          <label class="field">Data di nascita<input type="date"></label>
+          <label class="field">Data di nascita<input type="date" name="nascita" data-placeholder="gg/mm/aaaa" data-adult autocomplete="bday"></label>
         </div>
         <label class="field">Password<input type="password"></label>
         <label class="check"><input type="checkbox"> Dichiaro di essere maggiorenne. Al passo successivo verificherò l’età con un documento o un servizio di verifica.</label>
-        <label class="check"><input type="checkbox"> Acconsento esplicitamente al trattamento dei dati relativi alla vita sessuale, come descritto nell’<a href="#">informativa privacy</a>.</label>
+        <label class="check"><input type="checkbox"><span>Acconsento esplicitamente al trattamento dei dati relativi alla vita sessuale, come descritto nell’<a href="#">informativa privacy</a>.</span></label>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Continua con la verifica</button>
       </form>
 
@@ -64,13 +64,13 @@
           <label class="field">Password<input type="password"></label>
         </div>
         <p class="notice">Prima della pubblicazione ti chiederemo visura camerale, documento del referente e, per le strutture ricettive, il codice CIN.</p>
-        <label class="check"><input type="checkbox"> Accetto i <a href="#">termini per le aziende</a> e le linee guida sui contenuti.</label>
+        <label class="check"><input type="checkbox"><span>Accetto i <a href="#">termini per le aziende</a> e le linee guida sui contenuti.</span></label>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Crea account aziendale</button>
       </form>
     </div>
   </main>
 
-  <script src="assets/data.js?v=202610021846"></script>
-  <script src="assets/app.js?v=202610021846"></script>
+  <script src="assets/data.js?v=202610021847"></script>
+  <script src="assets/app.js?v=202610021847"></script>
 </body>
 </html>

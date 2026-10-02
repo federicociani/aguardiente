@@ -39,6 +39,24 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
   });
 
+  /* Campi data: stessa misura degli altri campi e segnaposto visibile anche su iPhone
+     (Safari non mostra il placeholder negli input type="date") */
+  $$('input[type="date"]').forEach((input) => {
+    const wrap = document.createElement('span');
+    wrap.className = 'date-wrap';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    const ph = document.createElement('span');
+    ph.className = 'date-ph'; ph.setAttribute('aria-hidden', 'true');
+    ph.textContent = input.dataset.placeholder || 'gg/mm/aaaa';
+    wrap.appendChild(ph);
+    const iso = (d) => d.toISOString().slice(0, 10);
+    if ('adult' in input.dataset) { const d = new Date(); d.setFullYear(d.getFullYear() - 18); input.max = iso(d); }
+    if ('future' in input.dataset) input.min = iso(new Date());
+    const sync = () => wrap.classList.toggle('has-value', !!input.value);
+    input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
+  });
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
