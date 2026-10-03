@@ -670,7 +670,9 @@
       $('#st-tags').innerHTML = D.storieTag.map((t) => `<button type="button" class="tag" data-q="${esc(t)}">#${esc(t)}</button>`).join('');
 
       const card = (x) => `
-        <article class="card story-card">
+        <article class="card story-card${x.img ? ' has-img' : ''}">
+          ${x.img ? `<div class="story-img"><img src="${D.unsplash(x.img, 480, 480)}" srcset="${D.unsplash(x.img, 480, 480)} 1x, ${D.unsplash(x.img, 900, 900)} 2x" alt="" loading="lazy" decoding="async"></div>` : ''}
+          <div class="story-text">
           <span class="cat-label">${esc(x.cat)}</span>
           <h3><a class="ad-link" href="storia.html?id=${x.id}">${esc(x.titolo)}</a></h3>
           <p class="muted story-excerpt">${esc(x.estratto)}</p>
@@ -679,6 +681,7 @@
             <span class="ad-avatar">${esc(x.ini)}</span>
             <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
             <span class="story-stats"><span aria-label="${x.like} mi piace">${ICON_HEART_S}${x.like}</span><span aria-label="${x.commenti} commenti">${ICON_COMMENT}${x.commenti}</span></span>
+          </div>
           </div>
         </article>`;
       const render = () => {
@@ -711,6 +714,7 @@
       document.title = `Aguardiente · ${x.titolo}`;
       let liked = false, saved = false;
       $('#st-story').innerHTML = `
+        ${x.img ? `<div class="story-hero"><img src="${D.unsplash(x.img, 1400, 600)}" srcset="${D.unsplash(x.img, 1400, 600)} 1x, ${D.unsplash(x.img, 2400, 1030)} 2x" alt="" decoding="async"></div>` : ''}
         <header class="story-head">
           <span class="cat-label">${esc(x.cat)}</span>
           <h1>${esc(x.titolo)}</h1>
@@ -737,11 +741,14 @@
       $('#st-comment-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('input', e.currentTarget); if (!i.value.trim()) return; comments.push({ ini: 'OM', nick: 'Ombra & Mare', quando: 'ora', testo: i.value.trim() }); i.value = ''; renderC(); });
       renderC();
       $('#st-more').innerHTML = D.storie.filter((s) => s.id !== x.id).slice(0, 3).map((s) => `
-        <article class="card story-card">
+        <article class="card story-card story-mini">
+          ${s.img ? `<div class="story-img"><img src="${D.unsplash(s.img, 800, 450)}" alt="" loading="lazy" decoding="async"></div>` : ''}
+          <div class="story-text">
           <span class="cat-label">${esc(s.cat)}</span>
           <h3><a class="ad-link" href="storia.html?id=${s.id}">${esc(s.titolo)}</a></h3>
           <p class="muted story-excerpt">${esc(s.estratto)}</p>
           <p class="muted" style="font-size:14px;margin:0">di ${esc(s.autore)} · ${s.min} min</p>
+          </div>
         </article>`).join('');
     },
 
