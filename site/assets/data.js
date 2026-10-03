@@ -142,7 +142,7 @@ window.DATA = {
 
   /* Storie della community (testi originali di esempio, senza contenuti espliciti) */
   storie: [
-    { id: 'aperitivo', cat: 'Scambio di coppia', titolo: 'Prima un aperitivo', autore: 'Duesumare', ini: 'DM', data: '3 ott', min: 6, like: 48, commenti: 12,
+    { id: 'aperitivo', img: '1702725365144-6e8584ea54e4', cat: 'Scambio di coppia', titolo: 'Prima un aperitivo', autore: 'Duesumare', ini: 'DM', data: '3 ott', min: 6, like: 48, commenti: 12,
       tag: ['aperitivo', 'sguardi', 'coppie'],
       estratto: 'Ci eravamo detti: solo un aperitivo, e se non scatta niente torniamo a casa e ci ridiamo sopra. Poi lei ha riso a una battuta di mio marito, e io ho capito che non saremmo tornati presto.',
       testo: [
@@ -151,7 +151,7 @@ window.DATA = {
         'Poi lei ha riso a una battuta di mio marito, gli ha appoggiato la mano sul braccio per un secondo di troppo, e lui ha guardato me. Non per chiedermi il permesso: per controllare che stessi bene. Io stavo benissimo.',
         'Il secondo giro l’abbiamo ordinato senza chiederci niente. Il terzo l’abbiamo bevuto a casa loro, sul terrazzo, con le scarpe in mano e la città accesa sotto di noi. Il resto lo teniamo per noi quattro.'
       ] },
-    { id: 'chiave-12', cat: 'In vacanza', titolo: 'La chiave della 12', autore: 'Viaggiatore_72', ini: 'V7', data: '2 ott', min: 5, like: 31, commenti: 7,
+    { id: 'chiave-12', img: '1606259458027-54d2a728b6ab', cat: 'In vacanza', titolo: 'La chiave della 12', autore: 'Viaggiatore_72', ini: 'V7', data: '2 ott', min: 5, like: 31, commenti: 7,
       tag: ['hotel', 'viaggio', 'sconosciuti'],
       estratto: 'La receptionist si era sbagliata: mi aveva dato la chiave della 12 invece della 21. Me ne sono accorto solo quando la porta si è aperta su una stanza con la luce accesa e qualcuno sul balcone.',
       testo: [
@@ -160,7 +160,7 @@ window.DATA = {
         'Abbiamo parlato fino a quando il mare è diventato nero. Di lei so il nome di battesimo, il colore del costume e il modo in cui tiene il bicchiere con due dita. Non so il cognome, né da dove venisse.',
         'Quando sono sceso a cambiare la chiave, la mattina dopo, la receptionist mi ha chiesto se avessi dormito bene. Le ho detto che era stato un errore fortunato.'
       ] },
-    { id: 'masquerade', cat: 'Club e serate', titolo: 'Masquerade', autore: 'Notturna', ini: 'NO', data: '1 ott', min: 7, like: 63, commenti: 18,
+    { id: 'masquerade', img: '1468056961052-15507578a50d', cat: 'Club e serate', titolo: 'Masquerade', autore: 'Notturna', ini: 'NO', data: '1 ott', min: 7, like: 63, commenti: 18,
       tag: ['maschera', 'club', 'prima volta'],
       estratto: 'Con la maschera addosso non ero più io, o forse lo ero di più. Lo staff ci aveva spiegato le regole all’ingresso: guardare si può, toccare solo se l’altro dice sì.',
       testo: [
@@ -169,7 +169,7 @@ window.DATA = {
         'Abbiamo ballato a lungo, solo noi due. Poi una coppia ci ha sorriso dal bancone, e quel sorriso ci ha accompagnato per tutta la sera senza bisogno di altro. A volte basta sapere di essere guardati.',
         'In macchina, tornando, mi sono tolta la maschera e mi sono accorta che avevo ancora il segno sulle guance. Lui l’ha sfiorato con un dito e ha detto: la prossima volta togliamocela prima.'
       ] },
-    { id: 'lettere', cat: 'Lei & lei', titolo: 'Lettere a una sconosciuta', autore: 'Lei_che_scrive', ini: 'LS', data: '30 set', min: 8, like: 57, commenti: 21,
+    { id: 'lettere', img: '1594734415578-00fc9540929b', cat: 'Lei & lei', titolo: 'Lettere a una sconosciuta', autore: 'Lei_che_scrive', ini: 'LS', data: '30 set', min: 8, like: 57, commenti: 21,
       tag: ['lettere', 'attesa', 'parole'],
       estratto: 'Ci siamo scritte per tre mesi senza mai vederci. Ogni lettera era più lunga della precedente, e ogni volta mi accorgevo che rileggevo le sue frasi con la voce che immaginavo per lei.',
       testo: [
@@ -178,7 +178,7 @@ window.DATA = {
         'Quando abbiamo deciso di incontrarci, abbiamo scelto una libreria, perché ci sembrava il posto giusto per due che si erano conosciute con le parole. Era più bassa di come la pensavo, e più bella.',
         'Non ci siamo dette quasi niente. Mi ha preso la mano tra gli scaffali della poesia, e per la prima volta in tre mesi non avevo bisogno di scrivere quello che sentivo.'
       ] },
-    { id: 'terzo-bicchiere', cat: 'In tre', titolo: 'Il terzo bicchiere', autore: 'Penna_Rossa', ini: 'PR', data: '29 set', min: 6, like: 44, commenti: 9,
+    { id: 'terzo-bicchiere', img: '1597075687490-8f673c6c17f6', cat: 'In tre', titolo: 'Il terzo bicchiere', autore: 'Penna_Rossa', ini: 'PR', data: '29 set', min: 6, like: 44, commenti: 9,
       tag: ['amicizia', 'cena', 'terrazzo'],
       estratto: 'Apparecchiare per tre era diventata un’abitudine del giovedì. Quella sera però, mentre sistemavo i bicchieri, mi sono accorta che nessuno dei tre aveva voglia di andare via.',
       testo: [
@@ -187,7 +187,7 @@ window.DATA = {
         'Il terzo bicchiere l’ho riempito io, e mentre lo facevo mi sono accorta che nessuno dei tre aveva voglia di andare via. Ci siamo guardati, e c’era una domanda nell’aria che nessuno voleva fare per primo.',
         'L’ha fatta Sara, alla fine, con la sua solita leggerezza. E la risposta, per tutti e tre, è stata sì.'
       ] },
-    { id: 'non-ti-ho-detto', cat: 'Confessioni', titolo: 'Quello che non ti ho detto', autore: 'Ombra_e_Mare', ini: 'OM', data: '28 set', min: 4, like: 39, commenti: 15,
+    { id: 'non-ti-ho-detto', img: '1634393653736-98a63fb73742', cat: 'Confessioni', titolo: 'Quello che non ti ho detto', autore: 'Ombra_e_Mare', ini: 'OM', data: '28 set', min: 4, like: 39, commenti: 15,
       tag: ['coppia', 'fantasia', 'fiducia'],
       estratto: 'Dopo otto anni insieme pensavo di conoscerti a memoria. Poi una sera, a letto, mi hai chiesto qual era la fantasia che non ti avevo mai raccontato. E io te l’ho detta.',
       testo: [
