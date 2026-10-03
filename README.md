@@ -75,7 +75,7 @@ V=$(date +%Y%m%d%H%M); sed -i -E "s#assets/(style\.css|data\.js|app\.js)(\?v=[0-
 
 ## Foto
 
-Le foto dei profili in "Online adesso" sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
+Le foto dei profili in "Online ora", le foto di lancio di esempio e le foto prodotto dello shop sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
 
 ## Foto di lancio degli annunci
 
