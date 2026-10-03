@@ -140,6 +140,77 @@ window.DATA = {
     ]
   },
 
+  /* Storie della community (testi originali di esempio, senza contenuti espliciti) */
+  storie: [
+    { id: 'aperitivo', cat: 'Scambio di coppia', titolo: 'Prima un aperitivo', autore: 'Duesumare', ini: 'DM', data: '3 ott', min: 6, like: 48, commenti: 12,
+      tag: ['aperitivo', 'sguardi', 'coppie'],
+      estratto: 'Ci eravamo detti: solo un aperitivo, e se non scatta niente torniamo a casa e ci ridiamo sopra. Poi lei ha riso a una battuta di mio marito, e io ho capito che non saremmo tornati presto.',
+      testo: [
+        'Ci eravamo detti: solo un aperitivo, e se non scatta niente torniamo a casa e ci ridiamo sopra. Avevamo scelto un bar sul porto, abbastanza affollato da sentirci al sicuro, abbastanza rumoroso da doverci avvicinare per parlare.',
+        'Loro erano già seduti. Lei aveva un vestito verde e una risata che si sentiva da tre tavoli di distanza. Lui era più timido, girava il bicchiere tra le dita come se cercasse le parole lì dentro. Per la prima mezz’ora abbiamo parlato di lavoro, di vacanze, di quanto fosse strano essere lì.',
+        'Poi lei ha riso a una battuta di mio marito, gli ha appoggiato la mano sul braccio per un secondo di troppo, e lui ha guardato me. Non per chiedermi il permesso: per controllare che stessi bene. Io stavo benissimo.',
+        'Il secondo giro l’abbiamo ordinato senza chiederci niente. Il terzo l’abbiamo bevuto a casa loro, sul terrazzo, con le scarpe in mano e la città accesa sotto di noi. Il resto lo teniamo per noi quattro.'
+      ] },
+    { id: 'chiave-12', cat: 'In vacanza', titolo: 'La chiave della 12', autore: 'Viaggiatore_72', ini: 'V7', data: '2 ott', min: 5, like: 31, commenti: 7,
+      tag: ['hotel', 'viaggio', 'sconosciuti'],
+      estratto: 'La receptionist si era sbagliata: mi aveva dato la chiave della 12 invece della 21. Me ne sono accorto solo quando la porta si è aperta su una stanza con la luce accesa e qualcuno sul balcone.',
+      testo: [
+        'La receptionist si era sbagliata: mi aveva dato la chiave della 12 invece della 21. Me ne sono accorto solo quando la porta si è aperta su una stanza con la luce accesa e una donna sul balcone, un libro in mano e i piedi sulla ringhiera.',
+        'Ho balbettato delle scuse. Lei ha chiuso il libro, mi ha guardato da capo a piedi e ha detto che tanto il libro era noioso. Poi mi ha offerto un bicchiere di vino, perché la bottiglia era già aperta e da sola non l’avrebbe finita.',
+        'Abbiamo parlato fino a quando il mare è diventato nero. Di lei so il nome di battesimo, il colore del costume e il modo in cui tiene il bicchiere con due dita. Non so il cognome, né da dove venisse.',
+        'Quando sono sceso a cambiare la chiave, la mattina dopo, la receptionist mi ha chiesto se avessi dormito bene. Le ho detto che era stato un errore fortunato.'
+      ] },
+    { id: 'masquerade', cat: 'Club e serate', titolo: 'Masquerade', autore: 'Notturna', ini: 'NO', data: '1 ott', min: 7, like: 63, commenti: 18,
+      tag: ['maschera', 'club', 'prima volta'],
+      estratto: 'Con la maschera addosso non ero più io, o forse lo ero di più. Lo staff ci aveva spiegato le regole all’ingresso: guardare si può, toccare solo se l’altro dice sì.',
+      testo: [
+        'Con la maschera addosso non ero più io, o forse lo ero di più. Era la nostra prima volta in un club e avevamo scelto la serata in maschera proprio per questo: per nasconderci un po’, almeno all’inizio.',
+        'Lo staff ci aveva spiegato le regole all’ingresso, con la calma di chi le ripete ogni sera: guardare si può, toccare solo se l’altro dice sì, e un no non ha bisogno di spiegazioni. Mi è sembrata la cosa più sensuale che avessi sentito da mesi.',
+        'Abbiamo ballato a lungo, solo noi due. Poi una coppia ci ha sorriso dal bancone, e quel sorriso ci ha accompagnato per tutta la sera senza bisogno di altro. A volte basta sapere di essere guardati.',
+        'In macchina, tornando, mi sono tolta la maschera e mi sono accorta che avevo ancora il segno sulle guance. Lui l’ha sfiorato con un dito e ha detto: la prossima volta togliamocela prima.'
+      ] },
+    { id: 'lettere', cat: 'Lei & lei', titolo: 'Lettere a una sconosciuta', autore: 'Lei_che_scrive', ini: 'LS', data: '30 set', min: 8, like: 57, commenti: 21,
+      tag: ['lettere', 'attesa', 'parole'],
+      estratto: 'Ci siamo scritte per tre mesi senza mai vederci. Ogni lettera era più lunga della precedente, e ogni volta mi accorgevo che rileggevo le sue frasi con la voce che immaginavo per lei.',
+      testo: [
+        'Ci siamo scritte per tre mesi senza mai vederci. Era cominciato con un commento sotto una storia, poi un messaggio, poi lettere vere, lunghe, scritte la sera con il telefono appoggiato sul cuscino.',
+        'Ogni lettera era più lunga della precedente. Lei descriveva le cose più piccole, il caffè che si raffredda, le mani fredde d’inverno, il modo in cui si sistema i capelli dietro l’orecchio quando è nervosa. Io rileggevo le sue frasi con la voce che immaginavo per lei.',
+        'Quando abbiamo deciso di incontrarci, abbiamo scelto una libreria, perché ci sembrava il posto giusto per due che si erano conosciute con le parole. Era più bassa di come la pensavo, e più bella.',
+        'Non ci siamo dette quasi niente. Mi ha preso la mano tra gli scaffali della poesia, e per la prima volta in tre mesi non avevo bisogno di scrivere quello che sentivo.'
+      ] },
+    { id: 'terzo-bicchiere', cat: 'In tre', titolo: 'Il terzo bicchiere', autore: 'Penna_Rossa', ini: 'PR', data: '29 set', min: 6, like: 44, commenti: 9,
+      tag: ['amicizia', 'cena', 'terrazzo'],
+      estratto: 'Apparecchiare per tre era diventata un’abitudine del giovedì. Quella sera però, mentre sistemavo i bicchieri, mi sono accorta che nessuno dei tre aveva voglia di andare via.',
+      testo: [
+        'Apparecchiare per tre era diventata un’abitudine del giovedì. Marco portava il vino, io cucinavo, e Sara arrivava sempre in ritardo con un dolce comprato all’ultimo minuto e un’ottima scusa.',
+        'Quella sera faceva caldo e abbiamo mangiato sul terrazzo. Si è parlato di tutto, anche di cose di cui non avevamo mai parlato: fantasie, desideri, quello che ognuno avrebbe voluto provare almeno una volta.',
+        'Il terzo bicchiere l’ho riempito io, e mentre lo facevo mi sono accorta che nessuno dei tre aveva voglia di andare via. Ci siamo guardati, e c’era una domanda nell’aria che nessuno voleva fare per primo.',
+        'L’ha fatta Sara, alla fine, con la sua solita leggerezza. E la risposta, per tutti e tre, è stata sì.'
+      ] },
+    { id: 'non-ti-ho-detto', cat: 'Confessioni', titolo: 'Quello che non ti ho detto', autore: 'Ombra_e_Mare', ini: 'OM', data: '28 set', min: 4, like: 39, commenti: 15,
+      tag: ['coppia', 'fantasia', 'fiducia'],
+      estratto: 'Dopo otto anni insieme pensavo di conoscerti a memoria. Poi una sera, a letto, mi hai chiesto qual era la fantasia che non ti avevo mai raccontato. E io te l’ho detta.',
+      testo: [
+        'Dopo otto anni insieme pensavo di conoscerti a memoria: come bevi il caffè, da che parte dormi, cosa dici quando sei stanco. Poi una sera, a letto, al buio, mi hai chiesto qual era la fantasia che non ti avevo mai raccontato.',
+        'Ho riso, ho cambiato discorso, ho detto che non ce n’erano. Tu hai aspettato. Hai questa pazienza che mi fa impazzire, come se avessi tutto il tempo del mondo per sentire una cosa sola.',
+        'Così te l’ho detta. Lentamente, con la faccia nel cuscino, sicura che avresti riso o, peggio, che ti saresti offeso. Invece mi hai stretto e hai detto: anche io.',
+        'Da quella sera abbiamo iniziato a parlarne, poi a cercare, poi a scrivere qui. Questa è la prima storia. Non sarà l’ultima.'
+      ] }
+  ],
+  storieCategorie: [
+    { gruppo: 'Coppia e dintorni', voci: ['Lui & Lei', 'Scambio di coppia', 'In tre', 'Prime volte'] },
+    { gruppo: 'Arcobaleno', voci: ['Lei & lei', 'Lui & lui', 'Trans'] },
+    { gruppo: 'Atmosfere', voci: ['Club e serate', 'In vacanza', 'Confessioni', 'Giochi di ruolo'] }
+  ],
+  storieAutori: [
+    { nick: 'Penna_Rossa', ini: 'PR', tipo: 'Lei', storie: 14 },
+    { nick: 'Notturna', ini: 'NO', tipo: 'Lei', storie: 9 },
+    { nick: 'Duesumare', ini: 'DM', tipo: 'Coppia', storie: 7 },
+    { nick: 'Viaggiatore_72', ini: 'V7', tipo: 'Lui', storie: 5 },
+    { nick: 'Lei_che_scrive', ini: 'LS', tipo: 'Lei', storie: 4 }
+  ],
+  storieTag: ['mare', 'hotel', 'aperitivo', 'maschera', 'lettere', 'treno', 'sauna', 'terrazzo', 'prima volta', 'club', 'sguardi', 'viaggio', 'fiducia', 'attesa'],
+
   regioni: ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
             'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto']
 };

@@ -652,6 +652,97 @@
 
     },
 
+    /* ---------- STORIE: elenco con collezioni, filtri, ordinamento, autori e temi ---------- */
+    storie() {
+      const S = D.storie; const st = { cat: null, q: '', sort: 'nuove' };
+      const ICON_HEART_S = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+      const ICON_COMMENT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg>';
+      const count = (c) => S.filter((x) => x.cat === c).length;
+
+      $('#st-collections').innerHTML = D.storieCategorie.map((g) => `
+        <div class="collection"><p class="eyebrow">${esc(g.gruppo)}</p>
+          <div class="chips">${g.voci.map((v) => `<button type="button" class="pill" data-cat="${esc(v)}" aria-pressed="false">${esc(v)}${count(v) ? ` <span class="pill-n">${count(v)}</span>` : ''}</button>`).join('')}</div>
+        </div>`).join('');
+      $('#st-authors').innerHTML = D.storieAutori.map((a, i) => `
+        <li><span class="rank">${i + 1}</span><span class="ad-avatar">${esc(a.ini)}</span><span class="author-text"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${a.storie} storie</span></span></li>`).join('');
+      $('#st-tags').innerHTML = D.storieTag.map((t) => `<button type="button" class="tag" data-q="${esc(t)}">#${esc(t)}</button>`).join('');
+
+      const card = (x) => `
+        <article class="card story-card">
+          <span class="cat-label">${esc(x.cat)}</span>
+          <h3><a class="ad-link" href="storia.html?id=${x.id}">${esc(x.titolo)}</a></h3>
+          <p class="muted story-excerpt">${esc(x.estratto)}</p>
+          <p class="story-tags">${x.tag.map((t) => `#${esc(t)}`).join(' ')}</p>
+          <div class="story-meta">
+            <span class="ad-avatar">${esc(x.ini)}</span>
+            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+            <span class="story-stats"><span aria-label="${x.like} mi piace">${ICON_HEART_S}${x.like}</span><span aria-label="${x.commenti} commenti">${ICON_COMMENT}${x.commenti}</span></span>
+          </div>
+        </article>`;
+      const render = () => {
+        const q = st.q.toLowerCase();
+        let list = S.filter((x) => (!st.cat || x.cat === st.cat) && (!q || [x.titolo, x.autore, x.cat, x.estratto, ...x.tag].join(' ').toLowerCase().includes(q)));
+        if (st.sort === 'lette') list = [...list].sort((a, b) => b.like - a.like);
+        if (st.sort === 'commentate') list = [...list].sort((a, b) => b.commenti - a.commenti);
+        $('#st-list').innerHTML = list.length ? list.map(card).join('') : `<p class="empty">Nessuna storia ${st.cat ? `in “${esc(st.cat)}”` : ''}${st.q ? ` per “${esc(st.q)}”` : ''}. <a href="#scrivi">Scrivi la prima.</a></p>`;
+        $('#st-count').textContent = `${list.length} ${list.length === 1 ? 'storia' : 'storie'}`;
+        const active = [st.cat && `<button type="button" class="pill" aria-pressed="true" data-clear="cat">${esc(st.cat)} ✕</button>`, st.q && `<button type="button" class="pill" aria-pressed="true" data-clear="q">“${esc(st.q)}” ✕</button>`].filter(Boolean);
+        $('#st-active').innerHTML = active.join(''); $('#st-active').hidden = !active.length;
+        $$('#st-collections [data-cat]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.cat === st.cat));
+      };
+      document.addEventListener('click', (e) => {
+        const c = e.target.closest('[data-cat]'), t = e.target.closest('[data-q]'), x = e.target.closest('[data-clear]'), so = e.target.closest('[data-sort]');
+        if (c) { st.cat = st.cat === c.dataset.cat ? null : c.dataset.cat; render(); }
+        if (t) { st.q = t.dataset.q; $('#st-search').value = st.q; render(); $('#st-list').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
+        if (x) { st[x.dataset.clear] = x.dataset.clear === 'cat' ? null : ''; if (x.dataset.clear === 'q') $('#st-search').value = ''; render(); }
+        if (so) { st.sort = so.dataset.sort; $$('[data-sort]').forEach((b) => b.setAttribute('aria-selected', b === so)); render(); }
+      });
+      $('#st-search').addEventListener('input', (e) => { st.q = e.target.value.trim(); render(); });
+      $('#st-form').addEventListener('submit', (e) => { e.preventDefault(); $('#st-sent').hidden = false; });
+      render();
+    },
+
+    /* ---------- STORIA singola (storia.html?id=...) ---------- */
+    storia() {
+      const id = new URLSearchParams(location.search).get('id');
+      const x = D.storie.find((s) => s.id === id) || D.storie[0];
+      document.title = `Aguardiente · ${x.titolo}`;
+      let liked = false, saved = false;
+      $('#st-story').innerHTML = `
+        <header class="story-head">
+          <span class="cat-label">${esc(x.cat)}</span>
+          <h1>${esc(x.titolo)}</h1>
+          <div class="story-meta">
+            <span class="ad-avatar">${esc(x.ini)}</span>
+            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+          </div>
+        </header>
+        <div class="story-body">${x.testo.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
+        <p class="story-tags">${x.tag.map((t) => `<a href="storie.html">#${esc(t)}</a>`).join(' ')}</p>
+        <div class="story-actions">
+          <button class="btn btn-ghost" type="button" data-like aria-pressed="false">Mi piace · <span>${x.like}</span></button>
+          <button class="btn btn-ghost" type="button" data-save aria-pressed="false">Salva</button>
+          <a class="btn btn-ghost" href="messaggi.html">Scrivi all’autore</a>
+          <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
+        </div>`;
+      $('[data-like]').addEventListener('click', (e) => { liked = !liked; const b = e.currentTarget; b.setAttribute('aria-pressed', liked); $('span', b).textContent = x.like + (liked ? 1 : 0); });
+      $('[data-save]').addEventListener('click', (e) => { saved = !saved; e.currentTarget.setAttribute('aria-pressed', saved); e.currentTarget.textContent = saved ? 'Salvata' : 'Salva'; });
+      const comments = [
+        { ini: 'NO', nick: 'Notturna', quando: '2 ore fa', testo: 'Scritta benissimo, mi hai fatto venire voglia di riprovarci.' },
+        { ini: 'GE', nick: 'Giulia & Enri', quando: 'ieri', testo: 'Ci siamo ritrovati in tante cose. Aspettiamo il seguito!' }
+      ];
+      const renderC = () => { $('#st-comments').innerHTML = comments.map((c) => `<div class="comment"><span class="ad-avatar">${esc(c.ini)}</span><div><strong>${esc(c.nick)}</strong> <span class="muted">${esc(c.quando)}</span><p>${esc(c.testo)}</p></div></div>`).join(''); };
+      $('#st-comment-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('input', e.currentTarget); if (!i.value.trim()) return; comments.push({ ini: 'OM', nick: 'Ombra & Mare', quando: 'ora', testo: i.value.trim() }); i.value = ''; renderC(); });
+      renderC();
+      $('#st-more').innerHTML = D.storie.filter((s) => s.id !== x.id).slice(0, 3).map((s) => `
+        <article class="card story-card">
+          <span class="cat-label">${esc(s.cat)}</span>
+          <h3><a class="ad-link" href="storia.html?id=${s.id}">${esc(s.titolo)}</a></h3>
+          <p class="muted story-excerpt">${esc(s.estratto)}</p>
+          <p class="muted" style="font-size:14px;margin:0">di ${esc(s.autore)} · ${s.min} min</p>
+        </article>`).join('');
+    },
+
     /* ---------- LUOGHI ---------- */
     luoghi() {
       const render = (cat) => {

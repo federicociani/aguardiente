@@ -8,6 +8,8 @@
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
 | `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
+| `storie.html` | Storie della community: collezioni, ricerca, ordinamento (nuove, più lette, più commentate), autori della settimana, temi, form Scrivi la tua storia con regole di moderazione | storia, messaggi |
+| `storia.html?id=…` | Storia singola: lettura, mi piace, salva, scrivi all’autore, segnala, commenti, altre storie | storie, messaggi |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
 | `messaggi.html` | Lista conversazioni + chat + pannello sicurezza | annuncio ("Vedi annuncio"), scheda |
