@@ -521,7 +521,10 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .shop-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; align-items: start; }
 .shop-grid .grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .product { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-.product-visual { aspect-ratio: 4 / 3; display: grid; place-items: center; color: #fff; background: var(--grad-deep); }
+.product-visual.has-img { position: relative; overflow: hidden; background: #F3E9EC; }
+.product-visual.has-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s ease; }
+.product:hover .product-visual.has-img img { transform: scale(1.05); }
+.product-visual { aspect-ratio: 1 / 1; display: grid; place-items: center; color: #fff; background: var(--grad-deep); }
 .product-visual[data-cat="Protezione"] { background: linear-gradient(135deg, #2C0E18, #6B2A42); }
 .product-visual[data-cat="Benessere"] { background: linear-gradient(135deg, #3B0A1E, #9E1238); }
 .product-visual[data-cat="Lingerie"] { background: linear-gradient(135deg, #1E0A2E, #500000); }

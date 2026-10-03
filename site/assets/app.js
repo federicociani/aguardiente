@@ -513,7 +513,9 @@
         const list = cat === 'Tutti' ? S.prodotti : S.prodotti.filter((p) => p.cat === cat);
         $('#products').innerHTML = list.map((p) => `
           <article class="card product">
-            <div class="product-visual" data-cat="${esc(p.cat)}">${icon(p.cat)}</div>
+            <div class="product-visual${p.img ? ' has-img' : ''}" data-cat="${esc(p.cat)}">${p.img
+              ? `<img src="${D.unsplash(p.img, 600, 600)}" srcset="${D.unsplash(p.img, 600, 600)} 1x, ${D.unsplash(p.img, 1000, 1000)} 2x" alt="" loading="lazy" decoding="async">`
+              : icon(p.cat)}</div>
             <div class="product-body">
               <span class="cat-label">${esc(p.cat)}</span>
               <h3>${esc(p.nome)}</h3>

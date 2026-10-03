@@ -72,23 +72,23 @@ window.DATA = {
     { nome: 'Desiderio Store', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Online', descr: 'Shop online con codice sconto dedicato alla community.', offerta: '-20% primo ordine' }
   ],
 
-  /* Shop online delle attività (prezzi di esempio) */
+  /* Shop online delle attività (prezzi di esempio; foto Unsplash, licenza gratuita) */
   shop: {
     nome: 'Velluto Boutique',
     citta: 'Rimini',
     prodotti: [
-      { id: 'p1', cat: 'Protezione', nome: 'Preservativi ultrasottili', det: 'Confezione da 12, certificati CE', prezzo: 9.9 },
-      { id: 'p2', cat: 'Protezione', nome: 'Preservativi senza lattice', det: 'Confezione da 10, per chi ha sensibilità', prezzo: 11.5 },
-      { id: 'p3', cat: 'Benessere', nome: 'Lubrificante a base acqua', det: '100 ml, compatibile con preservativi e giochi', prezzo: 12.9 },
-      { id: 'p4', cat: 'Benessere', nome: 'Olio da massaggio', det: '150 ml, mandorla e vaniglia', prezzo: 16.0 },
-      { id: 'p5', cat: 'Benessere', nome: 'Candela da massaggio', det: 'Cera di soia, si scioglie in olio tiepido', prezzo: 19.0 },
-      { id: 'p6', cat: 'Giochi', nome: 'Vibratore in silicone', det: 'Ricaricabile USB, 10 modalità, impermeabile', prezzo: 49.0 },
-      { id: 'p7', cat: 'Giochi', nome: 'Anello vibrante per coppia', det: 'Silicone medicale, ricaricabile', prezzo: 29.0 },
-      { id: 'p8', cat: 'Giochi', nome: 'Set benda e piuma', det: 'Raso nero, lavabile', prezzo: 14.5 },
-      { id: 'p9', cat: 'Kit coppia', nome: 'Kit prima serata', det: 'Preservativi, lubrificante, benda e candela', prezzo: 39.0 },
-      { id: 'p10', cat: 'Kit coppia', nome: 'Kit weekend', det: 'Tutto il kit prima serata più olio e anello vibrante', prezzo: 79.0 },
-      { id: 'p11', cat: 'Lingerie', nome: 'Completo in pizzo', det: 'Taglie dalla XS alla XL', prezzo: 45.0 },
-      { id: 'p12', cat: 'Lingerie', nome: 'Kimono in raso', det: 'Taglia unica, bordeaux', prezzo: 38.0 }
+      { id: 'p1', img: '1573209946145-848669b5ef39', cat: 'Protezione', nome: 'Preservativi ultrasottili', det: 'Confezione da 12, certificati CE', prezzo: 9.9 },
+      { id: 'p2', img: '1574007444177-5f6d21d6af70', cat: 'Protezione', nome: 'Preservativi senza lattice', det: 'Confezione da 10, per chi ha sensibilità', prezzo: 11.5 },
+      { id: 'p3', img: '1638416606166-793c9d691c04', cat: 'Benessere', nome: 'Lubrificante a base acqua', det: '100 ml, compatibile con preservativi e giochi', prezzo: 12.9 },
+      { id: 'p4', img: '1606259457945-67dc66271ee6', cat: 'Benessere', nome: 'Olio da massaggio', det: '150 ml, mandorla e vaniglia', prezzo: 16.0 },
+      { id: 'p5', img: '1755642754869-2c69a62dc306', cat: 'Giochi', nome: 'Massaggiatore a rosa', det: 'Silicone morbido, ricaricabile, silenzioso', prezzo: 39.0 },
+      { id: 'p6', img: '1707587683483-65eb5595b5af', cat: 'Giochi', nome: 'Vibratore in silicone', det: 'Ricaricabile USB, 10 modalità, impermeabile', prezzo: 49.0 },
+      { id: 'p7', img: '1648782360078-52084f329945', cat: 'Giochi', nome: 'Anello vibrante per coppia', det: 'Silicone medicale, ricaricabile', prezzo: 29.0 },
+      { id: 'p8', img: '1612744192242-35cd7a7d35e6', cat: 'Giochi', nome: 'Set benda e piuma', det: 'Raso nero, lavabile', prezzo: 14.5 },
+      { id: 'p9', img: '1654512041772-446bd165a3b3', cat: 'Kit coppia', nome: 'Kit prima serata', det: 'Preservativi, lubrificante, benda e candela', prezzo: 39.0 },
+      { id: 'p10', img: '1616783335090-ec6e7ac63975', cat: 'Kit coppia', nome: 'Kit weekend', det: 'Tutto il kit prima serata più olio e anello vibrante', prezzo: 79.0 },
+      { id: 'p11', img: '1617055407123-3d7130c1f940', cat: 'Lingerie', nome: 'Completo in pizzo', det: 'Taglie dalla XS alla XL', prezzo: 45.0 },
+      { id: 'p12', img: '1518893063132-36e46dbe2428', cat: 'Lingerie', nome: 'Kimono in raso', det: 'Taglia unica, bordeaux', prezzo: 38.0 }
     ]
   },
 
