@@ -59,7 +59,7 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 - **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.
 - **Cerca**: i filtri si aprono con il tasto "Filtri"; profili su due colonne.
-- **Shop**: prodotti su due colonne e barra del carrello flottante con il totale.
+- **Shop**: prodotti su due colonne; il carrello è un'icona nella navbar (piena con badge quando contiene articoli) che apre un pannello dal basso, trascinabile per chiuderlo. Su desktop lo stesso pannello si apre da destra.
 - **Dashboard**: il menu laterale diventa una riga che scorre sotto il logo.
 - Margini di sicurezza per notch e barra home (`env(safe-area-inset-*)`, `viewport-fit=cover`).
 
