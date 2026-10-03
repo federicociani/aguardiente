@@ -257,6 +257,25 @@
     return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
   }
 
+  /* Pannelli (dialog) che si chiudono con X, tocco fuori, Esc o trascinando giù la maniglia */
+  function sheetClose(dlg, handle) {
+    const close = () => {
+      if (!dlg.open) return;
+      dlg.classList.add('is-closing');
+      setTimeout(() => { dlg.classList.remove('is-closing'); dlg.style.transform = ''; dlg.close(); }, reduceMotion ? 0 : 220);
+    };
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', close));
+    if (handle) {
+      let y0 = null, dy = 0;
+      handle.addEventListener('pointerdown', (e) => { if (e.target.closest('button') || matchMedia('(min-width: 721px)').matches) return; y0 = e.clientY; dy = 0; handle.setPointerCapture(e.pointerId); dlg.style.transition = 'none'; });
+      handle.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); dlg.style.transform = `translateY(${dy}px)`; });
+      handle.addEventListener('pointerup', () => { if (y0 === null) return; dlg.style.transition = ''; y0 = null; if (dy > 90) close(); else dlg.style.transform = ''; });
+    }
+    return close;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -482,8 +501,13 @@
         $('#cart-discount').textContent = tot ? `−${eur(tot * 0.1)}` : eur(0);
         $('#cart-pay').textContent = eur(tot * 0.9);
         $('#cart-checkout').toggleAttribute('disabled', !tot);
-        const bar = $('#cartbar');
-        if (bar) { bar.hidden = !n; $('#cartbar-n').textContent = `Carrello, ${n} ${n === 1 ? 'articolo' : 'articoli'}`; $('#cartbar-tot').textContent = eur(tot * 0.9); }
+        // Icona del carrello nella navbar: badge con il numero di articoli
+        const badge = $('#cart-badge'), btn = $('#cart-open');
+        if (badge) {
+          badge.hidden = !n; badge.textContent = n;
+          btn.setAttribute('aria-label', n ? `Carrello, ${n} ${n === 1 ? 'articolo' : 'articoli'}, ${eur(tot * 0.9)}` : 'Carrello vuoto');
+          btn.classList.toggle('has-items', !!n);
+        }
       };
       const renderList = (cat) => {
         const list = cat === 'Tutti' ? S.prodotti : S.prodotti.filter((p) => p.cat === cat);
@@ -500,10 +524,19 @@
       };
       document.addEventListener('click', (e) => {
         const inc = e.target.closest('[data-inc]'); const dec = e.target.closest('[data-dec]');
-        if (inc) { cart.set(inc.dataset.inc, (cart.get(inc.dataset.inc) || 0) + 1); renderCart(); }
+        if (inc) {
+          cart.set(inc.dataset.inc, (cart.get(inc.dataset.inc) || 0) + 1); renderCart();
+          // conferma visiva: il badge "salta" e il bottone dice Aggiunto per un attimo
+          const b = $('#cart-badge'); if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+          if (inc.closest('.product') && inc.textContent.trim() === 'Aggiungi') { inc.textContent = 'Aggiunto'; setTimeout(() => { inc.textContent = 'Aggiungi'; }, 1200); }
+        }
         if (dec) { const q = (cart.get(dec.dataset.dec) || 0) - 1; q > 0 ? cart.set(dec.dataset.dec, q) : cart.delete(dec.dataset.dec); renderCart(); }
       });
       $('#cart-checkout').addEventListener('click', () => { $('#cart-done').hidden = false; });
+      // Carrello in un pannello: da destra su desktop, dal basso su mobile
+      const drawer = $('#cart');
+      $('#cart-open').addEventListener('click', () => drawer.showModal());
+      sheetClose(drawer, $('.drawer-head', drawer));
       pills($('#shop-filters'), ['Tutti', 'Protezione', 'Benessere', 'Giochi', 'Kit coppia', 'Lingerie'], renderList);
       renderCart();
     },

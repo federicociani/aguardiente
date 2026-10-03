@@ -6,7 +6,7 @@
   <title>Aguardiente · Velluto Boutique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021900">
+  <link rel="stylesheet" href="assets/style.css?v=202610031040">
 </head>
 <body data-page="shop">
   <header class="site-header">
@@ -19,6 +19,7 @@
     </nav>
     <div class="header-actions">
       <a class="btn btn-primary" href="pubblica.html">Pubblica annuncio</a>
+      <button class="cart-btn" type="button" id="cart-open" aria-haspopup="dialog" aria-controls="cart" aria-label="Carrello vuoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path class="cut" d="M9 10V7a3 3 0 0 1 6 0v3"/></svg><span class="cart-badge" id="cart-badge" hidden>0</span></button>
       <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
     </div>
   </header>
@@ -34,14 +35,26 @@
       <a class="btn btn-ghost" href="messaggi.html">Chiedi un consiglio</a>
     </div>
 
-    <div class="shop-grid">
+    <div class="shop-grid shop-grid-full">
       <section>
         <div class="chips" id="shop-filters" role="group" aria-label="Categoria" style="margin-bottom:24px"></div>
         <div class="grid grid-3" id="products"></div>
       </section>
 
-      <aside class="card cart" id="cart" aria-label="Carrello">
-        <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:24px">Carrello</h2><span class="badge" id="cart-count"></span></div>
+    </div>
+  </main>
+
+  <dialog class="drawer" id="cart" aria-labelledby="cart-title">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <span class="bs-handle" aria-hidden="true"></span>
+        <div class="bs-title-row">
+          <h2 id="cart-title">Carrello <span class="badge" id="cart-count"></span></h2>
+          <button class="bs-close" type="button" data-close aria-label="Chiudi il carrello"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+      <div class="drawer-body">
+        
         <ul class="cart-list" id="cart-items"></ul>
         <ul class="totals">
           <li><span>Sconto iscritti 10%</span><span id="cart-discount"></span></li>
@@ -52,10 +65,9 @@
         <button class="btn btn-primary btn-lg btn-block" id="cart-checkout" type="button" disabled>Vai al pagamento</button>
         <p class="muted" style="font-size:14px;display:flex;gap:8px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Acquisto riservato ai maggiorenni verificati. In estratto conto compare un nome neutro.</span></p>
         <p id="cart-done" class="notice" hidden role="status">Nel prototipo il pagamento si ferma qui. Qui andrà il checkout con un processore abilitato ai prodotti per adulti.</p>
-      </aside>
+            </div>
     </div>
-    <a class="cartbar" href="#cart" id="cartbar" hidden><span id="cartbar-n"></span><strong id="cartbar-tot"></strong></a>
-  </main>
+  </dialog>
   <footer class="site-footer">
     <div class="container">
       <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
@@ -67,7 +79,7 @@
       </nav>
     </div>
   </footer>
-  <script src="assets/data.js?v=202610021900"></script>
-  <script src="assets/app.js?v=202610021900"></script>
+  <script src="assets/data.js?v=202610031040"></script>
+  <script src="assets/app.js?v=202610031040"></script>
 </body>
 </html>

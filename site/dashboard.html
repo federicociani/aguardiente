@@ -6,7 +6,7 @@
   <title>Aguardiente Business · Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021900">
+  <link rel="stylesheet" href="assets/style.css?v=202610031040">
 </head>
 <body data-page="dashboard" class="business">
   <div class="dash">
@@ -54,6 +54,25 @@
       <section id="eventi" class="card" style="padding:28px;display:flex;flex-direction:column;gap:16px">
         <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:26px">Eventi</h2><a class="btn btn-ghost" href="index.html#bacheca">Vedi come appaiono in home</a></div>
         <p class="muted">Pubblica una serata con un prezzo speciale in prevendita. Compare nella tab Eventi della home e chi ha salvato il locale riceve un avviso.</p>
+
+        <div class="ev-live">
+          <div class="ev-live-head">
+            <span><strong>Notte in rosso</strong><br><span class="muted" style="font-size:14px">Ven 9 ott, 23:00 · prevendita 30 € invece di 40 €</span></span>
+            <span class="badge">In bozza</span>
+          </div>
+          <div class="ev-progress"><div class="progress"><span style="width:0%"></span></div><span class="muted" style="font-size:13px">— di 80 prevendite</span></div>
+          <div class="ev-stats">
+            <div class="stat-mini"><span class="muted">Prevendite vendute</span><strong>—</strong></div>
+            <div class="stat-mini"><span class="muted">Incasso prevendite</span><strong>—</strong></div>
+            <div class="stat-mini"><span class="muted">Visualizzazioni evento</span><strong>—</strong></div>
+            <div class="stat-mini"><span class="muted">Ingressi convalidati</span><strong>—</strong></div>
+            <div class="stat-mini"><span class="muted">Iscritti avvisati</span><strong>—</strong></div>
+            <div class="stat-mini"><span class="muted">Da prevendita a ingresso</span><strong>—</strong></div>
+          </div>
+          <p class="muted" style="font-size:13px;margin:0">I numeri si riempiono quando l’evento è online e, dopo la serata, puoi confrontarli con le serate precedenti.</p>
+        </div>
+
+        <h3 style="font-size:20px;margin-top:8px">Nuovo evento</h3>
         <form class="ev-form" onsubmit="event.preventDefault(); this.querySelector('.notice').hidden=false;">
           <label class="field" style="grid-column:1/-1">Titolo della serata<input type="text" value="Notte in rosso"></label>
           <label class="field">Data<input type="date" data-placeholder="Scegli il giorno" data-future></label>
@@ -134,7 +153,7 @@
     </main>
   </div>
 
-  <script src="assets/data.js?v=202610021900"></script>
-  <script src="assets/app.js?v=202610021900"></script>
+  <script src="assets/data.js?v=202610031040"></script>
+  <script src="assets/app.js?v=202610031040"></script>
 </body>
 </html>
