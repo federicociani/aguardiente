@@ -1282,7 +1282,7 @@ body.is-gated main, body.is-gated footer { filter: blur(16px); pointer-events: n
   body:has(.nav-icons) .search-fab { bottom: calc(80px + env(safe-area-inset-bottom)); }
   body[data-page="home"] { padding-bottom: calc(160px + env(safe-area-inset-bottom)); }
   /* area aziende: rail in riga che scorre */
-  .dash-side { flex: 1 1 100%; flex-direction: row; padding: 8px 0 8px 12px; gap: 8px; height: auto; overflow: visible; }
+  .dash-side { flex: 1 1 100%; flex-direction: row; padding: 8px 0 8px 12px; gap: 8px; height: auto; overflow: hidden; }
   .logo-mini { width: 40px; height: 40px; flex-shrink: 0; font-size: 22px; }
   .nav-rail { flex-direction: row; overflow-x: auto; gap: 4px; padding-right: 12px; scrollbar-width: none; }
   .nav-rail::-webkit-scrollbar { display: none; }
