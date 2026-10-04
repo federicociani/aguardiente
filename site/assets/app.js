@@ -57,6 +57,18 @@
     input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
   });
 
+  /* Icone di navigazione verso sezioni della stessa pagina: piena quella della sezione in vista */
+  const spyLinks = $$('.nav a.nav-icon[href^="#"]').filter((a) => a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href')));
+  if (spyLinks.length && 'IntersectionObserver' in window) {
+    const byId = new Map(spyLinks.map((a) => [a.getAttribute('href').slice(1), a]));
+    const spy = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const a = byId.get(e.target.id); if (!a) return;
+      if (e.isIntersecting) { spyLinks.forEach((x) => { if (x.getAttribute('aria-current') === 'location') x.removeAttribute('aria-current'); }); a.setAttribute('aria-current', 'location'); }
+      else if (a.getAttribute('aria-current') === 'location') a.removeAttribute('aria-current');
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    byId.forEach((_, id) => spy.observe(document.getElementById(id)));
+  }
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
@@ -276,6 +288,58 @@
     return close;
   }
 
+  /* ---------- Contatti esterni (Instagram, Facebook, WhatsApp, Telegram) ----------
+     Salvati nel browser (localStorage) così il profilo e la chat del prototipo li condividono. */
+  const EXT = {
+    instagram: { label: 'Instagram', badge: 'IG', url: (h) => `https://instagram.com/${h.replace(/^@/, '')}` },
+    facebook: { label: 'Facebook', badge: 'FB', url: (h) => /^https?:\/\//.test(h) ? h : `https://facebook.com/${h.replace(/^@/, '')}` },
+    whatsapp: { label: 'WhatsApp', badge: 'WA', url: (h) => `https://wa.me/${h.replace(/[^\d]/g, '')}` },
+    telegram: { label: 'Telegram', badge: 'TG', url: (h) => `https://t.me/${h.replace(/^@/, '')}` }
+  };
+  const EXT_KEY = 'agu.contatti';
+  const extDefault = { instagram: { h: '@ombra.e.mare', pub: false }, telegram: { h: '@ombraemare', pub: false }, facebook: { h: '', pub: false }, whatsapp: { h: '', pub: false } };
+  function extLoad() { try { return Object.assign({}, extDefault, JSON.parse(localStorage.getItem(EXT_KEY) || '{}')); } catch (e) { return Object.assign({}, extDefault); } }
+  function extSave(v) { try { localStorage.setItem(EXT_KEY, JSON.stringify(v)); return true; } catch (e) { return false; } }
+  function extCard(type, handle, mine) {
+    const t = EXT[type];
+    return `<div class="contact-card">
+        <span class="ext-badge ext-${type}" aria-hidden="true">${t.badge}</span>
+        <span class="contact-text"><span class="contact-k">${mine ? 'Hai condiviso il tuo' : 'Ti ha condiviso il suo'} ${t.label}</span><strong>${esc(handle)}</strong></span>
+        <a class="btn btn-ghost contact-open" href="${esc(t.url(handle))}" target="_blank" rel="noopener noreferrer">Apri</a>
+      </div>`;
+  }
+
+  /* Crediti per le webcam (salvati nel browser per il prototipo) */
+  const CR_KEY = 'agu.crediti';
+  const crGet = () => { try { const v = localStorage.getItem(CR_KEY); return v === null ? (D.webcam ? D.webcam.crediti : 0) : +v; } catch (e) { return D.webcam ? D.webcam.crediti : 0; } };
+  const crSet = (v) => { try { localStorage.setItem(CR_KEY, String(v)); } catch (e) { /* ignorato */ } };
+  const ICON_COIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5c-.5-.9-1.4-1.4-2.5-1.4-1.6 0-2.7 1-2.7 2.2 0 2.9 5.6 1.5 5.6 4.3 0 1.2-1.2 2.2-2.9 2.2-1.2 0-2.2-.6-2.6-1.5M12 6.5v1.6M12 16v1.5"/></svg>';
+  const walletHTML = (v) => `${ICON_COIN}<strong>${v}</strong> crediti <button type="button" class="wallet-add" data-topup aria-label="Ricarica crediti">+</button>`;
+
+  /* ---------- Accesso: le sezioni per adulti (Vetrina, Webcam, Storie) chiedono di entrare ----------
+     Nel prototipo "essere entrati" è un flag nel browser: si attiva iscrivendosi, accedendo o con il tasto del pannello. */
+  const AUTH_KEY = 'agu.entrato';
+  const isIn = () => { try { return localStorage.getItem(AUTH_KEY) === '1'; } catch (e) { return false; } };
+  const setIn = () => { try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) { /* ignorato */ } };
+  $$('[data-login]').forEach((el) => el.addEventListener(el.tagName === 'FORM' ? 'submit' : 'click', setIn));
+  if (document.body.hasAttribute('data-gate') && !isIn()) {
+    document.body.classList.add('is-gated');
+    const next = encodeURIComponent(location.pathname.split('/').pop() + location.search);
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+        <div class="gate-card">
+          <p class="eyebrow">Solo maggiorenni verificati</p>
+          <h2 id="gate-title">Entra per vedere questa sezione</h2>
+          <p class="muted">Vetrina, webcam e storie sono riservate agli iscritti che hanno verificato età e identità. L’iscrizione è gratuita.</p>
+          <a class="btn btn-primary btn-lg btn-block" href="iscrizione.html?next=${next}">Entra o iscriviti</a>
+          <button class="btn btn-ghost btn-block" type="button" data-gate-ok>Ho già un account (prototipo)</button>
+          <a class="gate-back" href="index.html">Torna alla home</a>
+        </div>
+      </div>`);
+    const ok = $('[data-gate-ok]'); ok.focus();
+    ok.addEventListener('click', () => { setIn(); document.body.classList.remove('is-gated'); $('.gate').remove(); });
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -300,6 +364,14 @@
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
       comeFunziona();
+      // Anteprime sfocate di Vetrina, Webcam e Storie (contenuti visibili solo dopo l'accesso)
+      const tiles = (ids) => ids.map((id) => `<span class="teaser-tile"><img src="${D.unsplash(id, 300, 375)}" alt="" loading="lazy" decoding="async"></span>`).join('');
+      if ($('#teaser-vetrina')) {
+        $('#teaser-vetrina').innerHTML = tiles(D.vetrina.post.slice(0, 3).map((p) => p.img));
+        $('#teaser-webcam').innerHTML = tiles(D.webcam.stanze.filter((r) => r.live).slice(0, 3).map((r) => r.img));
+        $('#teaser-storie').innerHTML = tiles(D.storie.slice(0, 3).map((x) => x.img));
+        $('#teaser-live-n').textContent = D.webcam.stanze.filter((r) => r.live).length;
+      }
       searchSheet();
     },
 
@@ -390,7 +462,7 @@
           return `<button type="button" class="conv" data-i="${i}" aria-current="${i === sel}">
             <span class="ad-avatar">${esc(c.ini)}</span>
             <span class="conv-text"><span style="display:flex;justify-content:space-between;gap:8px"><strong>${esc(c.nome)}</strong><span class="muted" style="font-size:13px">${esc(c.ora)}</span></span>
-            <span class="preview">${last.mine ? 'Tu: ' : ''}${esc(last.testo)}</span></span>
+            <span class="preview">${last.mine ? 'Tu: ' : ''}${last.contact ? `Contatto ${EXT[last.contact.type].label}` : esc(last.testo)}</span></span>
             ${c.nuovi && i !== sel ? `<span class="unread">${c.nuovi}</span>` : ''}
           </button>`;
         }).join('');
@@ -401,9 +473,12 @@
         $('#thread-name').textContent = c.nome;
         $('#thread-sub').textContent = c.sotto;
         $('#thread-link').href = c.link; $('#thread-link').textContent = c.linkLabel;
-        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => `
-          <div class="msg ${m.mine ? 'mine' : ''}"><div class="bubble">${esc(m.testo)}</div><time>${esc(m.ora)}</time></div>`).join('');
+        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => m.contact
+          ? `<div class="msg ${m.mine ? 'mine' : ''} msg-contact">${extCard(m.contact.type, m.contact.h, m.mine)}<time>${esc(m.ora)}</time></div>`
+          : `<div class="msg ${m.mine ? 'mine' : ''}"><div class="bubble">${esc(m.testo)}</div><time>${esc(m.ora)}</time></div>`).join('');
         const body = $('#thread-msgs'); body.scrollTop = body.scrollHeight;
+        // su mobile scorre la pagina, non il riquadro: porta in vista l'ultimo messaggio
+        if (matchMedia('(max-width: 720px)').matches && $('.chat').classList.contains('show-thread')) body.lastElementChild.scrollIntoView({ block: 'end' });
       };
       $('#conv-list').addEventListener('click', (e) => {
         const b = e.target.closest('.conv'); if (!b) return;
@@ -418,6 +493,26 @@
         convs[sel].msgs.push({ mine: true, testo: t, ora }); convs[sel].ora = ora;
         input.value = ''; renderList(); renderThread();
       });
+      // Shortcut: condividi un tuo contatto esterno nella chat
+      const shareDlg = $('#share-dialog');
+      if (shareDlg) {
+        const openShare = () => {
+          const ext = extLoad(); const c = convs[sel];
+          $('#share-to').textContent = `Con ${c.nome}. Scegli quale contatto inviare:`;
+          $('#share-list').innerHTML = Object.keys(EXT).map((k) => ext[k] && ext[k].h
+            ? `<button type="button" class="share-item" data-share="${k}"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span><span class="contact-text"><strong>${EXT[k].label}</strong><span class="muted">${esc(ext[k].h)}</span></span><span class="share-send">Invia</span></button>`
+            : `<a class="share-item is-empty" href="profilo.html#contatti"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span><span class="contact-text"><strong>${EXT[k].label}</strong><span class="muted">Non impostato</span></span><span class="share-send">Aggiungi</span></a>`).join('');
+          shareDlg.showModal();
+        };
+        const closeShare = sheetClose(shareDlg, $('.drawer-head', shareDlg));
+        $('#share-open').addEventListener('click', openShare);
+        $('#share-list').addEventListener('click', (e) => {
+          const b = e.target.closest('[data-share]'); if (!b) return;
+          const ext = extLoad(); const d = new Date(); const ora = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          convs[sel].msgs.push({ mine: true, contact: { type: b.dataset.share, h: ext[b.dataset.share].h }, ora }); convs[sel].ora = ora;
+          renderList(); renderThread(); closeShare();
+        });
+      }
       renderList(); renderThread();
     },
 
@@ -750,6 +845,198 @@
           <p class="muted" style="font-size:14px;margin:0">di ${esc(s.autore)} · ${s.min} min</p>
           </div>
         </article>`).join('');
+    },
+
+    /* ---------- PROFILO: contatti esterni ---------- */
+    profilo() {
+      const form = $('#ext-form'); if (!form) return;
+      const ext = extLoad();
+      Object.keys(EXT).forEach((k) => {
+        form[k].value = ext[k].h || '';
+        $(`[data-public="${k}"]`).setAttribute('aria-checked', !!ext[k].pub);
+      });
+      // Contatti resi visibili sul profilo: compaiono sotto il nome
+      const showPublic = (v) => {
+        const pub = Object.keys(EXT).filter((k) => v[k] && v[k].h && v[k].pub);
+        $('#ext-public').innerHTML = pub.map((k) => `<a class="ext-chip" href="${esc(EXT[k].url(v[k].h))}" target="_blank" rel="noopener noreferrer"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span>${esc(v[k].h)}</a>`).join('');
+        $('#ext-public').hidden = !pub.length;
+      };
+      showPublic(ext);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const v = {};
+        Object.keys(EXT).forEach((k) => { v[k] = { h: form[k].value.trim(), pub: $(`[data-public="${k}"]`).getAttribute('aria-checked') === 'true' }; });
+        if (v.whatsapp.h && v.whatsapp.h.replace(/[^\d]/g, '').length < 8) { $('#ext-saved').textContent = 'Il numero WhatsApp sembra incompleto: scrivilo con il prefisso, per esempio +39 333 1234567.'; form.whatsapp.focus(); return; }
+        $('#ext-saved').textContent = extSave(v) ? 'Contatti salvati. Li trovi nella chat, nel tasto accanto al campo di scrittura.' : 'Non è stato possibile salvarli in questo browser.';
+        showPublic(v);
+      });
+    },
+
+    /* ---------- VETRINA: creator, contenuti gratis / a pagamento / per abbonati ---------- */
+    vetrina() {
+      const V = D.vetrina; const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+      const unlocked = new Set(); const subs = new Set();
+      const cr = (id) => V.creator.find((c) => c.id === id);
+      const canSee = (p) => p.accesso === 'free' || unlocked.has(p.id) || (p.accesso === 'sub' && subs.has(p.creator));
+      const LOCK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+      const PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>';
+      const label = (p) => p.accesso === 'free' ? 'Gratis' : p.accesso === 'ppv' ? eur(p.prezzo) : 'Abbonati';
+
+      const renderCreators = () => {
+        $('#vt-creators').innerHTML = V.creator.map((c) => `
+          <article class="card creator-card">
+            <div class="creator-cover"><img src="${D.unsplash(c.foto, 600, 400)}" alt="" loading="lazy"></div>
+            <div class="creator-body">
+              <span class="creator-av"><img src="${D.unsplash(c.foto, 120, 120)}" alt="" loading="lazy"></span>
+              <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_CHECK}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
+              <p class="muted" style="margin:0">${esc(c.bio)}</p>
+              <button class="btn ${subs.has(c.id) ? 'btn-ghost' : 'btn-primary'}" type="button" data-sub="${c.id}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
+            </div>
+          </article>`).join('');
+      };
+      let filtro = 'Tutti';
+      const renderGrid = () => {
+        const f = { 'Tutti': () => true, 'Foto': (p) => p.tipo === 'foto', 'Video': (p) => p.tipo === 'video', 'Gratis': (p) => p.accesso === 'free', 'A pagamento': (p) => p.accesso === 'ppv', 'Per abbonati': (p) => p.accesso === 'sub' }[filtro];
+        const list = V.post.filter(f);
+        $('#vt-count').textContent = `${list.length} contenuti`;
+        $('#vt-grid').innerHTML = list.map((p) => {
+          const c = cr(p.creator), ok = canSee(p);
+          return `<button type="button" class="vt-tile${ok ? '' : ' is-locked'}" data-post="${p.id}" aria-label="${esc(p.titolo)} di ${esc(c.nick)}, ${ok ? 'visibile' : label(p)}">
+            <img src="${D.unsplash(p.img, 500, 625)}" alt="" loading="lazy" decoding="async">
+            <span class="vt-top">${p.tipo === 'video' ? `<span class="vt-pill">${PLAY}${esc(p.durata)}</span>` : '<span class="vt-pill">Foto</span>'}<span class="vt-pill ${p.accesso === 'free' ? 'is-free' : ''}">${ok && p.accesso !== 'free' ? 'Sbloccato' : label(p)}</span></span>
+            ${ok ? '' : `<span class="vt-lock">${LOCK}</span>`}
+            <span class="vt-foot"><span class="vt-av"><img src="${D.unsplash(c.foto, 80, 80)}" alt=""></span><span><strong>${esc(p.titolo)}</strong><br>${esc(c.nick)}</span></span>
+          </button>`;
+        }).join('');
+      };
+      pills($('#vt-filters'), ['Tutti', 'Foto', 'Video', 'Gratis', 'A pagamento', 'Per abbonati'], (k) => { filtro = k; renderGrid(); });
+      renderCreators();
+
+      const dlg = $('#vt-dialog'); let cur = null;
+      const openPost = (p) => {
+        cur = p; const c = cr(p.creator), ok = canSee(p);
+        $('#vt-d-media').className = 'vt-d-media' + (ok ? '' : ' is-locked');
+        $('#vt-d-media').innerHTML = `<img src="${D.unsplash(p.img, 900, 1125)}" alt="">${ok ? '' : `<span class="vt-lock">${LOCK}</span>`}`;
+        $('#vt-d-creator').innerHTML = `<span class="vt-av"><img src="${D.unsplash(c.foto, 80, 80)}" alt=""></span><span><strong>${esc(c.nick)}</strong><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)}</span></span>`;
+        $('#vt-d-title').textContent = p.titolo;
+        $('#vt-d-info').textContent = `${p.tipo === 'video' ? `Video, ${p.durata}` : 'Foto'} · ${p.like} mi piace`;
+        $('#vt-d-actions').innerHTML = ok
+          ? `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-like>Mi piace</button>`
+          : p.accesso === 'ppv'
+            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
+            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
+        if (!dlg.open) dlg.showModal();
+      };
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-post]'), b = e.target.closest('[data-buy]'), sb = e.target.closest('[data-sub]'), lk = e.target.closest('[data-like]'), cl = e.target.closest('#vt-dialog [data-close]');
+        if (t) openPost(V.post.find((p) => p.id === t.dataset.post));
+        if (b) { unlocked.add(b.dataset.buy); renderGrid(); openPost(cur); }
+        if (sb) { const id = sb.dataset.sub; subs.has(id) ? subs.delete(id) : subs.add(id); renderCreators(); renderGrid(); if (dlg.open && cur) openPost(cur); }
+        if (lk) { lk.textContent = 'Ti piace'; lk.disabled = true; }
+        if (cl) dlg.close();
+      });
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+      // Form "Nuovo contenuto"
+      const form = $('#vt-form');
+      form.addEventListener('change', () => { $('#vt-price').hidden = form.accesso.value !== 'ppv'; });
+      $('#vt-file').addEventListener('change', (e) => { const n = e.target.files.length; $('#vt-file-msg').textContent = n ? `${n} ${n === 1 ? 'file selezionato' : 'file selezionati'}` : 'JPG, PNG, WEBP, MP4 o MOV. Puoi selezionarne più di uno.'; });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); const m = $('#vt-sent'); m.hidden = false;
+        if (!form.c1.checked || !form.c2.checked) { m.textContent = 'Per pubblicare devi confermare le due dichiarazioni sul consenso e sulla moderazione.'; return; }
+        const acc = { free: 'gratis per gli iscritti verificati', ppv: `a pagamento (${eur(+form.prezzo.value || 0)})`, sub: 'solo per gli abbonati' }[form.accesso.value];
+        m.textContent = `Inviato alla moderazione: sarà ${acc}. Ti avvisiamo appena è online.`;
+      });
+    },
+
+    /* ---------- WEBCAM: elenco dirette, prossime dirette, prova cam ---------- */
+    webcam() {
+      const W = D.webcam;
+      const paintWallet = () => { $('#wc-wallet').innerHTML = walletHTML(crGet()); };
+      paintWallet();
+      document.addEventListener('click', (e) => { if (e.target.closest('[data-topup]')) { crSet(crGet() + 100); paintWallet(); } });
+      let f = 'Tutte';
+      const render = () => {
+        const live = W.stanze.filter((r) => r.live && (f === 'Tutte' || r.tipo === f || (f === 'Coppie' && r.tipo === 'Coppia')));
+        $('#wc-count').textContent = `${live.length} in diretta`;
+        $('#wc-grid').innerHTML = live.map((r) => `
+          <a class="wc-tile" href="live.html?id=${r.id}">
+            <img src="${D.unsplash(r.img, 640, 480)}" alt="" loading="lazy" decoding="async">
+            <span class="stage-top"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span>LIVE</span><span class="vt-pill">${r.spettatori} spettatori</span></span>
+            <span class="wc-foot"><strong>${esc(r.nick)}</strong> <span class="muted-light">${esc(r.tipo)}, ${esc(r.citta)}</span><br><span class="wc-title">${esc(r.titolo)}</span></span>
+          </a>`).join('') || '<p class="empty">Nessuna diretta in questa categoria adesso.</p>';
+      };
+      pills($('#wc-filters'), ['Tutte', 'Lei', 'Lui', 'Coppie', 'Trans'], (k) => { f = k; render(); });
+      $('#wc-next').innerHTML = W.stanze.filter((r) => !r.live).map((r) => `
+        <div class="card wc-next-item"><span class="vt-av" style="width:48px;height:48px"><img src="${D.unsplash(r.img, 96, 96)}" alt=""></span>
+          <span style="flex:1"><strong>${esc(r.nick)}</strong><br><span class="muted">${esc(r.prossima)} · ${esc(r.titolo)}</span></span>
+          <button class="btn btn-ghost" type="button" data-remind aria-pressed="false">Avvisami</button></div>`).join('');
+      $('#wc-next').addEventListener('click', (e) => { const b = e.target.closest('[data-remind]'); if (!b) return; const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); b.textContent = on ? 'Ti avviseremo' : 'Avvisami'; });
+
+      // Prova la webcam: anteprima locale, nessun invio
+      let stream = null;
+      $('#cam-start').addEventListener('click', async () => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('#cam-msg').textContent = 'Questo browser non permette di usare la webcam.'; return; }
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+          const v = $('#cam-video'); v.srcObject = stream; await v.play();
+          $('#cam-preview').classList.add('is-on'); $('#cam-stop').disabled = false; $('#cam-start').disabled = true;
+          $('#cam-msg').textContent = 'La webcam funziona. Quando andrai in diretta potrai scegliere chi ti vede.';
+        } catch (err) { $('#cam-msg').textContent = 'Non è stato possibile accedere alla webcam: controlla i permessi del browser.'; }
+      });
+      $('#cam-stop').addEventListener('click', () => { if (stream) stream.getTracks().forEach((t) => t.stop()); stream = null; $('#cam-preview').classList.remove('is-on'); $('#cam-stop').disabled = true; $('#cam-start').disabled = false; $('#cam-msg').textContent = ''; });
+      render();
+    },
+
+    /* ---------- STANZA LIVE (live.html?id=...) ---------- */
+    live() {
+      const W = D.webcam;
+      const r = W.stanze.find((x) => x.id === new URLSearchParams(location.search).get('id') && x.live) || W.stanze.find((x) => x.live);
+      document.title = `Aguardiente · ${r.nick} in diretta`;
+      $('#rm-img').src = D.unsplash(r.img, 1280, 720);
+      $('#rm-av').src = D.unsplash(r.img, 96, 96);
+      $('#rm-nick').textContent = r.nick; $('#rm-title').textContent = r.titolo;
+      let viewers = r.spettatori, goal = r.goal.ora;
+      const paint = () => {
+        $('#rm-viewers').textContent = `${viewers} spettatori`;
+        $('#rm-goal-label').textContent = r.goal.label;
+        $('#rm-goal-num').textContent = `${Math.min(goal, r.goal.target)} / ${r.goal.target} crediti`;
+        $('#rm-goal-bar').style.width = `${Math.min(100, (goal / r.goal.target) * 100)}%`;
+        $('#rm-wallet').innerHTML = walletHTML(crGet());
+      };
+      $('#rm-tips').innerHTML = [5, 10, 25, 50].map((n) => `<button class="btn btn-ghost" type="button" data-tip="${n}">${ICON_COIN}${n}</button>`).join('');
+      $('#rm-private').textContent = `Show privato · ${r.privato} crediti/min`;
+      const msgs = $('#rm-msgs');
+      const add = (nick, text, kind = '') => {
+        const el = document.createElement('p'); el.className = `rm-msg ${kind}`;
+        el.innerHTML = `<strong>${esc(nick)}</strong> ${esc(text)}`; msgs.appendChild(el);
+        while (msgs.children.length > 60) msgs.firstChild.remove();
+        msgs.scrollTop = msgs.scrollHeight;
+      };
+      add('Aguardiente', 'Benvenuto nella diretta. Rispetta il creator: niente richieste insistenti, niente dati personali.', 'is-system');
+      const hearts = (n) => { if (reduceMotion) return; for (let i = 0; i < Math.min(n / 5, 8); i++) { const h = document.createElement('span'); h.className = 'heart'; h.style.left = `${20 + Math.random() * 60}%`; h.style.animationDelay = `${i * 120}ms`; $('#rm-hearts').appendChild(h); setTimeout(() => h.remove(), 2200); } };
+      const tip = (n) => {
+        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
+        crSet(crGet() - n); goal += n; add('Tu', `hai mandato ${n} crediti`, 'is-tip'); hearts(n); paint();
+        if (goal >= r.goal.target && goal - n < r.goal.target) add('Aguardiente', `Obiettivo raggiunto: ${r.goal.label}!`, 'is-system');
+      };
+      const dlg = $('#rm-dialog');
+      const openDlg = (t, txt, actions) => { $('#rm-d-title').textContent = t; $('#rm-d-text').textContent = txt; $('#rm-d-actions').innerHTML = actions; if (!dlg.open) dlg.showModal(); };
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-tip]'), tp = e.target.closest('[data-topup]'), cl = e.target.closest('#rm-dialog [data-close]'), pv = e.target.closest('#rm-private'), ok = e.target.closest('[data-private-ok]');
+        if (t) tip(+t.dataset.tip);
+        if (tp) { crSet(crGet() + 100); paint(); if (dlg.open) dlg.close(); add('Aguardiente', 'Ricarica di 100 crediti completata (simulata).', 'is-system'); }
+        if (cl) dlg.close();
+        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-private-ok>Invia richiesta</button>`);
+        if (ok) { dlg.close(); add('Tu', 'hai chiesto uno show privato', 'is-tip'); setTimeout(() => add(r.nick, 'Ricevuto! Finisco il goal e ti scrivo 😉'), 1500); }
+      });
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+      $('#rm-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('#rm-input'); const v = i.value.trim(); if (!v) return; add('Tu', v); i.value = ''; });
+      // chat e spettatori simulati
+      const nicks = ['Marco_bo', 'Sara.rn', 'Ale&Robi', 'Viaggiatore_72', 'Notturna', 'Pietro84'];
+      setInterval(() => { add(nicks[Math.floor(Math.random() * nicks.length)], W.chat[Math.floor(Math.random() * W.chat.length)]); viewers = Math.max(5, viewers + Math.round(Math.random() * 6 - 3)); paint(); }, 3500);
+      setInterval(() => { if (Math.random() < .5) { const n = [5, 10, 25][Math.floor(Math.random() * 3)]; goal += n; add(nicks[Math.floor(Math.random() * nicks.length)], `ha mandato ${n} crediti`, 'is-tip'); hearts(n); paint(); } }, 6000);
+      paint();
     },
 
     /* ---------- LUOGHI ---------- */

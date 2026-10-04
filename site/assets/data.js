@@ -211,6 +211,40 @@ window.DATA = {
   ],
   storieTag: ['mare', 'hotel', 'aperitivo', 'maschera', 'lettere', 'treno', 'sauna', 'terrazzo', 'prima volta', 'club', 'sguardi', 'viaggio', 'fiducia', 'attesa'],
 
+  /* Vetrina: creator verificati e contenuti (anteprime non esplicite, prezzi di esempio) */
+  vetrina: {
+    creator: [
+      { id: 'kira', nick: 'Kira.rn', tipo: 'Lei', citta: 'Rimini', foto: '1606459310278-169d12230046', abbonamento: 9.9, nFoto: 48, nVideo: 12, bio: 'Lingerie, luci basse e tanta ironia.' },
+      { id: 'nikki', nick: 'Nikki', tipo: 'Trans', citta: 'Bologna', foto: '1617290337590-4c7d02c99a45', abbonamento: 12.9, nFoto: 63, nVideo: 20, bio: 'Mi piace farmi guardare, con eleganza.' },
+      { id: 'lm', nick: 'Luna & Matteo', tipo: 'Coppia', citta: 'Ravenna', foto: '1570135497084-0debfc780ed8', abbonamento: 14.9, nFoto: 31, nVideo: 9, bio: 'La nostra coppia, senza filtri ma con stile.' },
+      { id: 'sole', nick: 'Sole_83', tipo: 'Lei', citta: 'Cesena', foto: '1586211082529-b7c6b640abff', abbonamento: 7.9, nFoto: 22, nVideo: 4, bio: 'Quarant’anni e nessuna voglia di nascondermi.' }
+    ],
+    post: [
+      { id: 'v1', creator: 'kira', tipo: 'foto', accesso: 'free', titolo: 'Domenica mattina', img: '1606459310278-169d12230046', like: 210 },
+      { id: 'v2', creator: 'nikki', tipo: 'video', accesso: 'ppv', prezzo: 6, durata: '4:12', titolo: 'Specchio', img: '1617290337590-4c7d02c99a45', like: 154 },
+      { id: 'v3', creator: 'lm', tipo: 'foto', accesso: 'sub', titolo: 'Hotel, stanza 12', img: '1606259458027-54d2a728b6ab', like: 98 },
+      { id: 'v4', creator: 'sole', tipo: 'foto', accesso: 'free', titolo: 'Controluce', img: '1586211082529-b7c6b640abff', like: 132 },
+      { id: 'v5', creator: 'kira', tipo: 'video', accesso: 'sub', durata: '7:40', titolo: 'Backstage', img: '1617055407123-3d7130c1f940', like: 187 },
+      { id: 'v6', creator: 'nikki', tipo: 'foto', accesso: 'ppv', prezzo: 3, titolo: 'Raso rosso', img: '1518893063132-36e46dbe2428', like: 121 },
+      { id: 'v7', creator: 'lm', tipo: 'video', accesso: 'ppv', prezzo: 9, durata: '12:05', titolo: 'Serata in maschera', img: '1468056961052-15507578a50d', like: 76 },
+      { id: 'v8', creator: 'sole', tipo: 'foto', accesso: 'sub', titolo: 'Lenzuola bianche', img: '1634393653736-98a63fb73742', like: 64 }
+    ]
+  },
+
+  /* Webcam: stanze live dei creator verificati (anteprime non esplicite, numeri di esempio) */
+  webcam: {
+    crediti: 120,
+    stanze: [
+      { id: 'kira', nick: 'Kira.rn', tipo: 'Lei', citta: 'Rimini', img: '1606459310278-169d12230046', live: true, spettatori: 86, titolo: 'Chiacchiere e lingerie, scegliete voi il colore', privato: 6, goal: { label: 'Cambio look', target: 500, ora: 320 }, tag: ['lingerie', 'chiacchiere'] },
+      { id: 'nikki', nick: 'Nikki', tipo: 'Trans', citta: 'Bologna', img: '1617290337590-4c7d02c99a45', live: true, spettatori: 142, titolo: 'Serata allo specchio', privato: 8, goal: { label: 'Ballo a tema', target: 800, ora: 610 }, tag: ['ballo', 'specchio'] },
+      { id: 'lm', nick: 'Luna & Matteo', tipo: 'Coppia', citta: 'Ravenna', img: '1570135497084-0debfc780ed8', live: true, spettatori: 64, titolo: 'Coppia in diretta, domande a ruota libera', privato: 10, goal: { label: 'Gioco di coppia', target: 1000, ora: 240 }, tag: ['coppia', 'domande'] },
+      { id: 'sole', nick: 'Sole_83', tipo: 'Lei', citta: 'Cesena', img: '1586211082529-b7c6b640abff', live: true, spettatori: 37, titolo: 'Controluce, solo per chi resta', privato: 5, goal: { label: 'Musica a richiesta', target: 300, ora: 280 }, tag: ['controluce'] },
+      { id: 'ge', nick: 'Giulia & Enri', tipo: 'Coppia', citta: 'Forlì', img: '1749855333713-0f4ad9d033e3', live: false, prossima: 'Stasera, 22:30', spettatori: 0, titolo: 'Aperitivo in cam', privato: 9, goal: { label: '', target: 0, ora: 0 }, tag: ['coppia'] },
+      { id: 'dav', nick: 'Davide_RA', tipo: 'Lui', citta: 'Lugo', img: '1640902106532-47dd3a2e833e', live: false, prossima: 'Domani, 21:00', spettatori: 0, titolo: 'Bar sotto casa', privato: 5, goal: { label: '', target: 0, ora: 0 }, tag: ['lui'] }
+    ],
+    chat: ['Ciao a tutti!', 'Che bella luce stasera', 'Sono di Ravenna anche io', 'Bel tema!', 'Arrivo dal club, serata tranquilla', 'Che musica è?', 'Mandate cuori al goal', 'Ciao dal mare']
+  },
+
   regioni: ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
             'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto']
 };

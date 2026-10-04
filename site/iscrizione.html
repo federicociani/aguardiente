@@ -6,12 +6,14 @@
   <title>Aguardiente · Iscrizione</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610031945">
+  <link rel="stylesheet" href="assets/style.css?v=202610041301">
 </head>
 <body data-page="iscrizione">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
-    <span class="muted">Hai già un account? <a href="annunci.html"><strong>Accedi</strong></a></span>
+    <nav class="nav nav-icons nav-solo" aria-label="Account">
+      <a class="nav-icon" href="annunci.html" aria-label="Hai già un account? Accedi" data-login><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M13 4h4.5A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5H13z"/><path d="M4 12h11M11 8l4 4-4 4"/></svg><span class="nav-tip" aria-hidden="true">Hai già un account? Accedi</span></a>
+    </nav>
   </header>
 
   <main class="container signup">
@@ -31,7 +33,7 @@
         <button type="button" role="tab" data-type="azienda" aria-selected="false">Azienda</button>
       </div>
 
-      <form id="form-utente" action="annunci.html" style="display:flex;flex-direction:column;gap:20px">
+      <form id="form-utente" action="annunci.html" data-login style="display:flex;flex-direction:column;gap:20px">
         <fieldset>
           <legend>Il profilo è di</legend>
           <div class="radio-tiles">
@@ -52,7 +54,7 @@
         <button class="btn btn-primary btn-lg btn-block" type="submit">Continua con la verifica</button>
       </form>
 
-      <form id="form-azienda" action="dashboard.html" hidden style="display:flex;flex-direction:column;gap:20px">
+      <form id="form-azienda" action="dashboard.html" data-login hidden style="display:flex;flex-direction:column;gap:20px">
         <label class="field">Tipo di attività<select><option>Boutique / sex shop</option><option>Struttura ricettiva (hotel, B&amp;B, agriturismo)</option><option>Club / locale privé</option><option>Spazio privato (host)</option></select></label>
         <div class="field-row">
           <label class="field">Ragione sociale<input type="text"></label>
@@ -70,7 +72,7 @@
     </div>
   </main>
 
-  <script src="assets/data.js?v=202610031945"></script>
-  <script src="assets/app.js?v=202610031945"></script>
+  <script src="assets/data.js?v=202610041301"></script>
+  <script src="assets/app.js?v=202610041301"></script>
 </body>
 </html>
