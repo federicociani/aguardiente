@@ -116,9 +116,13 @@ p { margin: 0; }
   font: inherit; font-weight: 600; text-decoration: none; cursor: pointer;
   border: 1px solid transparent; color: var(--text); background: transparent;
 }
-/* CTA: fondo scuro e due scie di luce che girano lungo il bordo */
+/* Bottone principale: uno solo per schermata, pieno con il gradiente */
+.btn-primary { background: var(--grad); color: #fff; border-color: transparent; box-shadow: 0 10px 24px -14px rgba(158, 18, 56, .8); transition: filter .2s, box-shadow .2s; }
+.btn-primary:hover { color: #fff; filter: brightness(1.12); box-shadow: 0 12px 28px -12px rgba(158, 18, 56, .9); }
+
+/* CTA importanti o di pagamento: fondo scuro e due scie di luce che girano lungo il bordo */
 @property --cta-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-.btn-primary {
+.btn-cta {
   --cta-fill: #160307;             /* #770303 molto scurito */
   --cta-ring: #4A0A14;             /* bordo a riposo: tra #770303 e il fondo */
   --cta-glow: #E04A6E;             /* testa della scia: #9E1238 schiarito */
@@ -135,9 +139,9 @@ p { margin: 0; }
   animation: cta-orbit 3s linear infinite;
   transition: box-shadow .3s, --cta-fill .3s;
 }
-.btn-primary:hover { color: #fff; --cta-fill: #240509; box-shadow: 0 0 32px -8px rgba(224, 74, 110, .55); animation-duration: 1.8s; }
+.btn-cta:hover { color: #fff; filter: none; --cta-fill: #240509; box-shadow: 0 0 32px -8px rgba(224, 74, 110, .55); animation-duration: 1.8s; }
 @keyframes cta-orbit { to { --cta-angle: 360deg; } }
-@media (prefers-reduced-motion: reduce) { .btn-primary { animation: none; --cta-angle: 45deg; } }
+@media (prefers-reduced-motion: reduce) { .btn-cta { animation: none; --cta-angle: 45deg; } }
 .btn-ghost { border-color: var(--line-2); }
 .btn-ghost:hover { color: var(--text); background: var(--surface-2); }
 .btn-dark { background: var(--bg); color: var(--text); }
