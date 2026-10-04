@@ -149,6 +149,13 @@ p { margin: 0; }
 .btn-block { width: 100%; }
 .btn { text-align: center; }
 .btn-icon { width: 44px; padding: 0; flex-shrink: 0; }
+/* Bottoni piccoli per i link "vedi tutti" (freccia a destra) e "torna a" (freccia a sinistra) */
+.btn.btn-sm { min-height: 36px; padding: 0 14px; gap: 8px; font-size: .75rem; text-decoration: none; }
+.btn-more svg, .btn-back svg { flex-shrink: 0; transition: transform .2s ease; }
+.btn-more:hover svg { transform: translateX(3px); }
+.btn-back:hover svg { transform: translateX(-3px); }
+.btn-back { margin-bottom: 20px; }
+.section-head .btn-more { flex-shrink: 0; }
 
 /* Testo dei controlli: Inter, .875rem, maiuscolo con leggera spaziatura */
 .btn, .pill, .tabs button {
