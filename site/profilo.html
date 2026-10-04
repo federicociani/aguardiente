@@ -6,7 +6,7 @@
   <title>Aguardiente · Il mio profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610031945">
+  <link rel="stylesheet" href="assets/style.css?v=202610041153">
 </head>
 <body data-page="profilo">
   <header class="site-header">
@@ -36,6 +36,7 @@
             <span class="badge badge-grad">Premium</span>
           </div>
           <span class="muted" style="font-size:17px">Coppia, 35 / 33, Ravenna</span>
+          <div class="ext-public-list" id="ext-public" hidden></div>
         </div>
         <div class="actions" style="padding-bottom:6px">
           <a class="btn btn-ghost" href="#" aria-label="Modifica profilo">Modifica</a>
@@ -75,6 +76,34 @@
         <div class="switch-row"><span><strong style="font-weight:500">Mostra distanza</strong><br><span class="muted" style="font-size:13px">Indicativa, mai la posizione esatta</span></span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Mostra distanza"></button></div>
         <div class="switch-row"><span><strong style="font-weight:500">Ricevi offerte dai locali</strong><br><span class="muted" style="font-size:13px">Solo attività verificate</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ricevi offerte dai locali"></button></div>
         </section>
+        <section class="card ext-card" id="contatti">
+          <h2 style="font-size:22px">Contatti esterni</h2>
+          <p class="muted" style="font-size:14px;margin:4px 0 6px">Restano privati: li condividi tu, quando vuoi, con un tocco dalla chat. Se lo scegli, puoi mostrarli anche sul profilo.</p>
+          <form id="ext-form" novalidate>
+          <div class="ext-row">
+            <label class="field ext-field"><span class="ext-label"><span class="ext-badge ext-instagram" aria-hidden="true">IG</span>Instagram</span>
+              <input type="text" name="instagram" placeholder="@nomeutente" autocomplete="off"></label>
+            <div class="switch-row ext-public"><span class="muted" style="font-size:13px">Visibile sul profilo</span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Instagram visibile sul profilo" data-public="instagram"></button></div>
+          </div>
+          <div class="ext-row">
+            <label class="field ext-field"><span class="ext-label"><span class="ext-badge ext-facebook" aria-hidden="true">FB</span>Facebook</span>
+              <input type="text" name="facebook" placeholder="nome.cognome o link al profilo" autocomplete="off"></label>
+            <div class="switch-row ext-public"><span class="muted" style="font-size:13px">Visibile sul profilo</span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Facebook visibile sul profilo" data-public="facebook"></button></div>
+          </div>
+          <div class="ext-row">
+            <label class="field ext-field"><span class="ext-label"><span class="ext-badge ext-whatsapp" aria-hidden="true">WA</span>WhatsApp</span>
+              <input type="tel" name="whatsapp" placeholder="+39 333 1234567" autocomplete="off" inputmode="tel"></label>
+            <div class="switch-row ext-public"><span class="muted" style="font-size:13px">Visibile sul profilo</span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="WhatsApp visibile sul profilo" data-public="whatsapp"></button></div>
+          </div>
+          <div class="ext-row">
+            <label class="field ext-field"><span class="ext-label"><span class="ext-badge ext-telegram" aria-hidden="true">TG</span>Telegram</span>
+              <input type="text" name="telegram" placeholder="@nomeutente" autocomplete="off"></label>
+            <div class="switch-row ext-public"><span class="muted" style="font-size:13px">Visibile sul profilo</span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Telegram visibile sul profilo" data-public="telegram"></button></div>
+          </div>
+            <button class="btn btn-primary btn-block" type="submit" style="margin-top:8px">Salva contatti</button>
+            <p class="ext-saved" id="ext-saved" role="status" aria-live="polite"></p>
+          </form>
+        </section>
         <section class="card-deep" style="display:flex;flex-direction:column;gap:10px">
           <span class="badge" style="background:rgba(0,0,0,.25);color:#fff;align-self:flex-start">Premium attivo</span>
           <h3>Messaggi illimitati e annunci in evidenza</h3>
@@ -102,7 +131,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610031945"></script>
-  <script src="assets/app.js?v=202610031945"></script>
+  <script src="assets/data.js?v=202610041153"></script>
+  <script src="assets/app.js?v=202610041153"></script>
 </body>
 </html>

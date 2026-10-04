@@ -6,7 +6,7 @@
   <title>Aguardiente · Messaggi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610031945">
+  <link rel="stylesheet" href="assets/style.css?v=202610041153">
 </head>
 <body data-page="messaggi">
   <header class="site-header">
@@ -40,6 +40,9 @@
       </div>
       <div class="thread-body" id="thread-msgs"></div>
       <form class="composer" id="composer">
+        <button class="btn btn-ghost btn-icon share-btn" type="button" id="share-open" aria-haspopup="dialog" aria-controls="share-dialog" aria-label="Condividi un tuo contatto" title="Condividi un contatto">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.9-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h4M14.5 13.5h3"/></svg>
+        </button>
         <label class="sr-only" for="msg-input">Scrivi un messaggio</label>
         <input id="msg-input" type="text" placeholder="Scrivi un messaggio" autocomplete="off">
         <button class="btn btn-primary btn-icon" type="submit" aria-label="Invia" style="width:52px;height:52px">
@@ -56,7 +59,25 @@
     </aside>
   </main>
 
-  <script src="assets/data.js?v=202610031945"></script>
-  <script src="assets/app.js?v=202610031945"></script>
+  <dialog class="drawer share-sheet" id="share-dialog" aria-labelledby="share-title">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <span class="bs-handle" aria-hidden="true"></span>
+        <div class="bs-title-row">
+          <h2 id="share-title">Condividi un contatto</h2>
+          <button class="bs-close" type="button" data-close aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+      <div class="drawer-body">
+        <p class="muted" style="margin:0" id="share-to"></p>
+        <div class="share-list" id="share-list"></div>
+        <p class="notice" style="font-size:14px;margin:0">Fuori da Aguardiente non valgono verifica, segnalazioni e blocco. Condividi i tuoi contatti solo con chi conosci già un po’.</p>
+        <a href="profilo.html#contatti" class="muted" style="font-size:14px">Modifica i contatti nel profilo</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="assets/data.js?v=202610041153"></script>
+  <script src="assets/app.js?v=202610041153"></script>
 </body>
 </html>

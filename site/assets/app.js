@@ -276,6 +276,27 @@
     return close;
   }
 
+  /* ---------- Contatti esterni (Instagram, Facebook, WhatsApp, Telegram) ----------
+     Salvati nel browser (localStorage) così il profilo e la chat del prototipo li condividono. */
+  const EXT = {
+    instagram: { label: 'Instagram', badge: 'IG', url: (h) => `https://instagram.com/${h.replace(/^@/, '')}` },
+    facebook: { label: 'Facebook', badge: 'FB', url: (h) => /^https?:\/\//.test(h) ? h : `https://facebook.com/${h.replace(/^@/, '')}` },
+    whatsapp: { label: 'WhatsApp', badge: 'WA', url: (h) => `https://wa.me/${h.replace(/[^\d]/g, '')}` },
+    telegram: { label: 'Telegram', badge: 'TG', url: (h) => `https://t.me/${h.replace(/^@/, '')}` }
+  };
+  const EXT_KEY = 'agu.contatti';
+  const extDefault = { instagram: { h: '@ombra.e.mare', pub: false }, telegram: { h: '@ombraemare', pub: false }, facebook: { h: '', pub: false }, whatsapp: { h: '', pub: false } };
+  function extLoad() { try { return Object.assign({}, extDefault, JSON.parse(localStorage.getItem(EXT_KEY) || '{}')); } catch (e) { return Object.assign({}, extDefault); } }
+  function extSave(v) { try { localStorage.setItem(EXT_KEY, JSON.stringify(v)); return true; } catch (e) { return false; } }
+  function extCard(type, handle, mine) {
+    const t = EXT[type];
+    return `<div class="contact-card">
+        <span class="ext-badge ext-${type}" aria-hidden="true">${t.badge}</span>
+        <span class="contact-text"><span class="contact-k">${mine ? 'Hai condiviso il tuo' : 'Ti ha condiviso il suo'} ${t.label}</span><strong>${esc(handle)}</strong></span>
+        <a class="btn btn-ghost contact-open" href="${esc(t.url(handle))}" target="_blank" rel="noopener noreferrer">Apri</a>
+      </div>`;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -390,7 +411,7 @@
           return `<button type="button" class="conv" data-i="${i}" aria-current="${i === sel}">
             <span class="ad-avatar">${esc(c.ini)}</span>
             <span class="conv-text"><span style="display:flex;justify-content:space-between;gap:8px"><strong>${esc(c.nome)}</strong><span class="muted" style="font-size:13px">${esc(c.ora)}</span></span>
-            <span class="preview">${last.mine ? 'Tu: ' : ''}${esc(last.testo)}</span></span>
+            <span class="preview">${last.mine ? 'Tu: ' : ''}${last.contact ? `Contatto ${EXT[last.contact.type].label}` : esc(last.testo)}</span></span>
             ${c.nuovi && i !== sel ? `<span class="unread">${c.nuovi}</span>` : ''}
           </button>`;
         }).join('');
@@ -401,9 +422,12 @@
         $('#thread-name').textContent = c.nome;
         $('#thread-sub').textContent = c.sotto;
         $('#thread-link').href = c.link; $('#thread-link').textContent = c.linkLabel;
-        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => `
-          <div class="msg ${m.mine ? 'mine' : ''}"><div class="bubble">${esc(m.testo)}</div><time>${esc(m.ora)}</time></div>`).join('');
+        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => m.contact
+          ? `<div class="msg ${m.mine ? 'mine' : ''} msg-contact">${extCard(m.contact.type, m.contact.h, m.mine)}<time>${esc(m.ora)}</time></div>`
+          : `<div class="msg ${m.mine ? 'mine' : ''}"><div class="bubble">${esc(m.testo)}</div><time>${esc(m.ora)}</time></div>`).join('');
         const body = $('#thread-msgs'); body.scrollTop = body.scrollHeight;
+        // su mobile scorre la pagina, non il riquadro: porta in vista l'ultimo messaggio
+        if (matchMedia('(max-width: 720px)').matches && $('.chat').classList.contains('show-thread')) body.lastElementChild.scrollIntoView({ block: 'end' });
       };
       $('#conv-list').addEventListener('click', (e) => {
         const b = e.target.closest('.conv'); if (!b) return;
@@ -418,6 +442,26 @@
         convs[sel].msgs.push({ mine: true, testo: t, ora }); convs[sel].ora = ora;
         input.value = ''; renderList(); renderThread();
       });
+      // Shortcut: condividi un tuo contatto esterno nella chat
+      const shareDlg = $('#share-dialog');
+      if (shareDlg) {
+        const openShare = () => {
+          const ext = extLoad(); const c = convs[sel];
+          $('#share-to').textContent = `Con ${c.nome}. Scegli quale contatto inviare:`;
+          $('#share-list').innerHTML = Object.keys(EXT).map((k) => ext[k] && ext[k].h
+            ? `<button type="button" class="share-item" data-share="${k}"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span><span class="contact-text"><strong>${EXT[k].label}</strong><span class="muted">${esc(ext[k].h)}</span></span><span class="share-send">Invia</span></button>`
+            : `<a class="share-item is-empty" href="profilo.html#contatti"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span><span class="contact-text"><strong>${EXT[k].label}</strong><span class="muted">Non impostato</span></span><span class="share-send">Aggiungi</span></a>`).join('');
+          shareDlg.showModal();
+        };
+        const closeShare = sheetClose(shareDlg, $('.drawer-head', shareDlg));
+        $('#share-open').addEventListener('click', openShare);
+        $('#share-list').addEventListener('click', (e) => {
+          const b = e.target.closest('[data-share]'); if (!b) return;
+          const ext = extLoad(); const d = new Date(); const ora = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          convs[sel].msgs.push({ mine: true, contact: { type: b.dataset.share, h: ext[b.dataset.share].h }, ora }); convs[sel].ora = ora;
+          renderList(); renderThread(); closeShare();
+        });
+      }
       renderList(); renderThread();
     },
 
@@ -750,6 +794,31 @@
           <p class="muted" style="font-size:14px;margin:0">di ${esc(s.autore)} · ${s.min} min</p>
           </div>
         </article>`).join('');
+    },
+
+    /* ---------- PROFILO: contatti esterni ---------- */
+    profilo() {
+      const form = $('#ext-form'); if (!form) return;
+      const ext = extLoad();
+      Object.keys(EXT).forEach((k) => {
+        form[k].value = ext[k].h || '';
+        $(`[data-public="${k}"]`).setAttribute('aria-checked', !!ext[k].pub);
+      });
+      // Contatti resi visibili sul profilo: compaiono sotto il nome
+      const showPublic = (v) => {
+        const pub = Object.keys(EXT).filter((k) => v[k] && v[k].h && v[k].pub);
+        $('#ext-public').innerHTML = pub.map((k) => `<a class="ext-chip" href="${esc(EXT[k].url(v[k].h))}" target="_blank" rel="noopener noreferrer"><span class="ext-badge ext-${k}" aria-hidden="true">${EXT[k].badge}</span>${esc(v[k].h)}</a>`).join('');
+        $('#ext-public').hidden = !pub.length;
+      };
+      showPublic(ext);
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const v = {};
+        Object.keys(EXT).forEach((k) => { v[k] = { h: form[k].value.trim(), pub: $(`[data-public="${k}"]`).getAttribute('aria-checked') === 'true' }; });
+        if (v.whatsapp.h && v.whatsapp.h.replace(/[^\d]/g, '').length < 8) { $('#ext-saved').textContent = 'Il numero WhatsApp sembra incompleto: scrivilo con il prefisso, per esempio +39 333 1234567.'; form.whatsapp.focus(); return; }
+        $('#ext-saved').textContent = extSave(v) ? 'Contatti salvati. Li trovi nella chat, nel tasto accanto al campo di scrittura.' : 'Non è stato possibile salvarli in questo browser.';
+        showPublic(v);
+      });
     },
 
     /* ---------- LUOGHI ---------- */
