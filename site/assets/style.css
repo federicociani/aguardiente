@@ -215,7 +215,7 @@ p { margin: 0; }
 .cat-link:hover { color: var(--text); border-color: var(--line-2); background: var(--surface-2); }
 
 /* ---------- Home ---------- */
-.hero { display: flex; gap: 56px; align-items: center; flex-wrap: wrap; padding: 72px 0 56px; }
+.hero { display: flex; gap: 56px; align-items: center; flex-wrap: wrap; padding-block: 72px 56px; }
 .hero-copy { flex: 1 1 460px; display: flex; flex-direction: column; gap: 24px; }
 .hero-search { flex: 1 1 360px; max-width: 460px; display: flex; flex-direction: column; gap: 16px; }
 .pre-badge { display: inline-flex; align-self: flex-start; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; color: var(--text-2); }
