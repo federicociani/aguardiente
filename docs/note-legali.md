@@ -30,6 +30,14 @@ Questo documento elenca i punti emersi in fase di progettazione. **Non è una co
 - Avviso in chat: fuori dalla piattaforma non valgono verifica, segnalazioni e blocco.
 - Valutare limiti anti-abuso (es. non condivisibili nel primo messaggio, o solo dopo una risposta) per ridurre spam e adescamento verso altre app.
 
+## Vetrina (contenuti dei creator)
+- Diffusione illecita di immagini sessualmente esplicite (art. 612-ter c.p.): solo contenuti propri; **ogni persona** che compare deve essere maggiorenne, verificata e aver dato il consenso registrato alla pubblicazione (anche il partner).
+- Verifica di identità ed età dei creator con documento e selfie prima della prima pubblicazione; registro dei consensi conservato.
+- Moderazione prima della pubblicazione, hashing per bloccare i contenuti già rimossi, segnalazione e sospensione immediata (DSA, notice & action).
+- Contenuti visibili solo a iscritti verificati; filigrana e blocco del download.
+- Pagamenti ricorrenti per contenuti per adulti: processori dedicati (high risk) e politiche di rimborso chiare.
+- I creator incassano redditi: informare su obblighi fiscali; valutare ritenuta/sostituto d'imposta o reportistica (DAC7).
+
 ## Storie della community
 - Moderazione prima della pubblicazione; regole esplicite: niente minori (neanche come riferimento o ambientazione scolastica), niente incesto, niente violenza o assenza di consenso, niente nomi reali o persone riconoscibili.
 - Ritenere i contenuti testuali come contenuti per adulti ai fini della verifica dell'età: visibili solo agli iscritti verificati.
