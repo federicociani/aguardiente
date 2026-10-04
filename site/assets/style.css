@@ -898,7 +898,8 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .nav-rail { flex-direction: column; gap: 6px; align-items: center; }
 .nav-rail .nav-icon { width: 52px; height: 52px; border-radius: 16px; }
 .nav-rail .nav-icon[aria-current="page"], .nav-rail .nav-icon[aria-current="location"] { background: #3A1230; }
-.nav-rail .nav-tip { top: 50%; left: calc(100% + 10px); transform: translate(-4px, -50%); z-index: 30; }
+/* il tooltip è "fixed" (posizionato via JS) così non viene tagliato dallo scroll della barra */
+.nav-rail .nav-tip { position: fixed; top: var(--tip-y, 0); left: var(--tip-x, 0); transform: translate(-4px, -50%); z-index: 60; }
 .nav-rail .nav-icon:hover .nav-tip, .nav-rail .nav-icon:focus-visible .nav-tip { transform: translate(0, -50%); }
 .nav-icons.nav-guest, .nav-icons.nav-biz { gap: 4px; }
 

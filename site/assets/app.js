@@ -88,6 +88,12 @@
     hd.addEventListener('pointerup', () => { if (y0 === null) return; bookForm.style.transition = ''; bookForm.style.transform = ''; y0 = null; if (dy > 90) setBook(false); });
   }
 
+  /* Tooltip della barra laterale dell'area aziende: posizione calcolata accanto all'icona */
+  $$('.nav-rail .nav-icon').forEach((a) => {
+    const place = () => { const r = a.getBoundingClientRect(); a.style.setProperty('--tip-x', `${r.right + 10}px`); a.style.setProperty('--tip-y', `${r.top + r.height / 2}px`); };
+    a.addEventListener('mouseenter', place); a.addEventListener('focus', place);
+  });
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
