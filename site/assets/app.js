@@ -69,6 +69,31 @@
     byId.forEach((_, id) => spy.observe(document.getElementById(id)));
   }
 
+  /* Scheda struttura su mobile: il modulo di prenotazione si apre dal basso dalla barra fissa */
+  const bookForm = $('#book-form'), bookOpen = $('#book-open');
+  if (bookForm && bookOpen) {
+    const bd = $('#book-backdrop');
+    const setBook = (open) => {
+      bookForm.classList.toggle('is-open', open); bd.hidden = !open; bookOpen.setAttribute('aria-expanded', open);
+      document.documentElement.classList.toggle('sheet-open', open);
+      if (open) { const f = bookForm.querySelector('input, select'); if (f) setTimeout(() => f.focus({ preventScroll: true }), 250); } else bookOpen.focus();
+    };
+    bookOpen.addEventListener('click', () => setBook(true));
+    bd.addEventListener('click', () => setBook(false));
+    $('.book-close', bookForm).addEventListener('click', () => setBook(false));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && bookForm.classList.contains('is-open')) setBook(false); });
+    let y0 = null, dy = 0; const hd = $('.book-head', bookForm);
+    hd.addEventListener('pointerdown', (e) => { if (e.target.closest('button') || !matchMedia('(max-width: 720px)').matches) return; y0 = e.clientY; dy = 0; hd.setPointerCapture(e.pointerId); bookForm.style.transition = 'none'; });
+    hd.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); bookForm.style.transform = `translateY(${dy}px)`; });
+    hd.addEventListener('pointerup', () => { if (y0 === null) return; bookForm.style.transition = ''; bookForm.style.transform = ''; y0 = null; if (dy > 90) setBook(false); });
+  }
+
+  /* Tooltip della barra laterale dell'area aziende: posizione calcolata accanto all'icona */
+  $$('.nav-rail .nav-icon').forEach((a) => {
+    const place = () => { const r = a.getBoundingClientRect(); a.style.setProperty('--tip-x', `${r.right + 10}px`); a.style.setProperty('--tip-y', `${r.top + r.height / 2}px`); };
+    a.addEventListener('mouseenter', place); a.addEventListener('focus', place);
+  });
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
@@ -88,11 +113,14 @@
   const VIS_LABEL = { tutti: 'Visibile a tutti', verificati: 'Solo profili verificati', sfocata: 'Sfocata fino al contatto' };
   const ICON_LOCK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
   function profileOf(nick) { return (D.profili || []).find((p) => p.nick === nick); }
+  // Avatar con foto di esempio se disponibile, altrimenti iniziali
+  function photoOf(nick) { const p = profileOf(nick); return (p && p.foto && p.foto.id) || (D.avatar && D.avatar[nick]) || null; }
+  function av(nick, ini, cls = 'ad-avatar', size = 120) {
+    const id = photoOf(nick);
+    return id ? `<span class="${cls}"><img src="${D.unsplash(id, size, size)}" alt="" loading="lazy"></span>` : `<span class="${cls}">${esc(ini || '')}</span>`;
+  }
   function avatarHTML(a, cls = 'ad-avatar') {
-    const prof = profileOf(a.nick);
-    return prof && prof.foto
-      ? `<span class="${cls}"><img src="${D.unsplash(prof.foto.id, 120, 120)}" alt="" loading="lazy"></span>`
-      : `<span class="${cls}">${esc(a.ini)}</span>`;
+    return av(a.nick, a.ini, cls);
   }
   // "Oggi • Verificato": data di pubblicazione e, se c'è, la verifica del profilo
   function metaHTML(a) {
@@ -149,7 +177,7 @@
         </div>
         <div class="ad-body">
           <div class="ad-head">
-            <span class="ad-avatar">${esc(e.ini)}</span>
+            ${av(e.locale, e.ini)}
             <div class="ad-who"><strong><a class="ad-link-plain" href="${e.link}">${esc(e.locale)}</a></strong><span class="muted">${esc(e.citta)}</span></div>
           </div>
           <span class="ad-meta">${e.cert ? `<span class="meta-ver">${ICON_SEAL}Certificato</span>` : '<span class="muted">Locale</span>'}</span>
@@ -158,7 +186,7 @@
           <p class="muted">${esc(e.testo)}</p>
           <div class="ad-foot">
             <span class="price">${eur(e.prevendita)} <s class="muted">${eur(e.ingresso)}</s></span>
-            <button class="btn btn-primary" type="button" data-ticket="${e.id}">Partecipa</button>
+            <button class="btn btn-ghost" type="button" data-ticket="${e.id}">Partecipa</button>
           </div>
         </div>
       </article>`).join('');
@@ -171,7 +199,7 @@
       const k = tab.dataset.tab;
       $('#latest-ads').hidden = k !== 'annunci'; $('#latest-events').hidden = k !== 'eventi';
       $('#bacheca-title').textContent = copy[k][0];
-      $('#bacheca-link').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
+      $('#bacheca-link span').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
     };
     tabs.forEach((t) => t.addEventListener('click', () => select(t)));
     $('.home-tabs').addEventListener('keydown', (e) => {
@@ -325,12 +353,23 @@
   if (document.body.hasAttribute('data-gate') && !isIn()) {
     document.body.classList.add('is-gated');
     const next = encodeURIComponent(location.pathname.split('/').pop() + location.search);
+    // Titolo e testo del pannello con il nome della sezione
+    const q = new URLSearchParams(location.search);
+    const room = D.webcam && D.webcam.stanze.find((r) => r.id === q.get('id'));
+    const story = D.storie && D.storie.find((x) => x.id === q.get('id'));
+    const G = {
+      vetrina: ['Entra per vedere la Vetrina', 'Foto e video dei creator sono riservati agli iscritti che hanno verificato età e identità.'],
+      webcam: ['Entra per vedere le Webcam', 'Le dirette dei creator sono riservate agli iscritti che hanno verificato età e identità.'],
+      live: [room ? `Entra per vedere la diretta di ${room.nick}` : 'Entra per vedere questa diretta', 'Le dirette dei creator sono riservate agli iscritti che hanno verificato età e identità.'],
+      storie: ['Entra per leggere le Storie', 'I racconti della community sono riservati agli iscritti che hanno verificato età e identità.'],
+      storia: [story ? `Entra per leggere “${story.titolo}”` : 'Entra per leggere questa storia', 'I racconti della community sono riservati agli iscritti che hanno verificato età e identità.']
+    }[document.body.dataset.page] || ['Entra per vedere questa sezione', 'Questa sezione è riservata agli iscritti che hanno verificato età e identità.'];
     document.body.insertAdjacentHTML('beforeend', `
       <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
         <div class="gate-card">
           <p class="eyebrow">Solo maggiorenni verificati</p>
-          <h2 id="gate-title">Entra per vedere questa sezione</h2>
-          <p class="muted">Vetrina, webcam e storie sono riservate agli iscritti che hanno verificato età e identità. L’iscrizione è gratuita.</p>
+          <h2 id="gate-title">${esc(G[0])}</h2>
+          <p class="muted">${esc(G[1])} L’iscrizione è gratuita.</p>
           <a class="btn btn-primary btn-lg btn-block" href="iscrizione.html?next=${next}">Entra o iscriviti</a>
           <button class="btn btn-ghost btn-block" type="button" data-gate-ok>Ho già un account (prototipo)</button>
           <a class="gate-back" href="index.html">Torna alla home</a>
@@ -418,7 +457,7 @@
         $('#res-count').textContent = `${items.length} profili corrispondono ai filtri`;
         $('#results').innerHTML = items.length ? items.map((p) => `
           <article class="card profile-card">
-            <div class="photo">${esc(p.ini)}
+            <div class="photo">${p.foto ? `<img src="${D.unsplash(p.foto.id, 420, 400)}" alt="" loading="lazy" decoding="async">` : esc(p.ini)}
               ${p.online ? '<span class="tag-online"><span class="online-dot"></span>Online</span>' : ''}
               ${p.ver ? `<span class="tag-ver" aria-label="Verificato" style="color:#fff">${ICON_CHECK}</span>` : ''}
             </div>
@@ -427,7 +466,7 @@
               <span class="muted">${esc(p.tipo)}, ${esc(p.eta)}, ${esc(p.citta)}</span>
               <span style="color:var(--text-2)">Cerca: ${esc(p.cerca)}</span>
               <div class="row">
-                <a class="btn btn-primary" style="flex:1" href="messaggi.html">Scrivi</a>
+                <a class="btn btn-ghost" style="flex:1" href="messaggi.html">Scrivi</a>
                 <button type="button" class="btn btn-ghost btn-icon like" data-nick="${esc(p.nick)}" aria-pressed="${liked.has(p.nick)}" aria-label="Mi piace">${ICON_HEART}</button>
               </div>
             </div>
@@ -460,7 +499,7 @@
         $('#conv-list').innerHTML = convs.map((c, i) => {
           const last = c.msgs[c.msgs.length - 1];
           return `<button type="button" class="conv" data-i="${i}" aria-current="${i === sel}">
-            <span class="ad-avatar">${esc(c.ini)}</span>
+            ${av(c.nome, c.ini)}
             <span class="conv-text"><span style="display:flex;justify-content:space-between;gap:8px"><strong>${esc(c.nome)}</strong><span class="muted" style="font-size:13px">${esc(c.ora)}</span></span>
             <span class="preview">${last.mine ? 'Tu: ' : ''}${last.contact ? `Contatto ${EXT[last.contact.type].label}` : esc(last.testo)}</span></span>
             ${c.nuovi && i !== sel ? `<span class="unread">${c.nuovi}</span>` : ''}
@@ -469,7 +508,7 @@
       };
       const renderThread = () => {
         const c = convs[sel];
-        $('#thread-ini').textContent = c.ini;
+        $('#thread-ini').innerHTML = photoOf(c.nome) ? `<img src="${D.unsplash(photoOf(c.nome), 120, 120)}" alt="">` : esc(c.ini);
         $('#thread-name').textContent = c.nome;
         $('#thread-sub').textContent = c.sotto;
         $('#thread-link').href = c.link; $('#thread-link').textContent = c.linkLabel;
@@ -722,7 +761,7 @@
           ${o.nota ? `<p class="offer-note">${esc(o.nota)}</p>` : ''}
           <div class="ad-foot">
             <span class="price">${eur(o.prezzo)}${o.listino ? ` <s class="muted">${eur(o.listino)}</s>` : ''}</span>
-            <button class="btn btn-primary" type="button" data-buy="${o.id}">${o.prezzo === 0 ? 'Riserva' : 'Acquista'}</button>
+            <button class="btn btn-ghost" type="button" data-buy="${o.id}">${o.prezzo === 0 ? 'Riserva' : 'Acquista'}</button>
           </div>
         </article>`).join('');
 
@@ -761,7 +800,7 @@
           <div class="chips">${g.voci.map((v) => `<button type="button" class="pill" data-cat="${esc(v)}" aria-pressed="false">${esc(v)}${count(v) ? ` <span class="pill-n">${count(v)}</span>` : ''}</button>`).join('')}</div>
         </div>`).join('');
       $('#st-authors').innerHTML = D.storieAutori.map((a, i) => `
-        <li><span class="rank">${i + 1}</span><span class="ad-avatar">${esc(a.ini)}</span><span class="author-text"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${a.storie} storie</span></span></li>`).join('');
+        <li><span class="rank">${i + 1}</span>${av(a.nick, a.ini)}<span class="author-text"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${a.storie} storie</span></span></li>`).join('');
       $('#st-tags').innerHTML = D.storieTag.map((t) => `<button type="button" class="tag" data-q="${esc(t)}">#${esc(t)}</button>`).join('');
 
       const card = (x) => `
@@ -773,7 +812,7 @@
           <p class="muted story-excerpt">${esc(x.estratto)}</p>
           <p class="story-tags">${x.tag.map((t) => `#${esc(t)}`).join(' ')}</p>
           <div class="story-meta">
-            <span class="ad-avatar">${esc(x.ini)}</span>
+            ${av(x.autore, x.ini)}
             <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
             <span class="story-stats"><span aria-label="${x.like} mi piace">${ICON_HEART_S}${x.like}</span><span aria-label="${x.commenti} commenti">${ICON_COMMENT}${x.commenti}</span></span>
           </div>
@@ -814,7 +853,7 @@
           <span class="cat-label">${esc(x.cat)}</span>
           <h1>${esc(x.titolo)}</h1>
           <div class="story-meta">
-            <span class="ad-avatar">${esc(x.ini)}</span>
+            ${av(x.autore, x.ini)}
             <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
           </div>
         </header>
@@ -832,7 +871,7 @@
         { ini: 'NO', nick: 'Notturna', quando: '2 ore fa', testo: 'Scritta benissimo, mi hai fatto venire voglia di riprovarci.' },
         { ini: 'GE', nick: 'Giulia & Enri', quando: 'ieri', testo: 'Ci siamo ritrovati in tante cose. Aspettiamo il seguito!' }
       ];
-      const renderC = () => { $('#st-comments').innerHTML = comments.map((c) => `<div class="comment"><span class="ad-avatar">${esc(c.ini)}</span><div><strong>${esc(c.nick)}</strong> <span class="muted">${esc(c.quando)}</span><p>${esc(c.testo)}</p></div></div>`).join(''); };
+      const renderC = () => { $('#st-comments').innerHTML = comments.map((c) => `<div class="comment">${av(c.nick, c.ini)}<div><strong>${esc(c.nick)}</strong> <span class="muted">${esc(c.quando)}</span><p>${esc(c.testo)}</p></div></div>`).join(''); };
       $('#st-comment-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('input', e.currentTarget); if (!i.value.trim()) return; comments.push({ ini: 'OM', nick: 'Ombra & Mare', quando: 'ora', testo: i.value.trim() }); i.value = ''; renderC(); });
       renderC();
       $('#st-more').innerHTML = D.storie.filter((s) => s.id !== x.id).slice(0, 3).map((s) => `
@@ -890,7 +929,7 @@
               <span class="creator-av"><img src="${D.unsplash(c.foto, 120, 120)}" alt="" loading="lazy"></span>
               <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_CHECK}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
               <p class="muted" style="margin:0">${esc(c.bio)}</p>
-              <button class="btn ${subs.has(c.id) ? 'btn-ghost' : 'btn-primary'}" type="button" data-sub="${c.id}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
+              <button class="btn btn-ghost" type="button" data-sub="${c.id}" aria-pressed="${subs.has(c.id)}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
             </div>
           </article>`).join('');
       };
@@ -923,8 +962,8 @@
         $('#vt-d-actions').innerHTML = ok
           ? `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-like>Mi piace</button>`
           : p.accesso === 'ppv'
-            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
-            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
+            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary btn-cta" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
+            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary btn-cta" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
         if (!dlg.open) dlg.showModal();
       };
       document.addEventListener('click', (e) => {
@@ -1016,7 +1055,7 @@
       add('Aguardiente', 'Benvenuto nella diretta. Rispetta il creator: niente richieste insistenti, niente dati personali.', 'is-system');
       const hearts = (n) => { if (reduceMotion) return; for (let i = 0; i < Math.min(n / 5, 8); i++) { const h = document.createElement('span'); h.className = 'heart'; h.style.left = `${20 + Math.random() * 60}%`; h.style.animationDelay = `${i * 120}ms`; $('#rm-hearts').appendChild(h); setTimeout(() => h.remove(), 2200); } };
       const tip = (n) => {
-        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
+        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary btn-cta" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
         crSet(crGet() - n); goal += n; add('Tu', `hai mandato ${n} crediti`, 'is-tip'); hearts(n); paint();
         if (goal >= r.goal.target && goal - n < r.goal.target) add('Aguardiente', `Obiettivo raggiunto: ${r.goal.label}!`, 'is-system');
       };
@@ -1027,7 +1066,7 @@
         if (t) tip(+t.dataset.tip);
         if (tp) { crSet(crGet() + 100); paint(); if (dlg.open) dlg.close(); add('Aguardiente', 'Ricarica di 100 crediti completata (simulata).', 'is-system'); }
         if (cl) dlg.close();
-        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-private-ok>Invia richiesta</button>`);
+        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary btn-cta" type="button" data-private-ok>Invia richiesta</button>`);
         if (ok) { dlg.close(); add('Tu', 'hai chiesto uno show privato', 'is-tip'); setTimeout(() => add(r.nick, 'Ricevuto! Finisco il goal e ti scrivo 😉'), 1500); }
       });
       dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
@@ -1045,7 +1084,7 @@
         const items = cat === 'Tutti' ? D.luoghi : D.luoghi.filter((p) => p.cat === cat);
         $('#places').innerHTML = items.map((p) => `
           <a class="card place" href="${p.link || 'scheda.html'}">
-            <div class="photo"><span class="photo-label">[FOTO]</span>${p.offerta ? `<span class="badge badge-grad">${esc(p.offerta)}</span>` : ''}</div>
+            <div class="photo">${p.img ? `<img src="${D.unsplash(p.img, 640, 360)}" alt="" loading="lazy" decoding="async">` : ''}${p.offerta ? `<span class="badge badge-grad">${esc(p.offerta)}</span>` : ''}</div>
             <div class="body">
               <div style="display:flex;justify-content:space-between;gap:12px"><span class="muted" style="font-size:14px">${esc(p.cat)}</span>${p.shop ? `<span class="badge">${ICON_CHECK}Shop online</span>` : certHTML(false)}</div>
               <h3>${esc(p.nome)}</h3>

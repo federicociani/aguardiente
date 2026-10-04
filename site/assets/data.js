@@ -25,15 +25,15 @@ window.DATA = {
       foto: { id: '1570135497084-0debfc780ed8', autore: 'Ivan Moncada', user: 'ivamoncadar', pagina: 'LiKS9KCaWOA' }, citta: 'Ravenna', cerca: 'coppia', online: true, ver: true },
     { ini: 'S', nick: 'Sole_83', tipo: 'Lei', eta: '41',
       foto: { id: '1586211082529-b7c6b640abff', autore: 'Jorge Salvador', user: 'jsshotz', pagina: 'vVINLKZtGOI' }, citta: 'Cesena', cerca: 'coppia', online: true, ver: true },
-    { ini: 'D', nick: 'Davide_RA', tipo: 'Lui', eta: '38', citta: 'Lugo', cerca: 'coppia, lei', online: false, ver: true },
+    { ini: 'D', nick: 'Davide_RA', tipo: 'Lui', eta: '38', citta: 'Lugo', cerca: 'coppia, lei', online: false, ver: true, foto: { id: '1578977826019-5141d8ff5870' } },
     { ini: 'GE', nick: 'Giulia & Enri', tipo: 'Coppia', eta: '45/47',
       foto: { id: '1749855333713-0f4ad9d033e3', autore: 'Tim Mossholder', user: 'timmossholder', pagina: 'FBC2hoZaPuI' }, citta: 'Forlì', cerca: 'coppia', online: true, ver: true },
     { ini: 'K', nick: 'Kira.rn', tipo: 'Lei', eta: '29',
       foto: { id: '1606459310278-169d12230046', autore: 'Suvi Honkanen', user: 'suvihelena', pagina: 'oIi4sJZNSK8' }, citta: 'Rimini', cerca: 'lui', online: true, ver: false },
-    { ini: 'AR', nick: 'Ale e Robi', tipo: 'Coppia', eta: '29/31', citta: 'Rimini', cerca: 'coppia, lei', online: false, ver: false },
+    { ini: 'AR', nick: 'Ale e Robi', tipo: 'Coppia', eta: '29/31', citta: 'Rimini', cerca: 'coppia, lei', online: false, ver: false, foto: { id: '1426543881949-cbd9a76740a4' } },
     { ini: 'N', nick: 'Nikki', tipo: 'Trans', eta: '32',
       foto: { id: '1617290337590-4c7d02c99a45', autore: 'Bobbi Wu', user: 'bobbiwu', pagina: '55LBec8jP9M' }, citta: 'Bologna', cerca: 'lui, coppia', online: true, ver: true },
-    { ini: 'PA', nick: 'Paola & Andrea', tipo: 'Coppia', eta: '50/52', citta: 'Faenza', cerca: 'coppia', online: false, ver: true }
+    { ini: 'PA', nick: 'Paola & Andrea', tipo: 'Coppia', eta: '50/52', citta: 'Faenza', cerca: 'coppia', online: false, ver: true, foto: { id: '1568815641398-b3f655da2f8a' } }
   ],
 
   /* Foto Unsplash (licenza Unsplash, uso gratuito): silhouette senza volti riconoscibili */
@@ -64,13 +64,40 @@ window.DATA = {
   ],
 
   luoghi: [
-    { nome: 'Villa Ombrosa', cat: 'Struttura friendly', citta: 'Brisighella (RA)', descr: 'B&B adults only in collina, 6 camere, piscina riservata agli ospiti.', offerta: '-15% iscritti' },
-    { nome: 'Velluto Boutique', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Rimini', descr: 'Lingerie, accessori e giochi, con consulenza in negozio e spedizione discreta.', offerta: '-10% iscritti' },
-    { nome: 'Club Ventaglio', link: 'locale.html', cat: 'Club', citta: 'Bologna', descr: 'Locale privé con serate a tema il venerdì e il sabato.', offerta: 'Ingresso coppie omaggio' },
-    { nome: 'Loft sul Canale', cat: 'Spazio privato', citta: 'Ravenna', descr: 'Appartamento di un host verificato, check-in registrato.', offerta: '' },
-    { nome: 'Agriturismo Le Fosse', cat: 'Struttura friendly', citta: 'Bertinoro (FC)', descr: 'Suite indipendenti e cena su prenotazione.', offerta: 'Late check-out' },
-    { nome: 'Desiderio Store', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Online', descr: 'Shop online con codice sconto dedicato alla community.', offerta: '-20% primo ordine' }
+    { nome: 'Villa Ombrosa', img: '1606259458027-54d2a728b6ab', cat: 'Struttura friendly', citta: 'Brisighella (RA)', descr: 'B&B adults only in collina, 6 camere, piscina riservata agli ospiti.', offerta: '-15% iscritti' },
+    { nome: 'Velluto Boutique', img: '1707587683483-65eb5595b5af', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Rimini', descr: 'Lingerie, accessori e giochi, con consulenza in negozio e spedizione discreta.', offerta: '-10% iscritti' },
+    { nome: 'Club Ventaglio', img: '1468056961052-15507578a50d', link: 'locale.html', cat: 'Club', citta: 'Bologna', descr: 'Locale privé con serate a tema il venerdì e il sabato.', offerta: 'Ingresso coppie omaggio' },
+    { nome: 'Loft sul Canale', img: '1634393653736-98a63fb73742', cat: 'Spazio privato', citta: 'Ravenna', descr: 'Appartamento di un host verificato, check-in registrato.', offerta: '' },
+    { nome: 'Agriturismo Le Fosse', img: '1597075687490-8f673c6c17f6', cat: 'Struttura friendly', citta: 'Bertinoro (FC)', descr: 'Suite indipendenti e cena su prenotazione.', offerta: 'Late check-out' },
+    { nome: 'Desiderio Store', img: '1654512041772-446bd165a3b3', link: 'shop.html', shop: true, cat: 'Boutique', citta: 'Online', descr: 'Shop online con codice sconto dedicato alla community.', offerta: '-20% primo ordine' }
   ],
+
+  /* Foto di esempio per profili, locali e autori (Unsplash): usate ovunque serva un avatar */
+  avatar: {
+    'Luna & Matteo': '1570135497084-0debfc780ed8',
+    'Sole_83': '1586211082529-b7c6b640abff',
+    'Giulia & Enri': '1749855333713-0f4ad9d033e3',
+    'Kira.rn': '1606459310278-169d12230046',
+    'Nikki': '1617290337590-4c7d02c99a45',
+    'Davide_RA': '1578977826019-5141d8ff5870',
+    'Ale e Robi': '1426543881949-cbd9a76740a4',
+    'Paola & Andrea': '1568815641398-b3f655da2f8a',
+    'Marta.bo': '1617055407123-3d7130c1f940',
+    'Ombra & Mare': '1755884684493-16b21f4adf96',
+    'Ombra_e_Mare': '1755884684493-16b21f4adf96',
+    'Penna_Rossa': '1612744192242-35cd7a7d35e6',
+    'Notturna': '1555515597-a1f74be3beb8',
+    'Duesumare': '1615966650071-855b15f29ad1',
+    'Viaggiatore_72': '1594684199092-e84f8cd802c2',
+    'Lei_che_scrive': '1594734415578-00fc9540929b',
+    'Villa Ombrosa': '1606259458027-54d2a728b6ab',
+    'Club Ventaglio': '1468056961052-15507578a50d',
+    'Bar Lanterna': '1543007630-9710e4a00a20',
+    'Velluto Boutique': '1707587683483-65eb5595b5af',
+    'Agriturismo Le Fosse': '1597075687490-8f673c6c17f6',
+    'Loft sul Canale': '1634393653736-98a63fb73742',
+    'Desiderio Store': '1654512041772-446bd165a3b3'
+  },
 
   /* Shop online delle attività (prezzi di esempio; foto Unsplash, licenza gratuita) */
   shop: {

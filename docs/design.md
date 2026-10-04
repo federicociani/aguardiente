@@ -13,8 +13,8 @@
 | `--text-2` | `#D6BEC6` | Testo secondario |
 | `--muted` | `#BC9DA8` | Didascalie |
 | `--accent` | `#FF6B8F` | Link, icone, etichette |
-| `--grad` | `#7B2FF7 → #D61E52` | Bottoni primari, stati attivi |
-| `--grad-deep` | `#4E1A9E → #9E1238` | Card in evidenza |
+| `--grad` | `#9E1238 → #770303` | Bottoni primari, stati attivi |
+| `--grad-deep` | `#770303 → #9E1238` | Card in evidenza |
 
 Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a sinistra). Le pagine Business (`body.business`) invertono la posizione dei bagliori per distinguersi.
 
@@ -23,9 +23,20 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
-## CTA (`.btn-primary`)
+## Badge
 
-Fondo quasi nero, bordo sottile e due scie di luce opposte (viola `#6400c9` → lilla `#B57BFF`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
+Tutti i badge ed etichette su foto (`.badge`, `.cert`, `.vt-pill`, `.live-badge`, `.ad-cover-tag`, `.photo-tag`, `.logo-tag`…) usano Inter 500, maiuscolo, `letter-spacing: .06em`, corpo 11px.
+
+## Bottoni
+
+- **Un solo `.btn-primary` per schermata** (ogni finestra/pannello conta come schermata a sé): pieno con `--grad`. Tutte le altre azioni sono `.btn-ghost`.
+- **`.btn-cta`** si aggiunge al primario solo per le azioni importanti o di pagamento (Paga, Vai al pagamento, Conferma acquisto, Sblocca, Abbonati, Richiedi disponibilità, Show privato, Ricarica crediti, conferma degli extra): attiva l'effetto delle scie descritto sotto.
+
+- **Link "vedi tutti" e "torna a"**: `.btn .btn-ghost .btn-sm` con freccia, `.btn-more` (freccia a destra, si sposta al passaggio del mouse) e `.btn-back` (freccia a sinistra). Niente sottolineatura.
+
+## CTA con scie (`.btn-cta`)
+
+Fondo quasi nero, bordo sottile e due scie di luce opposte (`#770303` → `#E04A6E`, derivati da `#9E1238` e `#770303`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
 
 ## Testo
 
@@ -56,9 +67,13 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 Tutti i menu di navigazione usano solo icone, mai parole visibili: stesso stile (24px, tratto 1,8), contorno a riposo e **piena** quando la pagina o la sezione è quella attiva (`aria-current="page"` per le pagine, `aria-current="location"` per le sezioni della stessa pagina, aggiornato allo scroll). Ogni icona ha `aria-label`; su desktop il nome compare come tooltip al passaggio del mouse o con Tab.
 
 - Utente: Annunci, Cerca, Pubblica, Storie, Vetrina, Webcam, Messaggi (+ avatar profilo)
-- Home pubblica: Annunci, Cerca profili, Storie, Vetrina, Webcam, Come funziona, Per le aziende (+ CTA Entra)
+- Home pubblica: Annunci, Cerca profili, Storie, Vetrina, Webcam, Come funziona (icona info), Per le aziende (+ CTA Entra)
 - Business: Come funziona, Per i locali, Eventi, Come guadagni, Piani, Area aziende (+ CTA Registra l’attività su desktop)
 - Area aziende: rail verticale su desktop, riga che scorre su mobile
+
+## Foto di esempio
+
+Ogni avatar, profilo, locale e galleria usa una foto di esempio (Unsplash, mappa `D.avatar` in `data.js` per nickname e locali; campo `foto`/`img` per profili, luoghi, annunci, storie, prodotti). Le iniziali restano solo come ripiego se manca la foto.
 
 ## Sezioni riservate
 
@@ -71,6 +86,7 @@ Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel men
 - **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.
 - **Cerca**: i filtri si aprono con il tasto "Filtri"; profili su due colonne.
+- **Scheda struttura**: barra fissa in basso con prezzo e "Richiedi"; il modulo di prenotazione si apre dal basso (chiusura con X, tocco fuori, Esc o trascinando giù).
 - **Shop**: prodotti su due colonne; il carrello è un'icona nella navbar (piena con badge quando contiene articoli) che apre un pannello dal basso, trascinabile per chiuderlo. Su desktop lo stesso pannello si apre da destra.
 - **Dashboard**: il menu laterale diventa una riga che scorre sotto il logo.
 - Margini di sicurezza per notch e barra home (`env(safe-area-inset-*)`, `viewport-fit=cover`).

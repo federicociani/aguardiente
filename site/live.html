@@ -6,7 +6,7 @@
   <title>Aguardiente · Diretta</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610041301">
+  <link rel="stylesheet" href="assets/style.css?v=202610041824">
 </head>
 <body data-page="live" data-gate>
   <header class="site-header">
@@ -21,12 +21,12 @@
       <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
     </nav>
     <div class="header-actions">
-      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo"><img src="https://images.unsplash.com/photo-1755884684493-16b21f4adf96?w=96&amp;h=96&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70" alt=""></a>
     </div>
   </header>
 
   <main class="container room">
-    <a href="webcam.html" style="display:inline-block;padding:12px 0">Tutte le dirette</a>
+    <a class="btn btn-ghost btn-sm btn-back" href="webcam.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Tutte le dirette</span></a>
     <div class="room-grid">
       <section class="room-stage" aria-label="Diretta">
         <div class="stage" id="rm-stage">
@@ -46,13 +46,13 @@
         <div class="tips">
           <span class="wallet" id="rm-wallet"></span>
           <div class="tip-btns" id="rm-tips"></div>
-          <button class="btn btn-primary" type="button" id="rm-private"></button>
+          <button class="btn btn-primary btn-cta" type="button" id="rm-private"></button>
         </div>
       </section>
       <aside class="room-chat card" aria-label="Chat della diretta">
         <h2 style="font-size:20px">Chat</h2>
         <div class="room-msgs" id="rm-msgs" aria-live="polite"></div>
-        <form class="room-composer" id="rm-form"><label class="sr-only" for="rm-input">Scrivi in chat</label><input id="rm-input" type="text" placeholder="Scrivi in chat" autocomplete="off" maxlength="140"><button class="btn btn-primary btn-icon" type="submit" aria-label="Invia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button></form>
+        <form class="room-composer" id="rm-form"><label class="sr-only" for="rm-input">Scrivi in chat</label><input id="rm-input" type="text" placeholder="Scrivi in chat" autocomplete="off" maxlength="140"><button class="btn btn-ghost btn-icon" type="submit" aria-label="Invia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button></form>
       </aside>
     </div>
   </main>
@@ -75,7 +75,7 @@
       </nav>
     </div>
   </footer>
-  <script src="assets/data.js?v=202610041301"></script>
-  <script src="assets/app.js?v=202610041301"></script>
+  <script src="assets/data.js?v=202610041824"></script>
+  <script src="assets/app.js?v=202610041824"></script>
 </body>
 </html>
