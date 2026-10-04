@@ -833,6 +833,83 @@
       });
     },
 
+    /* ---------- VETRINA: creator, contenuti gratis / a pagamento / per abbonati ---------- */
+    vetrina() {
+      const V = D.vetrina; const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+      const unlocked = new Set(); const subs = new Set();
+      const cr = (id) => V.creator.find((c) => c.id === id);
+      const canSee = (p) => p.accesso === 'free' || unlocked.has(p.id) || (p.accesso === 'sub' && subs.has(p.creator));
+      const LOCK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+      const PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>';
+      const label = (p) => p.accesso === 'free' ? 'Gratis' : p.accesso === 'ppv' ? eur(p.prezzo) : 'Abbonati';
+
+      const renderCreators = () => {
+        $('#vt-creators').innerHTML = V.creator.map((c) => `
+          <article class="card creator-card">
+            <div class="creator-cover"><img src="${D.unsplash(c.foto, 600, 400)}" alt="" loading="lazy"></div>
+            <div class="creator-body">
+              <span class="creator-av"><img src="${D.unsplash(c.foto, 120, 120)}" alt="" loading="lazy"></span>
+              <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_CHECK}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
+              <p class="muted" style="margin:0">${esc(c.bio)}</p>
+              <button class="btn ${subs.has(c.id) ? 'btn-ghost' : 'btn-primary'}" type="button" data-sub="${c.id}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
+            </div>
+          </article>`).join('');
+      };
+      let filtro = 'Tutti';
+      const renderGrid = () => {
+        const f = { 'Tutti': () => true, 'Foto': (p) => p.tipo === 'foto', 'Video': (p) => p.tipo === 'video', 'Gratis': (p) => p.accesso === 'free', 'A pagamento': (p) => p.accesso === 'ppv', 'Per abbonati': (p) => p.accesso === 'sub' }[filtro];
+        const list = V.post.filter(f);
+        $('#vt-count').textContent = `${list.length} contenuti`;
+        $('#vt-grid').innerHTML = list.map((p) => {
+          const c = cr(p.creator), ok = canSee(p);
+          return `<button type="button" class="vt-tile${ok ? '' : ' is-locked'}" data-post="${p.id}" aria-label="${esc(p.titolo)} di ${esc(c.nick)}, ${ok ? 'visibile' : label(p)}">
+            <img src="${D.unsplash(p.img, 500, 625)}" alt="" loading="lazy" decoding="async">
+            <span class="vt-top">${p.tipo === 'video' ? `<span class="vt-pill">${PLAY}${esc(p.durata)}</span>` : '<span class="vt-pill">Foto</span>'}<span class="vt-pill ${p.accesso === 'free' ? 'is-free' : ''}">${ok && p.accesso !== 'free' ? 'Sbloccato' : label(p)}</span></span>
+            ${ok ? '' : `<span class="vt-lock">${LOCK}</span>`}
+            <span class="vt-foot"><span class="vt-av"><img src="${D.unsplash(c.foto, 80, 80)}" alt=""></span><span><strong>${esc(p.titolo)}</strong><br>${esc(c.nick)}</span></span>
+          </button>`;
+        }).join('');
+      };
+      pills($('#vt-filters'), ['Tutti', 'Foto', 'Video', 'Gratis', 'A pagamento', 'Per abbonati'], (k) => { filtro = k; renderGrid(); });
+      renderCreators();
+
+      const dlg = $('#vt-dialog'); let cur = null;
+      const openPost = (p) => {
+        cur = p; const c = cr(p.creator), ok = canSee(p);
+        $('#vt-d-media').className = 'vt-d-media' + (ok ? '' : ' is-locked');
+        $('#vt-d-media').innerHTML = `<img src="${D.unsplash(p.img, 900, 1125)}" alt="">${ok ? '' : `<span class="vt-lock">${LOCK}</span>`}`;
+        $('#vt-d-creator').innerHTML = `<span class="vt-av"><img src="${D.unsplash(c.foto, 80, 80)}" alt=""></span><span><strong>${esc(c.nick)}</strong><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)}</span></span>`;
+        $('#vt-d-title').textContent = p.titolo;
+        $('#vt-d-info').textContent = `${p.tipo === 'video' ? `Video, ${p.durata}` : 'Foto'} · ${p.like} mi piace`;
+        $('#vt-d-actions').innerHTML = ok
+          ? `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-like>Mi piace</button>`
+          : p.accesso === 'ppv'
+            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
+            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
+        if (!dlg.open) dlg.showModal();
+      };
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-post]'), b = e.target.closest('[data-buy]'), sb = e.target.closest('[data-sub]'), lk = e.target.closest('[data-like]'), cl = e.target.closest('#vt-dialog [data-close]');
+        if (t) openPost(V.post.find((p) => p.id === t.dataset.post));
+        if (b) { unlocked.add(b.dataset.buy); renderGrid(); openPost(cur); }
+        if (sb) { const id = sb.dataset.sub; subs.has(id) ? subs.delete(id) : subs.add(id); renderCreators(); renderGrid(); if (dlg.open && cur) openPost(cur); }
+        if (lk) { lk.textContent = 'Ti piace'; lk.disabled = true; }
+        if (cl) dlg.close();
+      });
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+      // Form "Nuovo contenuto"
+      const form = $('#vt-form');
+      form.addEventListener('change', () => { $('#vt-price').hidden = form.accesso.value !== 'ppv'; });
+      $('#vt-file').addEventListener('change', (e) => { const n = e.target.files.length; $('#vt-file-msg').textContent = n ? `${n} ${n === 1 ? 'file selezionato' : 'file selezionati'}` : 'JPG, PNG, WEBP, MP4 o MOV. Puoi selezionarne più di uno.'; });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); const m = $('#vt-sent'); m.hidden = false;
+        if (!form.c1.checked || !form.c2.checked) { m.textContent = 'Per pubblicare devi confermare le due dichiarazioni sul consenso e sulla moderazione.'; return; }
+        const acc = { free: 'gratis per gli iscritti verificati', ppv: `a pagamento (${eur(+form.prezzo.value || 0)})`, sub: 'solo per gli abbonati' }[form.accesso.value];
+        m.textContent = `Inviato alla moderazione: sarà ${acc}. Ti avvisiamo appena è online.`;
+      });
+    },
+
     /* ---------- LUOGHI ---------- */
     luoghi() {
       const render = (cat) => {

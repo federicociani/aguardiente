@@ -34,6 +34,7 @@ python3 -m http.server --directory site 8080
 │  ├─ annunci.html          bacheca annunci con filtri per categoria
 │  ├─ annuncio.html         annuncio singolo (?id=…)
 │  ├─ pubblica.html         pubblica un annuncio con foto di lancio
+│  ├─ vetrina.html          vetrina dei creator (foto e video gratis o a pagamento)
 │  ├─ storie.html           storie della community
 │  ├─ storia.html           storia singola (?id=…)
 │  ├─ cerca.html            ricerca profili
