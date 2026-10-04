@@ -94,6 +94,32 @@
     a.addEventListener('mouseenter', place); a.addEventListener('focus', place);
   });
 
+  /* ---------- Animazioni allo scroll: entrata ed uscita morbide, anche sui testi ----------
+     Si applicano a titoli, testi, card e voci delle griglie; i fratelli entrano con un piccolo sfasamento. */
+  const ANIM_SEL = ['main h1', 'main h2', 'main .lead', 'main .eyebrow', 'main .section-head > a', 'main .card', 'main .ad', 'main .story-card', 'main .vt-tile', 'main .wc-tile', 'main .product',
+    'main .place', 'main .creator-card', 'main .teaser', 'main .cat-link', 'main .online-item', 'main .event', 'main .offer', 'main .plan', 'main .stat-mini', 'main .extra',
+    'main .steps-big li', 'main .cf-list li', 'main .faq-item', 'main .chips', 'main .story-body p', 'main .comment', 'main .regions a', 'main p.muted', 'footer .container'].join(',');
+  const ANIM_SKIP = 'header, dialog, .gate, .drawer, .book-form, .book-bar, .search-fab, .nav, .hero-copy, .reveal, .cf-panel, [hidden]';
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const animIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const el = e.target;
+      if (e.isIntersecting) { el.classList.remove('out-up', 'out-down'); el.classList.add('is-in'); }
+      else if (el.classList.contains('is-in')) { el.classList.remove('is-in'); el.classList.add(e.boundingClientRect.top < 0 ? 'out-up' : 'out-down'); }
+    }), { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    const scanAnim = () => {
+      const found = $$(ANIM_SEL).filter((el) => !el.classList.contains('anim') && !el.closest(ANIM_SKIP));
+      const set = new Set(found);
+      found.filter((el) => { let p = el.parentElement; while (p) { if (set.has(p) || p.classList.contains('anim')) return false; p = p.parentElement; } return true; })
+        .forEach((el) => {
+          const sibs = [...el.parentElement.children].filter((c) => c.matches(ANIM_SEL));
+          el.style.setProperty('--d', `${Math.min(sibs.indexOf(el), 6) * 70}ms`);
+          el.classList.add('anim'); animIO.observe(el);
+        });
+    };
+    scanAnim();
+    let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(scanAnim, 60); }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
