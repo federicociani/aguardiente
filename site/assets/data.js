@@ -231,6 +231,20 @@ window.DATA = {
     ]
   },
 
+  /* Webcam: stanze live dei creator verificati (anteprime non esplicite, numeri di esempio) */
+  webcam: {
+    crediti: 120,
+    stanze: [
+      { id: 'kira', nick: 'Kira.rn', tipo: 'Lei', citta: 'Rimini', img: '1606459310278-169d12230046', live: true, spettatori: 86, titolo: 'Chiacchiere e lingerie, scegliete voi il colore', privato: 6, goal: { label: 'Cambio look', target: 500, ora: 320 }, tag: ['lingerie', 'chiacchiere'] },
+      { id: 'nikki', nick: 'Nikki', tipo: 'Trans', citta: 'Bologna', img: '1617290337590-4c7d02c99a45', live: true, spettatori: 142, titolo: 'Serata allo specchio', privato: 8, goal: { label: 'Ballo a tema', target: 800, ora: 610 }, tag: ['ballo', 'specchio'] },
+      { id: 'lm', nick: 'Luna & Matteo', tipo: 'Coppia', citta: 'Ravenna', img: '1570135497084-0debfc780ed8', live: true, spettatori: 64, titolo: 'Coppia in diretta, domande a ruota libera', privato: 10, goal: { label: 'Gioco di coppia', target: 1000, ora: 240 }, tag: ['coppia', 'domande'] },
+      { id: 'sole', nick: 'Sole_83', tipo: 'Lei', citta: 'Cesena', img: '1586211082529-b7c6b640abff', live: true, spettatori: 37, titolo: 'Controluce, solo per chi resta', privato: 5, goal: { label: 'Musica a richiesta', target: 300, ora: 280 }, tag: ['controluce'] },
+      { id: 'ge', nick: 'Giulia & Enri', tipo: 'Coppia', citta: 'Forlì', img: '1749855333713-0f4ad9d033e3', live: false, prossima: 'Stasera, 22:30', spettatori: 0, titolo: 'Aperitivo in cam', privato: 9, goal: { label: '', target: 0, ora: 0 }, tag: ['coppia'] },
+      { id: 'dav', nick: 'Davide_RA', tipo: 'Lui', citta: 'Lugo', img: '1640902106532-47dd3a2e833e', live: false, prossima: 'Domani, 21:00', spettatori: 0, titolo: 'Bar sotto casa', privato: 5, goal: { label: '', target: 0, ora: 0 }, tag: ['lui'] }
+    ],
+    chat: ['Ciao a tutti!', 'Che bella luce stasera', 'Sono di Ravenna anche io', 'Bel tema!', 'Arrivo dal club, serata tranquilla', 'Che musica è?', 'Mandate cuori al goal', 'Ciao dal mare']
+  },
+
   regioni: ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
             'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto']
 };

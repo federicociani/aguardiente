@@ -38,6 +38,12 @@ Questo documento elenca i punti emersi in fase di progettazione. **Non è una co
 - Pagamenti ricorrenti per contenuti per adulti: processori dedicati (high risk) e politiche di rimborso chiare.
 - I creator incassano redditi: informare su obblighi fiscali; valutare ritenuta/sostituto d'imposta o reportistica (DAC7).
 
+## Webcam (dirette)
+- Verifica di identità ed età di chi trasmette e di chiunque compaia in cam; moderazione in tempo reale con possibilità di interrompere la diretta.
+- Dirette non registrabili né scaricabili; nessuna registrazione lato piattaforma senza consenso esplicito del creator.
+- Crediti: prezzi e conversione in euro chiari prima dell'acquisto, nessuna scadenza nascosta, rimborso dei crediti non usati secondo il Codice del Consumo.
+- Blocco geografico su richiesta del creator e strumenti di blocco/segnalazione degli spettatori.
+
 ## Storie della community
 - Moderazione prima della pubblicazione; regole esplicite: niente minori (neanche come riferimento o ambientazione scolastica), niente incesto, niente violenza o assenza di consenso, niente nomi reali o persone riconoscibili.
 - Ritenere i contenuti testuali come contenuti per adulti ai fini della verifica dell'età: visibili solo agli iscritti verificati.
