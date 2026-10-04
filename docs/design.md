@@ -25,7 +25,7 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 
 ## CTA (`.btn-primary`)
 
-Fondo quasi nero, bordo sottile e due scie di luce opposte (viola `#6400c9` → lilla `#B57BFF`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
+Fondo quasi nero, bordo sottile e due scie di luce opposte (`#770303` → `#E04A6E`, derivati da `#9E1238` e `#770303`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
 
 ## Testo
 

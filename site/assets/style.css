@@ -119,10 +119,10 @@ p { margin: 0; }
 /* CTA: fondo scuro e due scie di luce che girano lungo il bordo */
 @property --cta-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
 .btn-primary {
-  --cta-fill: #12040B;
-  --cta-ring: #3A1840;             /* bordo a riposo */
-  --cta-glow: #B57BFF;             /* testa della scia */
-  --cta-tail: #6400c9;             /* coda della scia */
+  --cta-fill: #160307;             /* #770303 molto scurito */
+  --cta-ring: #4A0A14;             /* bordo a riposo: tra #770303 e il fondo */
+  --cta-glow: #E04A6E;             /* testa della scia: #9E1238 schiarito */
+  --cta-tail: #770303;             /* coda della scia */
   color: #fff;
   border: 1.5px solid transparent;
   background:
@@ -131,11 +131,11 @@ p { margin: 0; }
       transparent 0deg, var(--cta-tail) 30deg, var(--cta-glow) 82deg, transparent 94deg,
       transparent 180deg, var(--cta-tail) 210deg, var(--cta-glow) 262deg, transparent 274deg) border-box,
     linear-gradient(var(--cta-ring), var(--cta-ring)) border-box;
-  box-shadow: 0 0 24px -10px rgba(100, 0, 201, .6);
+  box-shadow: 0 0 24px -10px rgba(158, 18, 56, .65);
   animation: cta-orbit 3s linear infinite;
   transition: box-shadow .3s, --cta-fill .3s;
 }
-.btn-primary:hover { color: #fff; --cta-fill: #1D0820; box-shadow: 0 0 32px -8px rgba(181, 123, 255, .55); animation-duration: 1.8s; }
+.btn-primary:hover { color: #fff; --cta-fill: #240509; box-shadow: 0 0 32px -8px rgba(224, 74, 110, .55); animation-duration: 1.8s; }
 @keyframes cta-orbit { to { --cta-angle: 360deg; } }
 @media (prefers-reduced-motion: reduce) { .btn-primary { animation: none; --cta-angle: 45deg; } }
 .btn-ghost { border-color: var(--line-2); }
