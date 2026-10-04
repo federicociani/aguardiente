@@ -1008,6 +1008,15 @@ body.is-gated main, body.is-gated footer { filter: blur(16px); pointer-events: n
 .gate-card .eyebrow { color: var(--accent); }
 .gate-back { font-size: 14px; color: var(--muted); }
 
+/* ---------- Badge: sempre peso 500, maiuscolo, spaziatura leggera ---------- */
+.badge, .badge-grad, .cert, .vt-pill, .live-badge, .ad-cover-tag, .ad-cover-vis, .photo-tag, .logo-tag, .tag-online, .cart-badge, .unread {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.badge, .cert, .vt-pill, .ad-cover-tag, .ad-cover-vis, .photo-tag, .tag-online { font-size: 11px; }
+.badge strong, .ad-cover-tag strong, .ad-cover-tag .muted { font-weight: 500; }
+
 /* ==========================================================
    MOBILE (≤ 720px)
    ========================================================== */
