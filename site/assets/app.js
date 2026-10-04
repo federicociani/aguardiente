@@ -57,6 +57,18 @@
     input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
   });
 
+  /* Icone di navigazione verso sezioni della stessa pagina: piena quella della sezione in vista */
+  const spyLinks = $$('.nav a.nav-icon[href^="#"]').filter((a) => a.getAttribute('href').length > 1 && document.querySelector(a.getAttribute('href')));
+  if (spyLinks.length && 'IntersectionObserver' in window) {
+    const byId = new Map(spyLinks.map((a) => [a.getAttribute('href').slice(1), a]));
+    const spy = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const a = byId.get(e.target.id); if (!a) return;
+      if (e.isIntersecting) { spyLinks.forEach((x) => { if (x.getAttribute('aria-current') === 'location') x.removeAttribute('aria-current'); }); a.setAttribute('aria-current', 'location'); }
+      else if (a.getAttribute('aria-current') === 'location') a.removeAttribute('aria-current');
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    byId.forEach((_, id) => spy.observe(document.getElementById(id)));
+  }
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');

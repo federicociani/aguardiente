@@ -51,10 +51,18 @@ Switch Privati / Business con indicatore che scorre; per ciascun profilo:
 
 I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte le animazioni sono disattivate.
 
+## Navigazione
+
+Tutti i menu di navigazione usano solo icone, mai parole visibili: stesso stile (24px, tratto 1,8), contorno a riposo e **piena** quando la pagina o la sezione è quella attiva (`aria-current="page"` per le pagine, `aria-current="location"` per le sezioni della stessa pagina, aggiornato allo scroll). Ogni icona ha `aria-label`; su desktop il nome compare come tooltip al passaggio del mouse o con Tab.
+
+- Utente: Annunci, Cerca, Pubblica, Storie, Messaggi (+ avatar profilo)
+- Home pubblica: Annunci, Cerca profili, Storie, Come funziona, Per le aziende (+ CTA Entra)
+- Business: Come funziona, Per i locali, Eventi, Come guadagni, Piani, Area aziende (+ CTA Registra l’attività su desktop)
+- Area aziende: rail verticale su desktop, riga che scorre su mobile
+
 ## Mobile (≤ 720px)
 
-- **Utente loggato**: le icone Annunci, Cerca, Messaggi diventano una tab bar fissa in basso, con il tasto centrale "+" per pubblicare; in alto restano logo e avatar.
-- **Home pubblica e Business**: menu a tendina (hamburger) con tutte le voci; in alto restano logo e il CTA principale.
+- **Tab bar in basso, solo icone**, per utente loggato, home pubblica e Business; in alto restano logo e avatar o CTA.
 - **Ricerca rapida (home)**: su mobile la card sparisce e diventa una barra fissa in basso con il riepilogo della ricerca; toccandola si apre un pannello dal basso (si chiude con la X, toccando fuori, con Esc o trascinando giù la maniglia) con scelte a pillola, regioni scorrevoli, doppio cursore per l'età e interruttore online. "Mostra profili" porta a Cerca con i filtri già impostati.
 - **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.

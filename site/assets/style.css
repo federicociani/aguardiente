@@ -597,20 +597,20 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .nav-icons { gap: 8px; }
 .nav .nav-icon { position: relative; width: 48px; height: 48px; padding: 0; display: grid; place-items: center; border-radius: 999px; color: var(--text-2); transition: color .2s, background .2s; }
 .nav .nav-icon:hover { color: var(--text); background: var(--surface); }
-.nav .nav-icon[aria-current="page"] { color: var(--accent); }
+.nav .nav-icon[aria-current="page"], .nav .nav-icon[aria-current="location"] { color: var(--accent); }
 .nav-icon .fillable { fill: transparent; transition: fill .2s; }
-.nav-icon[aria-current="page"] .fillable { fill: currentColor; }
-.nav-icon[aria-current="page"] svg { stroke-width: 2; }
+.nav-icon[aria-current="page"] .fillable, .nav-icon[aria-current="location"] .fillable { fill: currentColor; }
+.nav-icon[aria-current="page"] svg, .nav-icon[aria-current="location"] svg { stroke-width: 2; }
 /* Il segno dentro un'icona piena (es. il + di Pubblica) diventa del colore dello sfondo, così resta leggibile */
 .nav-icon .cut { transition: stroke .2s; }
-.nav-icon[aria-current="page"] .cut { stroke: var(--bg); }
+.nav-icon[aria-current="page"] .cut, .nav-icon[aria-current="location"] .cut { stroke: var(--bg); }
 .nav-dot { position: absolute; top: 10px; right: 10px; width: 9px; height: 9px; border-radius: 999px; background: var(--accent); border: 2px solid var(--bg); }
 .nav-tip { position: absolute; top: calc(100% + 6px); left: 50%; transform: translate(-50%, -4px); padding: 6px 10px; border-radius: 10px; background: var(--text); color: var(--bg); font-size: 12px; white-space: nowrap; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s, transform .15s, visibility .15s; }
 .nav-icon:hover .nav-tip, .nav-icon:focus-visible .nav-tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
 
 
 /* Elementi solo mobile (nascosti su desktop) */
-.menu-toggle, .menu-only, .nav .nav-add, .thread-back, .filters-toggle, .cartbar { display: none; }
+.menu-toggle, .menu-only, .thread-back, .filters-toggle, .cartbar { display: none; }
 
 @media (max-width: 720px) {
   .container { padding: 0 20px; }
@@ -863,6 +863,16 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 .contact-k { font-size: 12px; color: var(--muted); }
 .contact-open { min-height: 36px; padding: 0 14px; margin-left: auto; flex-shrink: 0; }
 
+/* ---------- Navigazione solo a icone: area aziende (rail laterale) ---------- */
+.logo-mini { width: 48px; height: 48px; border-radius: 16px; display: grid; place-items: center; background: var(--surface-2); font-size: 26px; }
+.dash-side { flex: 0 0 96px; align-items: center; padding: 24px 0; gap: 24px; }
+.nav-rail { flex-direction: column; gap: 6px; align-items: center; }
+.nav-rail .nav-icon { width: 52px; height: 52px; border-radius: 16px; }
+.nav-rail .nav-icon[aria-current="page"], .nav-rail .nav-icon[aria-current="location"] { background: #3A1230; }
+.nav-rail .nav-tip { top: 50%; left: calc(100% + 10px); transform: translate(-4px, -50%); z-index: 30; }
+.nav-rail .nav-icon:hover .nav-tip, .nav-rail .nav-icon:focus-visible .nav-tip { transform: translate(0, -50%); }
+.nav-icons.nav-guest, .nav-icons.nav-biz { gap: 4px; }
+
 /* ==========================================================
    MOBILE (≤ 720px)
    ========================================================== */
@@ -902,7 +912,6 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .nav-dot { top: 6px; right: 16px; }
   .nav .nav-add { display: grid; }
   body:has(.nav-icons) { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
-  .site-header:has(.nav-icons) .header-actions .btn-primary { display: none; }
   /* backdrop-filter crea un contenitore per i figli "fixed": su questi header lo togliamo, così la tab bar si aggancia allo schermo */
   .site-header:has(.nav-icons) { backdrop-filter: none; background: rgba(20,6,10,.97); }
   .tag-online { font-size: 0; gap: 0; padding: 6px; }
@@ -1114,4 +1123,24 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 
   .share-btn { width: 44px; height: 44px; }
   .composer { gap: 8px; }
+
+  /* Navigazione solo icone anche su mobile: tab bar senza etichette */
+  .nav-icons .nav-tip { display: none; }
+  .nav-icons, .nav-rail { flex-wrap: nowrap; }
+  .nav .nav-icon { height: 52px; padding-top: 0; grid-template-rows: none; }
+  .nav-icons .nav-icon svg { width: 26px; height: 26px; }
+  .nav-dot { top: 10px; right: 18px; }
+  .nav-icons.nav-solo { position: static; padding: 0; background: none; border: 0; backdrop-filter: none; justify-content: flex-end; }
+  .nav-icons.nav-solo .nav-icon { width: 44px; height: 44px; border: 1px solid var(--line-2); border-radius: 999px; }
+  body:has(.nav-solo) { padding-bottom: 0; }
+  /* la barra di ricerca della home sta sopra la tab bar */
+  body:has(.nav-icons) .search-fab { bottom: calc(80px + env(safe-area-inset-bottom)); }
+  body[data-page="home"] { padding-bottom: calc(160px + env(safe-area-inset-bottom)); }
+  /* area aziende: rail in riga che scorre */
+  .dash-side { flex: 1 1 100%; flex-direction: row; padding: 8px 0 8px 12px; gap: 8px; }
+  .logo-mini { width: 40px; height: 40px; flex-shrink: 0; font-size: 22px; }
+  .nav-rail { flex-direction: row; overflow-x: auto; gap: 4px; padding-right: 12px; scrollbar-width: none; }
+  .nav-rail::-webkit-scrollbar { display: none; }
+  .nav-rail .nav-icon { width: 46px; height: 46px; flex-shrink: 0; }
+  .nav-rail .nav-tip { display: none; }
 }
