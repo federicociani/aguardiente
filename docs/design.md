@@ -55,7 +55,7 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 
 Tutti i menu di navigazione usano solo icone, mai parole visibili: stesso stile (24px, tratto 1,8), contorno a riposo e **piena** quando la pagina o la sezione è quella attiva (`aria-current="page"` per le pagine, `aria-current="location"` per le sezioni della stessa pagina, aggiornato allo scroll). Ogni icona ha `aria-label`; su desktop il nome compare come tooltip al passaggio del mouse o con Tab.
 
-- Utente: Annunci, Cerca, Pubblica, Storie, Vetrina, Messaggi (+ avatar profilo)
+- Utente: Annunci, Cerca, Pubblica, Storie, Vetrina, Webcam, Messaggi (+ avatar profilo)
 - Home pubblica: Annunci, Cerca profili, Storie, Come funziona, Per le aziende (+ CTA Entra)
 - Business: Come funziona, Per i locali, Eventi, Come guadagni, Piani, Area aziende (+ CTA Registra l’attività su desktop)
 - Area aziende: rail verticale su desktop, riga che scorre su mobile

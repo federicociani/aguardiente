@@ -9,6 +9,8 @@
 | `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
 | `vetrina.html` | Vetrina dei creator: creator verificati con abbonamento, contenuti gratis / a pagamento / per abbonati con anteprima sfocata, sblocco e abbonamento, form Diventa creator con dichiarazioni di consenso | messaggi |
+| `webcam.html` | Dirette in corso (filtri), prossime dirette con avviso, sezione Vai in diretta con prova della webcam in locale | live |
+| `live.html?id=…` | Stanza in diretta: anteprima, spettatori, obiettivo a crediti, mance, show privato, chat | webcam |
 | `storie.html` | Storie della community: collezioni, ricerca, ordinamento (nuove, più lette, più commentate), autori della settimana, temi, form Scrivi la tua storia con regole di moderazione | storia, messaggi |
 | `storia.html?id=…` | Storia singola: lettura, mi piace, salva, scrivi all’autore, segnala, commenti, altre storie | storie, messaggi |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |

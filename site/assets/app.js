@@ -309,6 +309,13 @@
       </div>`;
   }
 
+  /* Crediti per le webcam (salvati nel browser per il prototipo) */
+  const CR_KEY = 'agu.crediti';
+  const crGet = () => { try { const v = localStorage.getItem(CR_KEY); return v === null ? (D.webcam ? D.webcam.crediti : 0) : +v; } catch (e) { return D.webcam ? D.webcam.crediti : 0; } };
+  const crSet = (v) => { try { localStorage.setItem(CR_KEY, String(v)); } catch (e) { /* ignorato */ } };
+  const ICON_COIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5c-.5-.9-1.4-1.4-2.5-1.4-1.6 0-2.7 1-2.7 2.2 0 2.9 5.6 1.5 5.6 4.3 0 1.2-1.2 2.2-2.9 2.2-1.2 0-2.2-.6-2.6-1.5M12 6.5v1.6M12 16v1.5"/></svg>';
+  const walletHTML = (v) => `${ICON_COIN}<strong>${v}</strong> crediti <button type="button" class="wallet-add" data-topup aria-label="Ricarica crediti">+</button>`;
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -908,6 +915,96 @@
         const acc = { free: 'gratis per gli iscritti verificati', ppv: `a pagamento (${eur(+form.prezzo.value || 0)})`, sub: 'solo per gli abbonati' }[form.accesso.value];
         m.textContent = `Inviato alla moderazione: sarà ${acc}. Ti avvisiamo appena è online.`;
       });
+    },
+
+    /* ---------- WEBCAM: elenco dirette, prossime dirette, prova cam ---------- */
+    webcam() {
+      const W = D.webcam;
+      const paintWallet = () => { $('#wc-wallet').innerHTML = walletHTML(crGet()); };
+      paintWallet();
+      document.addEventListener('click', (e) => { if (e.target.closest('[data-topup]')) { crSet(crGet() + 100); paintWallet(); } });
+      let f = 'Tutte';
+      const render = () => {
+        const live = W.stanze.filter((r) => r.live && (f === 'Tutte' || r.tipo === f || (f === 'Coppie' && r.tipo === 'Coppia')));
+        $('#wc-count').textContent = `${live.length} in diretta`;
+        $('#wc-grid').innerHTML = live.map((r) => `
+          <a class="wc-tile" href="live.html?id=${r.id}">
+            <img src="${D.unsplash(r.img, 640, 480)}" alt="" loading="lazy" decoding="async">
+            <span class="stage-top"><span class="live-badge"><span class="live-dot" aria-hidden="true"></span>LIVE</span><span class="vt-pill">${r.spettatori} spettatori</span></span>
+            <span class="wc-foot"><strong>${esc(r.nick)}</strong> <span class="muted-light">${esc(r.tipo)}, ${esc(r.citta)}</span><br><span class="wc-title">${esc(r.titolo)}</span></span>
+          </a>`).join('') || '<p class="empty">Nessuna diretta in questa categoria adesso.</p>';
+      };
+      pills($('#wc-filters'), ['Tutte', 'Lei', 'Lui', 'Coppie', 'Trans'], (k) => { f = k; render(); });
+      $('#wc-next').innerHTML = W.stanze.filter((r) => !r.live).map((r) => `
+        <div class="card wc-next-item"><span class="vt-av" style="width:48px;height:48px"><img src="${D.unsplash(r.img, 96, 96)}" alt=""></span>
+          <span style="flex:1"><strong>${esc(r.nick)}</strong><br><span class="muted">${esc(r.prossima)} · ${esc(r.titolo)}</span></span>
+          <button class="btn btn-ghost" type="button" data-remind aria-pressed="false">Avvisami</button></div>`).join('');
+      $('#wc-next').addEventListener('click', (e) => { const b = e.target.closest('[data-remind]'); if (!b) return; const on = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', on); b.textContent = on ? 'Ti avviseremo' : 'Avvisami'; });
+
+      // Prova la webcam: anteprima locale, nessun invio
+      let stream = null;
+      $('#cam-start').addEventListener('click', async () => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { $('#cam-msg').textContent = 'Questo browser non permette di usare la webcam.'; return; }
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+          const v = $('#cam-video'); v.srcObject = stream; await v.play();
+          $('#cam-preview').classList.add('is-on'); $('#cam-stop').disabled = false; $('#cam-start').disabled = true;
+          $('#cam-msg').textContent = 'La webcam funziona. Quando andrai in diretta potrai scegliere chi ti vede.';
+        } catch (err) { $('#cam-msg').textContent = 'Non è stato possibile accedere alla webcam: controlla i permessi del browser.'; }
+      });
+      $('#cam-stop').addEventListener('click', () => { if (stream) stream.getTracks().forEach((t) => t.stop()); stream = null; $('#cam-preview').classList.remove('is-on'); $('#cam-stop').disabled = true; $('#cam-start').disabled = false; $('#cam-msg').textContent = ''; });
+      render();
+    },
+
+    /* ---------- STANZA LIVE (live.html?id=...) ---------- */
+    live() {
+      const W = D.webcam;
+      const r = W.stanze.find((x) => x.id === new URLSearchParams(location.search).get('id') && x.live) || W.stanze.find((x) => x.live);
+      document.title = `Aguardiente · ${r.nick} in diretta`;
+      $('#rm-img').src = D.unsplash(r.img, 1280, 720);
+      $('#rm-av').src = D.unsplash(r.img, 96, 96);
+      $('#rm-nick').textContent = r.nick; $('#rm-title').textContent = r.titolo;
+      let viewers = r.spettatori, goal = r.goal.ora;
+      const paint = () => {
+        $('#rm-viewers').textContent = `${viewers} spettatori`;
+        $('#rm-goal-label').textContent = r.goal.label;
+        $('#rm-goal-num').textContent = `${Math.min(goal, r.goal.target)} / ${r.goal.target} crediti`;
+        $('#rm-goal-bar').style.width = `${Math.min(100, (goal / r.goal.target) * 100)}%`;
+        $('#rm-wallet').innerHTML = walletHTML(crGet());
+      };
+      $('#rm-tips').innerHTML = [5, 10, 25, 50].map((n) => `<button class="btn btn-ghost" type="button" data-tip="${n}">${ICON_COIN}${n}</button>`).join('');
+      $('#rm-private').textContent = `Show privato · ${r.privato} crediti/min`;
+      const msgs = $('#rm-msgs');
+      const add = (nick, text, kind = '') => {
+        const el = document.createElement('p'); el.className = `rm-msg ${kind}`;
+        el.innerHTML = `<strong>${esc(nick)}</strong> ${esc(text)}`; msgs.appendChild(el);
+        while (msgs.children.length > 60) msgs.firstChild.remove();
+        msgs.scrollTop = msgs.scrollHeight;
+      };
+      add('Aguardiente', 'Benvenuto nella diretta. Rispetta il creator: niente richieste insistenti, niente dati personali.', 'is-system');
+      const hearts = (n) => { if (reduceMotion) return; for (let i = 0; i < Math.min(n / 5, 8); i++) { const h = document.createElement('span'); h.className = 'heart'; h.style.left = `${20 + Math.random() * 60}%`; h.style.animationDelay = `${i * 120}ms`; $('#rm-hearts').appendChild(h); setTimeout(() => h.remove(), 2200); } };
+      const tip = (n) => {
+        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
+        crSet(crGet() - n); goal += n; add('Tu', `hai mandato ${n} crediti`, 'is-tip'); hearts(n); paint();
+        if (goal >= r.goal.target && goal - n < r.goal.target) add('Aguardiente', `Obiettivo raggiunto: ${r.goal.label}!`, 'is-system');
+      };
+      const dlg = $('#rm-dialog');
+      const openDlg = (t, txt, actions) => { $('#rm-d-title').textContent = t; $('#rm-d-text').textContent = txt; $('#rm-d-actions').innerHTML = actions; if (!dlg.open) dlg.showModal(); };
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-tip]'), tp = e.target.closest('[data-topup]'), cl = e.target.closest('#rm-dialog [data-close]'), pv = e.target.closest('#rm-private'), ok = e.target.closest('[data-private-ok]');
+        if (t) tip(+t.dataset.tip);
+        if (tp) { crSet(crGet() + 100); paint(); if (dlg.open) dlg.close(); add('Aguardiente', 'Ricarica di 100 crediti completata (simulata).', 'is-system'); }
+        if (cl) dlg.close();
+        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-private-ok>Invia richiesta</button>`);
+        if (ok) { dlg.close(); add('Tu', 'hai chiesto uno show privato', 'is-tip'); setTimeout(() => add(r.nick, 'Ricevuto! Finisco il goal e ti scrivo 😉'), 1500); }
+      });
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+      $('#rm-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('#rm-input'); const v = i.value.trim(); if (!v) return; add('Tu', v); i.value = ''; });
+      // chat e spettatori simulati
+      const nicks = ['Marco_bo', 'Sara.rn', 'Ale&Robi', 'Viaggiatore_72', 'Notturna', 'Pietro84'];
+      setInterval(() => { add(nicks[Math.floor(Math.random() * nicks.length)], W.chat[Math.floor(Math.random() * W.chat.length)]); viewers = Math.max(5, viewers + Math.round(Math.random() * 6 - 3)); paint(); }, 3500);
+      setInterval(() => { if (Math.random() < .5) { const n = [5, 10, 25][Math.floor(Math.random() * 3)]; goal += n; add(nicks[Math.floor(Math.random() * nicks.length)], `ha mandato ${n} crediti`, 'is-tip'); hearts(n); paint(); } }, 6000);
+      paint();
     },
 
     /* ---------- LUOGHI ---------- */
