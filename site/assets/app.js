@@ -193,7 +193,7 @@
       const k = tab.dataset.tab;
       $('#latest-ads').hidden = k !== 'annunci'; $('#latest-events').hidden = k !== 'eventi';
       $('#bacheca-title').textContent = copy[k][0];
-      $('#bacheca-link').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
+      $('#bacheca-link span').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
     };
     tabs.forEach((t) => t.addEventListener('click', () => select(t)));
     $('.home-tabs').addEventListener('keydown', (e) => {
