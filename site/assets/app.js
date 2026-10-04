@@ -180,7 +180,7 @@
           <p class="muted">${esc(e.testo)}</p>
           <div class="ad-foot">
             <span class="price">${eur(e.prevendita)} <s class="muted">${eur(e.ingresso)}</s></span>
-            <button class="btn btn-primary" type="button" data-ticket="${e.id}">Partecipa</button>
+            <button class="btn btn-ghost" type="button" data-ticket="${e.id}">Partecipa</button>
           </div>
         </div>
       </article>`).join('');
@@ -460,7 +460,7 @@
               <span class="muted">${esc(p.tipo)}, ${esc(p.eta)}, ${esc(p.citta)}</span>
               <span style="color:var(--text-2)">Cerca: ${esc(p.cerca)}</span>
               <div class="row">
-                <a class="btn btn-primary" style="flex:1" href="messaggi.html">Scrivi</a>
+                <a class="btn btn-ghost" style="flex:1" href="messaggi.html">Scrivi</a>
                 <button type="button" class="btn btn-ghost btn-icon like" data-nick="${esc(p.nick)}" aria-pressed="${liked.has(p.nick)}" aria-label="Mi piace">${ICON_HEART}</button>
               </div>
             </div>
@@ -755,7 +755,7 @@
           ${o.nota ? `<p class="offer-note">${esc(o.nota)}</p>` : ''}
           <div class="ad-foot">
             <span class="price">${eur(o.prezzo)}${o.listino ? ` <s class="muted">${eur(o.listino)}</s>` : ''}</span>
-            <button class="btn btn-primary" type="button" data-buy="${o.id}">${o.prezzo === 0 ? 'Riserva' : 'Acquista'}</button>
+            <button class="btn btn-ghost" type="button" data-buy="${o.id}">${o.prezzo === 0 ? 'Riserva' : 'Acquista'}</button>
           </div>
         </article>`).join('');
 
@@ -923,7 +923,7 @@
               <span class="creator-av"><img src="${D.unsplash(c.foto, 120, 120)}" alt="" loading="lazy"></span>
               <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_CHECK}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
               <p class="muted" style="margin:0">${esc(c.bio)}</p>
-              <button class="btn ${subs.has(c.id) ? 'btn-ghost' : 'btn-primary'}" type="button" data-sub="${c.id}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
+              <button class="btn btn-ghost" type="button" data-sub="${c.id}" aria-pressed="${subs.has(c.id)}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
             </div>
           </article>`).join('');
       };
@@ -956,8 +956,8 @@
         $('#vt-d-actions').innerHTML = ok
           ? `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-like>Mi piace</button>`
           : p.accesso === 'ppv'
-            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
-            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
+            ? `<button class="btn btn-ghost" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button><button class="btn btn-primary btn-cta" type="button" data-buy="${p.id}">Sblocca · ${eur(p.prezzo)}</button>`
+            : `<button class="btn btn-ghost" type="button" data-close>Chiudi</button><button class="btn btn-primary btn-cta" type="button" data-sub="${c.id}">Abbonati · ${eur(c.abbonamento)}/mese</button>`;
         if (!dlg.open) dlg.showModal();
       };
       document.addEventListener('click', (e) => {
@@ -1049,7 +1049,7 @@
       add('Aguardiente', 'Benvenuto nella diretta. Rispetta il creator: niente richieste insistenti, niente dati personali.', 'is-system');
       const hearts = (n) => { if (reduceMotion) return; for (let i = 0; i < Math.min(n / 5, 8); i++) { const h = document.createElement('span'); h.className = 'heart'; h.style.left = `${20 + Math.random() * 60}%`; h.style.animationDelay = `${i * 120}ms`; $('#rm-hearts').appendChild(h); setTimeout(() => h.remove(), 2200); } };
       const tip = (n) => {
-        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
+        if (crGet() < n) { openDlg('Crediti insufficienti', `Ti servono ${n} crediti, ne hai ${crGet()}.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary btn-cta" type="button" data-topup>Ricarica 100 crediti</button>`); return; }
         crSet(crGet() - n); goal += n; add('Tu', `hai mandato ${n} crediti`, 'is-tip'); hearts(n); paint();
         if (goal >= r.goal.target && goal - n < r.goal.target) add('Aguardiente', `Obiettivo raggiunto: ${r.goal.label}!`, 'is-system');
       };
@@ -1060,7 +1060,7 @@
         if (t) tip(+t.dataset.tip);
         if (tp) { crSet(crGet() + 100); paint(); if (dlg.open) dlg.close(); add('Aguardiente', 'Ricarica di 100 crediti completata (simulata).', 'is-system'); }
         if (cl) dlg.close();
-        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" data-private-ok>Invia richiesta</button>`);
+        if (pv) openDlg(`Show privato con ${r.nick}`, `${r.privato} crediti al minuto, scalati mentre lo show è attivo. ${r.nick} può accettare o rifiutare la richiesta. Hai ${crGet()} crediti.`, `<button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary btn-cta" type="button" data-private-ok>Invia richiesta</button>`);
         if (ok) { dlg.close(); add('Tu', 'hai chiesto uno show privato', 'is-tip'); setTimeout(() => add(r.nick, 'Ricevuto! Finisco il goal e ti scrivo 😉'), 1500); }
       });
       dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });

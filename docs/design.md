@@ -23,7 +23,12 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
-## CTA (`.btn-primary`)
+## Bottoni
+
+- **Un solo `.btn-primary` per schermata** (ogni finestra/pannello conta come schermata a sé): pieno con `--grad`. Tutte le altre azioni sono `.btn-ghost`.
+- **`.btn-cta`** si aggiunge al primario solo per le azioni importanti o di pagamento (Paga, Vai al pagamento, Conferma acquisto, Sblocca, Abbonati, Richiedi disponibilità, Show privato, Ricarica crediti, conferma degli extra): attiva l'effetto delle scie descritto sotto.
+
+## CTA con scie (`.btn-cta`)
 
 Fondo quasi nero, bordo sottile e due scie di luce opposte (`#770303` → `#E04A6E`, derivati da `#9E1238` e `#770303`) che girano lungo il bordo in 3 secondi; al passaggio del mouse il giro accelera e il bagliore aumenta. È un `conic-gradient` sul bordo animato tramite la proprietà registrata `--cta-angle`. Con `prefers-reduced-motion` le scie restano ferme. Colori regolabili da `--cta-fill`, `--cta-ring`, `--cta-glow`, `--cta-tail`.
 
