@@ -1036,6 +1036,27 @@ body.is-gated main, body.is-gated footer { filter: blur(16px); pointer-events: n
 @keyframes word-in { to { opacity: 1; transform: none; filter: blur(0); } }
 @keyframes fade-up { to { opacity: 1; transform: none; } }
 
+/* ---------- Intro della home (una volta per sessione): titolo e sottotitolo suadenti, poi il resto ---------- */
+.intro-play .hero-title .w { opacity: 0; animation-name: word-soft; animation-duration: 2s; animation-timing-function: cubic-bezier(.16,.84,.3,1); animation-fill-mode: forwards; }
+.intro-play .hero-title .w:nth-of-type(1) { animation-delay: .4s; }
+.intro-play .hero-title .w:nth-of-type(2) { animation-delay: 1.3s; }
+.intro-play .hero-title .w:nth-of-type(3) { animation-delay: 2.2s; animation-duration: 2.4s; }
+.intro-play p.lead.hero-after { opacity: 0; animation: fade-soft 1.8s cubic-bezier(.16,.84,.3,1) 3.2s forwards; }
+@keyframes word-soft { 0% { opacity: 0; transform: translateY(.22em); filter: blur(16px); letter-spacing: .03em; } 60% { filter: blur(2px); } 100% { opacity: 1; transform: none; filter: blur(0); letter-spacing: normal; } }
+@keyframes fade-soft { 0% { opacity: 0; transform: translateY(10px); filter: blur(6px); } 100% { opacity: 1; transform: none; filter: blur(0); } }
+
+/* tutto il resto aspetta: navbar dall'alto verso il basso, poi il contenuto */
+.intro-play .site-header { opacity: 0; }
+.intro-play .site-header .logo, .intro-play .site-header .nav, .intro-play .site-header .header-actions { transform: translateY(-28px); }
+.intro-play .actions.hero-after { opacity: 0; animation: none; }
+.intro-play .hero-search, .intro-play .search-fab, .intro-play main > section:not(.hero), .intro-play footer { opacity: 0; }
+.intro-done .site-header { opacity: 1; transition: opacity 1.1s ease; }
+.intro-done .site-header .logo, .intro-done .site-header .nav, .intro-done .site-header .header-actions { transform: none; transition: transform 1.1s cubic-bezier(.16,.84,.3,1); }
+.intro-done .site-header .nav { transition-delay: .12s; }
+.intro-done .site-header .header-actions { transition-delay: .24s; }
+.intro-done .actions.hero-after { animation: fade-up 1s ease .35s forwards; }
+.intro-done .hero-search, .intro-done .search-fab, .intro-done main > section:not(.hero), .intro-done footer { opacity: 1; transition: opacity 1.2s ease .45s; }
+
 @media (prefers-reduced-motion: reduce) {
   .js .anim, .js .anim.out-up, .js .anim.out-down { opacity: 1; transform: none; transition: none; }
   .js .hero-title .w, .js .hero-after { opacity: 1; transform: none; filter: none; animation: none; }

@@ -94,12 +94,18 @@
     a.addEventListener('mouseenter', place); a.addEventListener('focus', place);
   });
 
+  /* ---------- Intro della home: prima il titolo e il sottotitolo, poi il resto (una volta per sessione) ---------- */
+  if (document.documentElement.classList.contains('intro-play')) {
+    try { sessionStorage.setItem('agu.intro', '1'); } catch (e) { /* ignorato */ }
+    setTimeout(() => document.documentElement.classList.add('intro-done'), 4300);
+  }
+
   /* ---------- Animazioni allo scroll: entrata ed uscita morbide, anche sui testi ----------
      Si applicano a titoli, testi, card e voci delle griglie; i fratelli entrano con un piccolo sfasamento. */
   const ANIM_SEL = ['main h1', 'main h2', 'main .lead', 'main .eyebrow', 'main .section-head > a', 'main .card', 'main .ad', 'main .story-card', 'main .vt-tile', 'main .wc-tile', 'main .product',
     'main .place', 'main .creator-card', 'main .teaser', 'main .cat-link', 'main .online-item', 'main .event', 'main .offer', 'main .plan', 'main .stat-mini', 'main .extra',
     'main .steps-big li', 'main .cf-list li', 'main .faq-item', 'main .chips', 'main .story-body p', 'main .comment', 'main .regions a', 'main p.muted', 'footer .container'].join(',');
-  const ANIM_SKIP = 'header, dialog, .gate, .drawer, .book-form, .book-bar, .search-fab, .nav, .hero-copy, .reveal, .cf-panel, [hidden]';
+  const ANIM_SKIP = 'header, dialog, .gate, .drawer, .book-form, .book-bar, .search-fab, .nav, .hero, .reveal, .cf-panel, [hidden]';
   if (!reduceMotion && 'IntersectionObserver' in window) {
     const animIO = new IntersectionObserver((entries) => entries.forEach((e) => {
       const el = e.target;
