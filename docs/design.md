@@ -55,10 +55,11 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 
 - **Utente loggato**: le icone Annunci, Cerca, Messaggi diventano una tab bar fissa in basso, con il tasto centrale "+" per pubblicare; in alto restano logo e avatar.
 - **Home pubblica e Business**: menu a tendina (hamburger) con tutte le voci; in alto restano logo e il CTA principale.
+- **Ricerca rapida (home)**: su mobile la card sparisce e diventa una barra fissa in basso con il riepilogo della ricerca; toccandola si apre un pannello dal basso (si chiude con la X, toccando fuori, con Esc o trascinando giù la maniglia) con scelte a pillola, regioni scorrevoli, doppio cursore per l'età e interruttore online. "Mostra profili" porta a Cerca con i filtri già impostati.
 - **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.
 - **Cerca**: i filtri si aprono con il tasto "Filtri"; profili su due colonne.
-- **Shop**: prodotti su due colonne e barra del carrello flottante con il totale.
+- **Shop**: prodotti su due colonne; il carrello è un'icona nella navbar (piena con badge quando contiene articoli) che apre un pannello dal basso, trascinabile per chiuderlo. Su desktop lo stesso pannello si apre da destra.
 - **Dashboard**: il menu laterale diventa una riga che scorre sotto il logo.
 - Margini di sicurezza per notch e barra home (`env(safe-area-inset-*)`, `viewport-fit=cover`).
 
@@ -67,4 +68,4 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 - Target touch di almeno 44px
 - Focus visibile (`:focus-visible`)
 - Interruttori con `role="switch"` e `aria-checked`; filtri con `aria-pressed`
-- Animazione del logo disattivata con `prefers-reduced-motion`
+- Bagliore del logo disattivato con `prefers-reduced-motion`

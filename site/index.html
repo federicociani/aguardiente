@@ -6,7 +6,7 @@
   <title>Aguardiente · Annunci per adulti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021715">
+  <link rel="stylesheet" href="assets/style.css?v=202610031945">
 </head>
 <body data-page="home">
   <header class="site-header">
@@ -14,6 +14,7 @@
     <nav class="nav" id="site-menu" aria-label="Principale">
       <a href="annunci.html">Annunci</a>
       <a href="cerca.html">Cerca profili</a>
+      <a href="storie.html">Storie</a>
       <a href="#come-funziona">Come funziona</a>
       <a class="subtle" href="business.html">Per le aziende</a>
       <a class="menu-only" href="iscrizione.html">Accedi</a>
@@ -23,19 +24,18 @@
     </button>
     <div class="header-actions">
       <a class="btn btn-ghost" href="iscrizione.html">Accedi</a>
-      <a class="btn btn-primary" href="iscrizione.html">Iscriviti</a>
+      <a class="btn btn-primary" href="iscrizione.html">Entra</a>
     </div>
   </header>
 
   <main>
     <section class="container hero">
       <div class="hero-copy">
-        <span class="pre-badge"><span style="color:var(--accent);display:inline-flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>Solo maggiorenni, profili verificati</span>
-        <h1>Di cosa hai voglia oggi?<br><span class="gradient-text">Scegli. Organizza. Godi.</span></h1>
-        <p class="lead">Coppie, single, curiosi: pubblica il tuo annuncio, cerca nella tua zona e chatta solo con chi ha verificato la propria identità.</p>
+        <h1><span class="gradient-text">Scegli. Organizza.<br><span class="godi">Godi.</span></span></h1>
+        <p class="lead">Chiunque tu sia o qualunque cosa stiate cercando, questo è il posto giusto.</p>
         <div class="actions">
-          <a class="btn btn-primary btn-lg" href="iscrizione.html">Iscriviti gratis</a>
-          <a class="btn btn-ghost btn-lg" href="annunci.html">Sfoglia gli annunci</a>
+          <a class="btn btn-primary btn-lg hide-mobile" href="iscrizione.html">Iscriviti gratis</a>
+          <a class="btn btn-ghost btn-lg" href="annunci.html">Vai agli annunci</a>
         </div>
       </div>
 
@@ -56,7 +56,7 @@
     </section>
 
     <section class="container section" style="padding-top:24px">
-      <div class="section-head"><h2>Annunci per categoria</h2></div>
+      <div class="section-head"><div class="heading-group"><p class="eyebrow">Annunci</p><h2>Scegli per categoria</h2></div></div>
       <div class="grid grid-cats">
         <a class="cat-link" href="annunci.html">Coppia cerca coppia</a>
         <a class="cat-link" href="annunci.html">Coppia cerca lei</a>
@@ -73,19 +73,35 @@
 
     <section class="band">
       <div class="container section">
-        <div class="section-head"><h2>Online adesso vicino a te</h2><a href="cerca.html">Vedi tutti</a></div>
+        <div class="section-head"><h2>Online ora vicino a te</h2><a href="cerca.html">Vedi tutti</a></div>
         <div class="online-strip" id="online-strip"></div>
       </div>
     </section>
 
-    <section class="container section">
-      <div class="section-head"><h2>Ultimi annunci</h2><a href="annunci.html">Tutti gli annunci</a></div>
-      <div class="grid grid-3" id="latest-ads"></div>
+    <section class="container section" id="bacheca">
+      <div class="section-head">
+        <div class="heading-group">
+          <h2 id="bacheca-title">Ultimi annunci</h2>
+        </div>
+        <a href="annunci.html" id="bacheca-link">Tutti gli annunci</a>
+      </div>
+      <div class="tabs home-tabs" role="tablist" aria-label="Cosa vuoi vedere">
+        <button type="button" role="tab" id="tab-annunci" aria-selected="true" aria-controls="latest-ads" data-tab="annunci">Annunci</button>
+        <button type="button" role="tab" id="tab-eventi" aria-selected="false" aria-controls="latest-events" data-tab="eventi">Eventi</button>
+      </div>
+      <div class="grid grid-3 grid-scroll" id="latest-ads" role="tabpanel" aria-labelledby="tab-annunci"></div>
+      <div class="grid grid-3 grid-scroll" id="latest-events" role="tabpanel" aria-labelledby="tab-eventi" hidden></div>
     </section>
 
     <section class="container section" style="padding-top:0">
       <div class="section-head"><h2>Annunci per regione</h2></div>
       <nav class="regions" id="regions" aria-label="Regioni"></nav>
+      <form class="region-form" action="annunci.html" method="get">
+        <label class="field">In quale regione cerchi?
+          <select name="regione"><option>Abruzzo</option><option>Basilicata</option><option>Calabria</option><option>Campania</option><option selected>Emilia-Romagna</option><option>Friuli-Venezia Giulia</option><option>Lazio</option><option>Liguria</option><option>Lombardia</option><option>Marche</option><option>Molise</option><option>Piemonte</option><option>Puglia</option><option>Sardegna</option><option>Sicilia</option><option>Toscana</option><option>Trentino-Alto Adige</option><option>Umbria</option><option>Valle d’Aosta</option><option>Veneto</option></select>
+        </label>
+        <button class="btn btn-primary btn-lg" type="submit">Vedi gli annunci della zona</button>
+      </form>
     </section>
 
     <section class="come-funziona" id="come-funziona">
@@ -101,7 +117,7 @@
 
       <div class="cf-panel" id="cf-privati" role="tabpanel" aria-labelledby="cf-tab-privati">
 
-        <!-- 1. Copertura: righe che scorrono + titolo -->
+        <!-- 1. Copertura: righe che scorrono -->
         <div class="cf-block cf-reach reveal">
           <div class="marquees" aria-hidden="true">
           <div class="marquee">
@@ -116,11 +132,6 @@
             <ul class="marquee-track"><li>Aperitivo</li><li>Serata al club</li><li>Weekend fuori</li><li>Solo chat</li><li>Amicizia</li><li>Cena</li><li>Viaggio</li><li>Prima esperienza</li></ul>
             <ul class="marquee-track" aria-hidden="true"><li>Aperitivo</li><li>Serata al club</li><li>Weekend fuori</li><li>Solo chat</li><li>Amicizia</li><li>Cena</li><li>Viaggio</li><li>Prima esperienza</li></ul>
           </div>
-          </div>
-          <div class="cf-reach-copy">
-            <h3 class="cf-title">Tutta Italia, un solo profilo.</h3>
-            <p class="cf-sub">Pubblichi una volta e scegli tu dove farti trovare: categoria, regione, età e cosa cerchi.</p>
-            <ul class="cf-facts"><li><span>Profili</span><strong>Coppie, lei, lui, trans</strong></li><li><span>Zone</span><strong>20 regioni</strong></li><li><span>Accesso</span><strong>Solo maggiorenni verificati</strong></li></ul>
           </div>
         </div>
 
@@ -165,7 +176,7 @@
 
         <!-- 5. Domande -->
         <div class="cf-block reveal">
-          <h3 class="cf-title">Domande frequenti</h3>
+          <h3 class="cf-title">Domande? Ecco le risposte</h3>
           <div class="faq">
           <details class="faq-item"><summary>È gratis?</summary><p>Iscrizione, profilo e annunci sono gratuiti. Premium aggiunge messaggi illimitati, annunci in evidenza e i coupon nei locali convenzionati.</p></details>
           <details class="faq-item"><summary>Chi vede il mio profilo?</summary><p>Solo utenti iscritti e, se lo scegli, solo quelli verificati. Le foto sono sfocate per chi non è tra i tuoi contatti.</p></details>
@@ -181,7 +192,7 @@
 
       <div class="cf-panel" id="cf-business" role="tabpanel" aria-labelledby="cf-tab-business" hidden>
 
-        <!-- 1. Copertura: righe che scorrono + titolo -->
+        <!-- 1. Copertura: righe che scorrono -->
         <div class="cf-block cf-reach reveal">
           <div class="marquees" aria-hidden="true">
           <div class="marquee">
@@ -193,14 +204,9 @@
             <ul class="marquee-track" aria-hidden="true"><li>Ravenna</li><li>Bologna</li><li>Rimini</li><li>Milano</li><li>Torino</li><li>Firenze</li><li>Roma</li><li>Napoli</li><li>Bari</li><li>Verona</li><li>Padova</li><li>Pescara</li></ul>
           </div>
           <div class="marquee">
-            <ul class="marquee-track"><li>Coupon iscritti</li><li>Shop online</li><li>Extra in camera</li><li>Richieste di disponibilità</li><li>Eventi</li><li>Scheda verificata</li><li>Recensioni</li><li>Statistiche</li><li>Annunci sponsorizzati</li></ul>
+            <ul class="marquee-track"><li>Eventi in prevendita</li><li>Coupon iscritti</li><li>Shop online</li><li>Extra in camera</li><li>Richieste di disponibilità</li><li>Eventi</li><li>Scheda verificata</li><li>Recensioni</li><li>Statistiche</li><li>Annunci sponsorizzati</li></ul>
             <ul class="marquee-track" aria-hidden="true"><li>Coupon iscritti</li><li>Shop online</li><li>Extra in camera</li><li>Richieste di disponibilità</li><li>Eventi</li><li>Scheda verificata</li><li>Recensioni</li><li>Statistiche</li><li>Annunci sponsorizzati</li></ul>
           </div>
-          </div>
-          <div class="cf-reach-copy">
-            <h3 class="cf-title">Una vetrina per chi la cerca davvero.</h3>
-            <p class="cf-sub">La tua attività compare a chi sta già organizzando un incontro nella tua zona.</p>
-            <ul class="cf-facts"><li><span>Attività</span><strong>Shop, strutture, club, spazi</strong></li><li><span>Visibilità</span><strong>Locali, messaggi, bacheca</strong></li><li><span>Accesso</span><strong>Solo attività verificate</strong></li></ul>
           </div>
         </div>
 
@@ -217,6 +223,30 @@
             <h3 class="cf-title">Le richieste arrivano già pronte.</h3>
             <p class="cf-sub">Date, ospiti e offerta applicata: rispondi dalla dashboard o in chat, senza rincorrere nessuno.</p>
             <button type="button" class="btn btn-ghost" data-replay>Rivedi l’esempio</button>
+          </div>
+        </div>
+
+        <!-- 2b. Eventi in prevendita -->
+        <div class="cf-block cf-demo-wrap reveal">
+          <div class="cf-event-demo">
+            <article class="card ad has-cover event-card event-mock" aria-hidden="true">
+              <div class="ad-cover">
+                <img src="https://images.unsplash.com/photo-1468056961052-15507578a50d?w=800&h=450&fit=crop&crop=entropy&auto=format&q=70" alt="" loading="lazy">
+                <span class="ad-cover-tag"><span class="muted">Ven 9 ott, 23:00</span></span>
+                <span class="ad-cover-vis">−10 € in prevendita</span>
+              </div>
+              <div class="ad-body">
+                <div class="ad-head"><span class="ad-avatar">CV</span><div class="ad-who"><strong>Il tuo locale</strong><span class="muted">La tua città</span></div></div>
+                <span class="ad-meta"><span class="meta-ver"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2.9 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-.9 2.8-3-.2L12 21l-2.4-1.8-3 .2-.9-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7.9-2.8 3 .2z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>Certificato</span></span>
+                <h3>Notte in rosso</h3>
+                <div class="ad-foot"><span class="price">30 € <s class="muted">40 €</s></span><span class="btn btn-primary">Partecipa</span></div>
+              </div>
+            </article>
+          </div>
+          <div class="cf-demo-copy">
+            <h3 class="cf-title">Più persone alle tue serate.</h3>
+            <p class="cf-sub">Pubblica gli eventi con un prezzo speciale in prevendita: compaiono nella tab Eventi della home e chi compra in anticipo ha un motivo in più per esserci.</p>
+            <ul class="cf-list yes" style="margin-top:20px"><li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Prezzo in prevendita più basso dell’ingresso</li><li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Sai in anticipo quanti arrivano</li><li><span class="ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Incassi prima della serata</li></ul>
           </div>
         </div>
 
@@ -244,7 +274,7 @@
 
         <!-- 5. Domande -->
         <div class="cf-block reveal">
-          <h3 class="cf-title">Domande frequenti</h3>
+          <h3 class="cf-title">Domande? Ecco le risposte</h3>
           <div class="faq">
           <details class="faq-item"><summary>Quanto costa?</summary><p>Il piano Base è gratuito. Plus e In evidenza hanno un canone mensile e si disdicono quando vuoi.</p></details>
           <details class="faq-item"><summary>Che documenti servono?</summary><p>Visura camerale, documento del referente e, per le strutture ricettive, il codice CIN.</p></details>
@@ -260,6 +290,90 @@
       </div>
     </section>
   </main>
+
+  <!-- Ricerca su mobile: barra fissa in basso che apre un pannello dal basso -->
+  <button class="search-fab" type="button" aria-haspopup="dialog" aria-controls="search-sheet">
+    <span class="search-fab-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></span>
+    <span class="search-fab-text"><strong data-sum="chi">Coppia cerca coppia</strong><span data-sum="dove">Emilia-Romagna, 25–50 anni, online</span></span>
+    <span class="search-fab-edit" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>
+  </button>
+
+  <dialog class="sheet" id="ticket-dialog" aria-labelledby="tk-title">
+    <div class="sheet-body" id="tk-step1">
+      <span class="cat-label" id="tk-locale"></span>
+      <h2 id="tk-title" style="font-size:26px"></h2>
+      <p class="muted" id="tk-when"></p>
+      <div class="tk-compare">
+        <div><span class="muted">All’ingresso</span><s id="tk-door"></s></div>
+        <div class="tk-best"><span>Prevendita</span><strong id="tk-pre"></strong></div>
+      </div>
+      <p class="tk-save" id="tk-save"></p>
+      <label class="field">Biglietti
+        <select id="tk-qty"><option value="1">1 persona</option><option value="2" selected>2 persone</option><option value="3">3 persone</option><option value="4">4 persone</option></select>
+      </label>
+      <ul class="totals"><li class="grand"><span>Totale</span><span id="tk-total"></span></li></ul>
+      <p class="muted" style="font-size:14px">Riservato ai maggiorenni verificati. Rimborsabile fino a 24 ore prima dell’evento.</p>
+      <div class="sheet-actions"><button class="btn btn-ghost" type="button" data-close>Annulla</button><button class="btn btn-primary" type="button" id="tk-confirm">Paga</button></div>
+    </div>
+    <div class="sheet-body" id="tk-step2" hidden>
+      <span class="cat-label">Biglietto pronto</span>
+      <h2 style="font-size:26px">Ci vediamo all’ingresso</h2>
+      <div class="qr" id="tk-qr"></div>
+      <p class="qr-code" id="tk-code"></p>
+      <p class="muted" style="font-size:14px">Mostra il QR alla porta: lo staff lo convalida e salti la fila della cassa. Lo ritrovi nel tuo profilo. QR di esempio: nel prototipo non è valido.</p>
+      <div class="sheet-actions"><button class="btn btn-primary" type="button" data-close>Fatto</button></div>
+    </div>
+  </dialog>
+
+  <dialog class="bottom-sheet" id="search-sheet" aria-labelledby="ss-title">
+    <form class="bs-form" action="cerca.html" method="get">
+      <div class="bs-head">
+        <span class="bs-handle" aria-hidden="true"></span>
+        <div class="bs-title-row">
+          <h2 id="ss-title">Cosa cerchi?</h2>
+          <button class="bs-close" type="button" data-close aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+
+      <div class="bs-body">
+        <fieldset class="bs-group">
+          <legend>Siamo / sono</legend>
+          <div class="opts"><label class="opt"><input type="radio" name="sono" value="Coppia" checked><span>Coppia</span></label><label class="opt"><input type="radio" name="sono" value="Lei"><span>Lei</span></label><label class="opt"><input type="radio" name="sono" value="Lui"><span>Lui</span></label><label class="opt"><input type="radio" name="sono" value="Trans"><span>Trans</span></label></div>
+        </fieldset>
+
+        <fieldset class="bs-group">
+          <legend>Cerco <span class="bs-hint">anche più di uno</span></legend>
+          <div class="opts"><label class="opt"><input type="checkbox" name="cerco" value="Coppia" checked><span>Coppia</span></label><label class="opt"><input type="checkbox" name="cerco" value="Lei"><span>Lei</span></label><label class="opt"><input type="checkbox" name="cerco" value="Lui"><span>Lui</span></label><label class="opt"><input type="checkbox" name="cerco" value="Trans"><span>Trans</span></label></div>
+        </fieldset>
+
+        <fieldset class="bs-group">
+          <legend>Dove</legend>
+          <div class="opts opts-scroll"><label class="opt"><input type="radio" name="regione" value="Vicino a me"><span>Vicino a me</span></label><label class="opt"><input type="radio" name="regione" value="Abruzzo"><span>Abruzzo</span></label><label class="opt"><input type="radio" name="regione" value="Basilicata"><span>Basilicata</span></label><label class="opt"><input type="radio" name="regione" value="Calabria"><span>Calabria</span></label><label class="opt"><input type="radio" name="regione" value="Campania"><span>Campania</span></label><label class="opt"><input type="radio" name="regione" value="Emilia-Romagna" checked><span>Emilia-Romagna</span></label><label class="opt"><input type="radio" name="regione" value="Friuli-Venezia Giulia"><span>Friuli-Venezia Giulia</span></label><label class="opt"><input type="radio" name="regione" value="Lazio"><span>Lazio</span></label><label class="opt"><input type="radio" name="regione" value="Liguria"><span>Liguria</span></label><label class="opt"><input type="radio" name="regione" value="Lombardia"><span>Lombardia</span></label><label class="opt"><input type="radio" name="regione" value="Marche"><span>Marche</span></label><label class="opt"><input type="radio" name="regione" value="Molise"><span>Molise</span></label><label class="opt"><input type="radio" name="regione" value="Piemonte"><span>Piemonte</span></label><label class="opt"><input type="radio" name="regione" value="Puglia"><span>Puglia</span></label><label class="opt"><input type="radio" name="regione" value="Sardegna"><span>Sardegna</span></label><label class="opt"><input type="radio" name="regione" value="Sicilia"><span>Sicilia</span></label><label class="opt"><input type="radio" name="regione" value="Toscana"><span>Toscana</span></label><label class="opt"><input type="radio" name="regione" value="Trentino-Alto Adige"><span>Trentino-Alto Adige</span></label><label class="opt"><input type="radio" name="regione" value="Umbria"><span>Umbria</span></label><label class="opt"><input type="radio" name="regione" value="Valle d’Aosta"><span>Valle d’Aosta</span></label><label class="opt"><input type="radio" name="regione" value="Veneto"><span>Veneto</span></label></div>
+        </fieldset>
+
+        <fieldset class="bs-group">
+          <legend>Età <output class="bs-age" data-age>25–50 anni</output></legend>
+          <div class="range" data-range>
+            <span class="range-fill"></span>
+            <input type="range" name="da" min="18" max="70" value="25" aria-label="Età minima">
+            <input type="range" name="a" min="18" max="70" value="50" aria-label="Età massima">
+          </div>
+          <div class="range-scale" aria-hidden="true"><span>18</span><span>70+</span></div>
+        </fieldset>
+
+        <div class="bs-switch">
+          <span><strong style="font-weight:500">Solo online adesso</strong><br><span class="muted" style="font-size:13px">Profili attivi negli ultimi minuti</span></span>
+          <button type="button" class="switch" role="switch" aria-checked="true" aria-label="Solo online adesso" data-online></button>
+          <input type="hidden" name="online" value="1">
+        </div>
+      </div>
+
+      <div class="bs-foot">
+        <button class="btn btn-ghost" type="reset">Azzera</button>
+        <button class="btn btn-primary" type="submit">Mostra profili</button>
+      </div>
+    </form>
+  </dialog>
   <footer class="site-footer">
     <div class="container">
       <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
@@ -272,7 +386,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610021715"></script>
-  <script src="assets/app.js?v=202610021715"></script>
+  <script src="assets/data.js?v=202610031945"></script>
+  <script src="assets/app.js?v=202610031945"></script>
 </body>
 </html>

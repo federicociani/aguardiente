@@ -6,7 +6,7 @@
   <title>Aguardiente · Velluto Boutique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610021715">
+  <link rel="stylesheet" href="assets/style.css?v=202610031945">
 </head>
 <body data-page="shop">
   <header class="site-header">
@@ -14,11 +14,13 @@
     <nav class="nav nav-icons" aria-label="Principale">
       <a class="nav-icon" href="annunci.html" aria-label="Annunci"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l6.2 4.1a.8.8 0 0 0 1.3-.7V5.6a.8.8 0 0 0-1.3-.7L7 9H4.5A1.5 1.5 0 0 0 3 10.5z"/><path d="M18 9a4 4 0 0 1 0 6M7 15l1.2 4.2a1 1 0 0 0 1 .8H10"/></svg><span class="nav-tip" aria-hidden="true">Annunci</span></a>
       <a class="nav-icon" href="cerca.html" aria-label="Cerca"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="fillable" cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span class="nav-tip" aria-hidden="true">Cerca</span></a>
-      <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
+      <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="fillable" x="3.5" y="3.5" width="17" height="17" rx="5"/><path class="cut" d="M12 8.5v7M8.5 12h7"/></svg><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
+      <a class="nav-icon" href="storie.html" aria-label="Storie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M12 6.5C10.5 5 8.3 4.5 4 4.5v13c4.3 0 6.5.5 8 2 1.5-1.5 3.7-2 8-2v-13c-4.3 0-6.5.5-8 2z"/><path d="M12 6.5v13"/></svg><span class="nav-tip" aria-hidden="true">Storie</span></a>
       <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
     </nav>
     <div class="header-actions">
       <a class="btn btn-primary" href="pubblica.html">Pubblica annuncio</a>
+      <button class="cart-btn" type="button" id="cart-open" aria-haspopup="dialog" aria-controls="cart" aria-label="Carrello vuoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path class="cut" d="M9 10V7a3 3 0 0 1 6 0v3"/></svg><span class="cart-badge" id="cart-badge" hidden>0</span></button>
       <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
     </div>
   </header>
@@ -34,14 +36,26 @@
       <a class="btn btn-ghost" href="messaggi.html">Chiedi un consiglio</a>
     </div>
 
-    <div class="shop-grid">
+    <div class="shop-grid shop-grid-full">
       <section>
         <div class="chips" id="shop-filters" role="group" aria-label="Categoria" style="margin-bottom:24px"></div>
         <div class="grid grid-3" id="products"></div>
       </section>
 
-      <aside class="card cart" id="cart" aria-label="Carrello">
-        <div class="section-head" style="margin:0;align-items:center"><h2 style="font-size:24px">Carrello</h2><span class="badge" id="cart-count"></span></div>
+    </div>
+  </main>
+
+  <dialog class="drawer" id="cart" aria-labelledby="cart-title">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <span class="bs-handle" aria-hidden="true"></span>
+        <div class="bs-title-row">
+          <h2 id="cart-title">Carrello <span class="badge" id="cart-count"></span></h2>
+          <button class="bs-close" type="button" data-close aria-label="Chiudi il carrello"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+      </div>
+      <div class="drawer-body">
+        
         <ul class="cart-list" id="cart-items"></ul>
         <ul class="totals">
           <li><span>Sconto iscritti 10%</span><span id="cart-discount"></span></li>
@@ -52,10 +66,9 @@
         <button class="btn btn-primary btn-lg btn-block" id="cart-checkout" type="button" disabled>Vai al pagamento</button>
         <p class="muted" style="font-size:14px;display:flex;gap:8px;align-items:flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Acquisto riservato ai maggiorenni verificati. In estratto conto compare un nome neutro.</span></p>
         <p id="cart-done" class="notice" hidden role="status">Nel prototipo il pagamento si ferma qui. Qui andrà il checkout con un processore abilitato ai prodotti per adulti.</p>
-      </aside>
+            </div>
     </div>
-    <a class="cartbar" href="#cart" id="cartbar" hidden><span id="cartbar-n"></span><strong id="cartbar-tot"></strong></a>
-  </main>
+  </dialog>
   <footer class="site-footer">
     <div class="container">
       <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
@@ -67,7 +80,7 @@
       </nav>
     </div>
   </footer>
-  <script src="assets/data.js?v=202610021715"></script>
-  <script src="assets/app.js?v=202610021715"></script>
+  <script src="assets/data.js?v=202610031945"></script>
+  <script src="assets/app.js?v=202610031945"></script>
 </body>
 </html>

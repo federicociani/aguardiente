@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aguardiente · Storie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=202610031945">
+</head>
+<body data-page="storie">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav nav-icons" aria-label="Principale">
+      <a class="nav-icon" href="annunci.html" aria-label="Annunci"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l6.2 4.1a.8.8 0 0 0 1.3-.7V5.6a.8.8 0 0 0-1.3-.7L7 9H4.5A1.5 1.5 0 0 0 3 10.5z"/><path d="M18 9a4 4 0 0 1 0 6M7 15l1.2 4.2a1 1 0 0 0 1 .8H10"/></svg><span class="nav-tip" aria-hidden="true">Annunci</span></a>
+      <a class="nav-icon" href="cerca.html" aria-label="Cerca"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="fillable" cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span class="nav-tip" aria-hidden="true">Cerca</span></a>
+      <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="fillable" x="3.5" y="3.5" width="17" height="17" rx="5"/><path class="cut" d="M12 8.5v7M8.5 12h7"/></svg><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
+      <a class="nav-icon" href="storie.html" aria-current="page" aria-label="Storie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M12 6.5C10.5 5 8.3 4.5 4 4.5v13c4.3 0 6.5.5 8 2 1.5-1.5 3.7-2 8-2v-13c-4.3 0-6.5.5-8 2z"/><path d="M12 6.5v13"/></svg><span class="nav-tip" aria-hidden="true">Storie</span></a>
+      <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-primary" href="pubblica.html">Pubblica annuncio</a>
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo">OM</a>
+    </div>
+  </header>
+
+  <main class="container stories">
+    <header class="stories-head">
+      <div class="heading-group">
+        <p class="eyebrow">Community</p>
+        <h1>Storie</h1>
+        <p class="lead">Fantasie, confessioni e prime volte, raccontate in prima persona da chi fa parte di Aguardiente.</p>
+      </div>
+      <div class="stories-actions">
+        <label class="field stories-search"><span class="sr-only">Cerca tra le storie</span><input type="search" id="st-search" placeholder="Cerca per titolo, autore o tema"></label>
+        <a class="btn btn-primary" href="#scrivi">Scrivi la tua storia</a>
+      </div>
+    </header>
+
+    <section class="collections" aria-label="Collezioni" id="st-collections"></section>
+
+    <div class="two-col stories-grid">
+      <div class="main">
+        <div class="stories-toolbar">
+          <div class="tabs home-tabs" role="tablist" aria-label="Ordina">
+            <button type="button" role="tab" aria-selected="true" data-sort="nuove">Nuove</button>
+            <button type="button" role="tab" aria-selected="false" data-sort="lette">Più lette</button>
+            <button type="button" role="tab" aria-selected="false" data-sort="commentate">Più commentate</button>
+          </div>
+          <p class="muted" id="st-count" aria-live="polite"></p>
+        </div>
+        <div class="chips" role="group" aria-label="Filtro attivo" id="st-active"></div>
+        <div class="story-list" id="st-list"></div>
+      </div>
+
+      <aside>
+        <section class="card">
+          <h2 style="font-size:22px;margin-bottom:14px">Autori della settimana</h2>
+          <ol class="authors" id="st-authors"></ol>
+        </section>
+        <section class="card">
+          <h2 style="font-size:22px;margin-bottom:14px">Temi più cercati</h2>
+          <div class="tag-cloud" id="st-tags"></div>
+        </section>
+        <a class="card-deep write-cta" href="#scrivi">
+          <strong style="font-family:var(--font-display);font-size:22px">Hai una storia da raccontare?</strong>
+          <span>Scrivila con il tuo nickname: la leggono solo gli iscritti verificati.</span>
+        </a>
+      </aside>
+    </div>
+
+    <section class="card write" id="scrivi">
+      <div class="heading-group"><p class="eyebrow">Scrivi</p><h2>La tua storia</h2></div>
+      <form class="write-form" id="st-form" novalidate>
+        <label class="field" style="grid-column:1/-1">Titolo<input type="text" name="titolo" maxlength="80" placeholder="Un titolo che incuriosisca"></label>
+        <label class="field">Collezione<select name="cat"><option>Lui & Lei</option><option>Scambio di coppia</option><option>In tre</option><option>Prime volte</option><option>Lei & lei</option><option>Lui & lui</option><option>Trans</option><option>Club e serate</option><option>In vacanza</option><option>Confessioni</option><option>Giochi di ruolo</option></select></label>
+        <label class="field">Temi (separati da virgola)<input type="text" name="tag" placeholder="mare, hotel, prima volta"></label>
+        <label class="field" style="grid-column:1/-1">Testo<textarea name="testo" rows="8" placeholder="Racconta in prima persona. Puoi salvare la bozza e continuare dopo."></textarea></label>
+        <label class="check" style="grid-column:1/-1"><input type="checkbox" name="ok"><span>Confermo che la storia è frutto della mia fantasia o racconta fatti tra adulti consenzienti, e che non contiene dati che permettano di riconoscere qualcuno.</span></label>
+        <p class="notice" style="grid-column:1/-1">Ogni storia passa dalla moderazione. Non pubblichiamo racconti che coinvolgono minori, parenti, violenza o mancanza di consenso, né nomi reali o riferimenti a persone riconoscibili.</p>
+        <div class="write-actions" style="grid-column:1/-1"><button class="btn btn-ghost" type="button">Salva bozza</button><button class="btn btn-primary" type="submit">Invia alla moderazione</button></div>
+        <p class="notice" id="st-sent" hidden role="status" style="grid-column:1/-1">Grazie! La tua storia è in moderazione: ti avvisiamo appena è online.</p>
+      </form>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="assets/data.js?v=202610031945"></script>
+  <script src="assets/app.js?v=202610031945"></script>
+</body>
+</html>

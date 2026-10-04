@@ -4,10 +4,12 @@
 
 | Pagina | Scopo | Porta a |
 |---|---|---|
-| `index.html` | Home pubblica: ricerca rapida, categorie, online adesso, ultimi annunci, regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
+| `index.html` | Home pubblica: ricerca rapida, categorie, online ora, tab Annunci/Eventi (eventi dei locali con prevendita del biglietto), regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
 | `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
+| `storie.html` | Storie della community: collezioni, ricerca, ordinamento (nuove, più lette, più commentate), autori della settimana, temi, form Scrivi la tua storia con regole di moderazione | storia, messaggi |
+| `storia.html?id=…` | Storia singola: lettura, mi piace, salva, scrivi all’autore, segnala, commenti, altre storie | storie, messaggi |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
 | `messaggi.html` | Lista conversazioni + chat + pannello sicurezza | annuncio ("Vedi annuncio"), scheda |
@@ -17,8 +19,8 @@
 
 | Pagina | Scopo | Porta a |
 |---|---|---|
-| `business.html` | Home Aguardiente Business: categorie, come funziona, sezione per i locali (profilo, coupon, servizi), come guadagni, piani | iscrizione?tipo=azienda, dashboard, scheda |
-| `dashboard.html` | Area azienda: checklist di verifica, statistiche, piani | scheda |
+| `business.html` | Home Aguardiente Business: categorie, come funziona, sezione per i locali (profilo, coupon, servizi), eventi in prevendita, come guadagni, piani | iscrizione?tipo=azienda, dashboard, scheda |
+| `dashboard.html` | Area azienda: checklist di verifica, statistiche, eventi in prevendita, coupon e servizi, extra, shop, piani | scheda |
 | `locale.html` | Profilo di un locale (Club Ventaglio): serate, regole, coupon e servizi acquistabili con QR da mostrare all'ingresso | messaggi |
 | `luoghi.html` | Elenco attività come lo vedono gli utenti | scheda |
 | `scheda.html` | Scheda di una singola attività, offerta, richiesta disponibilità | prenotazione, messaggi |

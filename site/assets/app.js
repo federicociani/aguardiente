@@ -15,16 +15,6 @@
   const ICON_HEART = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
   const ICON_PIN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 
-  /* ---------- Logo: fiammella animata inserita in ogni .logo ---------- */
-  const FLAME = `
-    <svg class="flame" width="22" height="30" viewBox="0 0 24 32" aria-hidden="true">
-      <defs><linearGradient id="flg" x1="0" y1="1" x2="0.3" y2="0">
-        <stop offset="0" stop-color="#7B2FF7"/><stop offset="0.6" stop-color="#D61E52"/><stop offset="1" stop-color="#FF6B8F"/>
-      </linearGradient></defs>
-      <path d="M12 1C13.2 7 19.5 10.5 19.5 19.5a7.5 7.5 0 0 1-15 0c0-4.2 2.2-6.6 3.8-8.6 0 3 1.4 4.6 3 5.2C11 12 9.2 7 12 1z" fill="url(#flg)"/>
-      <path class="flame-core" d="M12 15.5c1.6 2 3.1 3.3 3.1 5.6a3.1 3.1 0 0 1-6.2 0c0-1.9 1.3-3.2 3.1-5.6z" fill="#FFC9D6"/>
-    </svg>`;
-  $$('.logo').forEach((el) => el.insertAdjacentHTML('afterbegin', FLAME));
 
   /* Utility: gruppo di pill che filtrano una lista */
   function pills(container, labels, onChange) {
@@ -47,6 +37,24 @@
     btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
     menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+  });
+
+  /* Campi data: stessa misura degli altri campi e segnaposto visibile anche su iPhone
+     (Safari non mostra il placeholder negli input type="date") */
+  $$('input[type="date"]').forEach((input) => {
+    const wrap = document.createElement('span');
+    wrap.className = 'date-wrap';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    const ph = document.createElement('span');
+    ph.className = 'date-ph'; ph.setAttribute('aria-hidden', 'true');
+    ph.textContent = input.dataset.placeholder || 'gg/mm/aaaa';
+    wrap.appendChild(ph);
+    const iso = (d) => d.toISOString().slice(0, 10);
+    if ('adult' in input.dataset) { const d = new Date(); d.setFullYear(d.getFullYear() - 18); input.max = iso(d); }
+    if ('future' in input.dataset) input.min = iso(new Date());
+    const sync = () => wrap.classList.toggle('has-value', !!input.value);
+    input.addEventListener('input', sync); input.addEventListener('change', sync); sync();
   });
 
   /* Interruttori role="switch" generici */
@@ -116,6 +124,158 @@
     return `Foto di ${links.join(', ')} su <a href="https://unsplash.com/?utm_source=aguardiente&utm_medium=referral">Unsplash</a>`;
   }
 
+  /* ---------- HOME: tab Annunci / Eventi e prevendita biglietti ---------- */
+  function homeEvents() {
+    const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    const list = $('#latest-events'); if (!list) return;
+    list.innerHTML = D.eventi.map((e) => `
+      <article class="card ad has-cover event-card">
+        <div class="ad-cover">
+          <img src="${D.unsplash(e.cover, 800, 450)}" alt="" loading="lazy" decoding="async">
+          <span class="ad-cover-tag"><span class="muted">${esc(e.quando)}</span></span>
+          <span class="ad-cover-vis">−${eur(e.ingresso - e.prevendita)} in prevendita</span>
+        </div>
+        <div class="ad-body">
+          <div class="ad-head">
+            <span class="ad-avatar">${esc(e.ini)}</span>
+            <div class="ad-who"><strong><a class="ad-link-plain" href="${e.link}">${esc(e.locale)}</a></strong><span class="muted">${esc(e.citta)}</span></div>
+          </div>
+          <span class="ad-meta">${e.cert ? `<span class="meta-ver">${ICON_SEAL}Certificato</span>` : '<span class="muted">Locale</span>'}</span>
+          <span class="cat-label">${esc(e.tipo)}</span>
+          <h3>${esc(e.titolo)}</h3>
+          <p class="muted">${esc(e.testo)}</p>
+          <div class="ad-foot">
+            <span class="price">${eur(e.prevendita)} <s class="muted">${eur(e.ingresso)}</s></span>
+            <button class="btn btn-primary" type="button" data-ticket="${e.id}">Partecipa</button>
+          </div>
+        </div>
+      </article>`).join('');
+
+    // Tab Annunci / Eventi
+    const tabs = $$('.home-tabs [role="tab"]');
+    const copy = { annunci: ['Ultimi annunci', 'Tutti gli annunci', 'annunci.html'], eventi: ['Prossimi eventi', 'Tutti i locali', 'luoghi.html'] };
+    const select = (tab) => {
+      tabs.forEach((t) => t.setAttribute('aria-selected', t === tab));
+      const k = tab.dataset.tab;
+      $('#latest-ads').hidden = k !== 'annunci'; $('#latest-events').hidden = k !== 'eventi';
+      $('#bacheca-title').textContent = copy[k][0];
+      $('#bacheca-link').textContent = copy[k][1]; $('#bacheca-link').href = copy[k][2];
+    };
+    tabs.forEach((t) => t.addEventListener('click', () => select(t)));
+    $('.home-tabs').addEventListener('keydown', (e) => {
+      if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+      const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length]; n.focus(); select(n);
+    });
+
+    // Partecipa: prevendita del biglietto
+    const dlg = $('#ticket-dialog'); let ev = null;
+    const total = () => { const q = +$('#tk-qty').value; $('#tk-total').textContent = eur(ev.prevendita * q); $('#tk-save').textContent = `Risparmi ${eur((ev.ingresso - ev.prevendita) * q)} rispetto all’ingresso`; };
+    list.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-ticket]'); if (!b) return;
+      ev = D.eventi.find((x) => x.id === b.dataset.ticket);
+      $('#tk-locale').textContent = `${ev.locale}, ${ev.citta}`;
+      $('#tk-title').textContent = ev.titolo;
+      $('#tk-when').textContent = ev.quando;
+      $('#tk-door').textContent = eur(ev.ingresso);
+      $('#tk-pre').textContent = eur(ev.prevendita);
+      $('#tk-step1').hidden = false; $('#tk-step2').hidden = true;
+      total(); dlg.showModal();
+    });
+    $('#tk-qty').addEventListener('change', total);
+    $('#tk-confirm').addEventListener('click', () => {
+      const code = 'EVT-' + Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+      $('#tk-code').textContent = code; $('#tk-qr').innerHTML = fakeQR(code);
+      $('#tk-step1').hidden = true; $('#tk-step2').hidden = false;
+    });
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', () => dlg.close()));
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+
+  /* ---------- RICERCA DA MOBILE: barra fissa + pannello dal basso ---------- */
+  function searchSheet() {
+    const fab = $('.search-fab'); const dlg = $('#search-sheet'); if (!fab || !dlg) return;
+    const form = $('form', dlg);
+    const range = $('[data-range]', dlg);
+    const [rMin, rMax] = $$('input[type="range"]', range);
+    const sw = $('[data-online]', dlg); const onlineInput = $('input[name="online"]', dlg);
+
+    const summary = () => {
+      const sono = form.sono.value || 'Chiunque';
+      const cerco = $$('input[name="cerco"]:checked', form).map((i) => i.value.toLowerCase());
+      const regione = (form.regione.value || 'Ovunque');
+      const eta = `${rMin.value}–${rMax.value >= 70 ? '70+' : rMax.value} anni`;
+      const online = sw.getAttribute('aria-checked') === 'true';
+      $('[data-sum="chi"]', fab).textContent = `${sono} cerca ${cerco.length ? cerco.join(', ') : 'chiunque'}`;
+      $('[data-sum="dove"]', fab).textContent = [regione, eta, online ? 'online' : ''].filter(Boolean).join(', ');
+      $('[data-age]', dlg).textContent = eta;
+      $('button[type="submit"]', dlg).textContent = cerco.length ? 'Mostra profili' : 'Scegli chi cerchi';
+      $('button[type="submit"]', dlg).disabled = !cerco.length;
+    };
+    const paintRange = () => {
+      // i due cursori non possono incrociarsi
+      if (+rMin.value > +rMax.value - 1) { if (document.activeElement === rMin) rMin.value = +rMax.value - 1; else rMax.value = +rMin.value + 1; }
+      const pct = (v) => (v - rMin.min) / (rMin.max - rMin.min);
+      range.style.setProperty('--a', pct(rMin.value));
+      range.style.setProperty('--b', pct(rMax.value));
+    };
+
+    const open = () => { dlg.showModal(); document.documentElement.classList.add('sheet-open'); const sel = $('input[name="regione"]:checked', dlg); if (sel) sel.closest('.opt').scrollIntoView({ inline: 'center', block: 'nearest' }); };
+    const close = () => {
+      if (!dlg.open) return;
+      dlg.classList.add('is-closing');
+      setTimeout(() => { dlg.classList.remove('is-closing'); dlg.style.transform = ''; dlg.close(); }, reduceMotion ? 0 : 220);
+    };
+    dlg.addEventListener('close', () => { document.documentElement.classList.remove('sheet-open'); fab.focus(); });
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    fab.addEventListener('click', open);
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', close));
+
+    // Trascina verso il basso per chiudere (dalla maniglia o dal titolo)
+    const head = $('.bs-head', dlg); let y0 = null, dy = 0;
+    head.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; y0 = e.clientY; dy = 0; head.setPointerCapture(e.pointerId); dlg.style.transition = 'none'; });
+    head.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); dlg.style.transform = `translateY(${dy}px)`; });
+    head.addEventListener('pointerup', () => { if (y0 === null) return; dlg.style.transition = ''; y0 = null; if (dy > 90) close(); else dlg.style.transform = ''; });
+
+    sw.addEventListener('change', () => { onlineInput.value = sw.getAttribute('aria-checked') === 'true' ? '1' : ''; summary(); });
+    form.addEventListener('input', () => { paintRange(); summary(); });
+    form.addEventListener('reset', () => setTimeout(() => { sw.setAttribute('aria-checked', 'true'); onlineInput.value = '1'; paintRange(); summary(); }));
+    paintRange(); summary();
+  }
+
+  // QR finto ma stabile: serve solo a far capire il flusso nel prototipo
+  function fakeQR(seed) {
+    let h = 0; for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+    const n = 21, cell = 8, rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) / 2 ** 32);
+    let r = '';
+    const finder = (x, y) => `<rect x="${x * cell}" y="${y * cell}" width="${7 * cell}" height="${7 * cell}" fill="#14060A"/><rect x="${(x + 1) * cell}" y="${(y + 1) * cell}" width="${5 * cell}" height="${5 * cell}" fill="#fff"/><rect x="${(x + 2) * cell}" y="${(y + 2) * cell}" width="${3 * cell}" height="${3 * cell}" fill="#14060A"/>`;
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
+      if (!inFinder && rnd() > 0.5) r += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#14060A"/>`;
+    }
+    return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
+  }
+
+  /* Pannelli (dialog) che si chiudono con X, tocco fuori, Esc o trascinando giù la maniglia */
+  function sheetClose(dlg, handle) {
+    const close = () => {
+      if (!dlg.open) return;
+      dlg.classList.add('is-closing');
+      setTimeout(() => { dlg.classList.remove('is-closing'); dlg.style.transform = ''; dlg.close(); }, reduceMotion ? 0 : 220);
+    };
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); close(); });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+    $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', close));
+    if (handle) {
+      let y0 = null, dy = 0;
+      handle.addEventListener('pointerdown', (e) => { if (e.target.closest('button') || matchMedia('(min-width: 721px)').matches) return; y0 = e.clientY; dy = 0; handle.setPointerCapture(e.pointerId); dlg.style.transition = 'none'; });
+      handle.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); dlg.style.transform = `translateY(${dy}px)`; });
+      handle.addEventListener('pointerup', () => { if (y0 === null) return; dlg.style.transition = ''; y0 = null; if (dy > 90) close(); else dlg.style.transform = ''; });
+    }
+    return close;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -128,6 +288,7 @@
             : esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
           <span><strong>${esc(p.nick)}</strong><br><span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span></span>
         </a>`).join('');
+      homeEvents();
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
         <a class="card ad latest${a.cover ? ' has-cover' : ''}" href="annunci.html" style="color:inherit;text-decoration:none">
           ${coverHTML(a, { compact: true })}
@@ -139,6 +300,7 @@
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
       comeFunziona();
+      searchSheet();
     },
 
     /* ---------- ISCRIZIONE: switch Utente / Azienda ---------- */
@@ -164,6 +326,12 @@
         $('#ads-count').textContent = `${items.length} annunci`;
         list.innerHTML = items.length ? items.map((a) => adCard(a)).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
       };
+      // Regione arrivata dalla home (?regione=...) o scelta qui
+      const regSel = $('#ads-region-select');
+      const reg = new URLSearchParams(location.search).get('regione');
+      if (reg && [...regSel.options].some((o) => o.value === reg)) regSel.value = reg;
+      const showReg = () => { $('#ads-region').textContent = regSel.value; };
+      regSel.addEventListener('change', showReg); showReg();
       pills($('#ad-filters'), ['Tutte', 'Coppia cerca coppia', 'Coppia cerca lei', 'Lei cerca lui', 'Lei cerca coppia', 'Lui cerca coppia'], render);
     },
 
@@ -193,6 +361,10 @@
             </div>
           </article>`).join('') : '<p class="empty">Nessun profilo con questi filtri. Prova ad allargare la ricerca.</p>';
       };
+      // Parametri arrivati dalla ricerca in home (?cerco=Coppia&cerco=Lei&online=1)
+      const q = new URLSearchParams(location.search);
+      if (q.getAll('cerco').length) $$('#filter-tipi input').forEach((i) => { i.checked = q.getAll('cerco').includes(i.value); });
+      if (q.get('online')) $('#sw-online').setAttribute('aria-checked', 'true');
       $('#filters').addEventListener('change', render);
       const ft = $('.filters-toggle');
       if (ft) ft.addEventListener('click', () => {
@@ -329,14 +501,21 @@
         $('#cart-discount').textContent = tot ? `−${eur(tot * 0.1)}` : eur(0);
         $('#cart-pay').textContent = eur(tot * 0.9);
         $('#cart-checkout').toggleAttribute('disabled', !tot);
-        const bar = $('#cartbar');
-        if (bar) { bar.hidden = !n; $('#cartbar-n').textContent = `Carrello, ${n} ${n === 1 ? 'articolo' : 'articoli'}`; $('#cartbar-tot').textContent = eur(tot * 0.9); }
+        // Icona del carrello nella navbar: badge con il numero di articoli
+        const badge = $('#cart-badge'), btn = $('#cart-open');
+        if (badge) {
+          badge.hidden = !n; badge.textContent = n;
+          btn.setAttribute('aria-label', n ? `Carrello, ${n} ${n === 1 ? 'articolo' : 'articoli'}, ${eur(tot * 0.9)}` : 'Carrello vuoto');
+          btn.classList.toggle('has-items', !!n);
+        }
       };
       const renderList = (cat) => {
         const list = cat === 'Tutti' ? S.prodotti : S.prodotti.filter((p) => p.cat === cat);
         $('#products').innerHTML = list.map((p) => `
           <article class="card product">
-            <div class="product-visual" data-cat="${esc(p.cat)}">${icon(p.cat)}</div>
+            <div class="product-visual${p.img ? ' has-img' : ''}" data-cat="${esc(p.cat)}">${p.img
+              ? `<img src="${D.unsplash(p.img, 600, 600)}" srcset="${D.unsplash(p.img, 600, 600)} 1x, ${D.unsplash(p.img, 1000, 1000)} 2x" alt="" loading="lazy" decoding="async">`
+              : icon(p.cat)}</div>
             <div class="product-body">
               <span class="cat-label">${esc(p.cat)}</span>
               <h3>${esc(p.nome)}</h3>
@@ -347,10 +526,19 @@
       };
       document.addEventListener('click', (e) => {
         const inc = e.target.closest('[data-inc]'); const dec = e.target.closest('[data-dec]');
-        if (inc) { cart.set(inc.dataset.inc, (cart.get(inc.dataset.inc) || 0) + 1); renderCart(); }
+        if (inc) {
+          cart.set(inc.dataset.inc, (cart.get(inc.dataset.inc) || 0) + 1); renderCart();
+          // conferma visiva: il badge "salta" e il bottone dice Aggiunto per un attimo
+          const b = $('#cart-badge'); if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
+          if (inc.closest('.product') && inc.textContent.trim() === 'Aggiungi') { inc.textContent = 'Aggiunto'; setTimeout(() => { inc.textContent = 'Aggiungi'; }, 1200); }
+        }
         if (dec) { const q = (cart.get(dec.dataset.dec) || 0) - 1; q > 0 ? cart.set(dec.dataset.dec, q) : cart.delete(dec.dataset.dec); renderCart(); }
       });
       $('#cart-checkout').addEventListener('click', () => { $('#cart-done').hidden = false; });
+      // Carrello in un pannello: da destra su desktop, dal basso su mobile
+      const drawer = $('#cart');
+      $('#cart-open').addEventListener('click', () => drawer.showModal());
+      sheetClose(drawer, $('.drawer-head', drawer));
       pills($('#shop-filters'), ['Tutti', 'Protezione', 'Benessere', 'Giochi', 'Kit coppia', 'Lingerie'], renderList);
       renderCart();
     },
@@ -464,18 +652,104 @@
       $$('[data-close]', dlg).forEach((b) => b.addEventListener('click', () => dlg.close()));
       dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
 
-      // QR finto ma stabile: serve solo a far capire il flusso nel prototipo
-      function fakeQR(seed) {
-        let h = 0; for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0;
-        const n = 21, cell = 8, rnd = () => ((h = (h * 1103515245 + 12345) >>> 0) / 2 ** 32);
-        let r = '';
-        const finder = (x, y) => `<rect x="${x * cell}" y="${y * cell}" width="${7 * cell}" height="${7 * cell}" fill="#14060A"/><rect x="${(x + 1) * cell}" y="${(y + 1) * cell}" width="${5 * cell}" height="${5 * cell}" fill="#fff"/><rect x="${(x + 2) * cell}" y="${(y + 2) * cell}" width="${3 * cell}" height="${3 * cell}" fill="#14060A"/>`;
-        for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
-          const inFinder = (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
-          if (!inFinder && rnd() > 0.5) r += `<rect x="${x * cell}" y="${y * cell}" width="${cell}" height="${cell}" fill="#14060A"/>`;
-        }
-        return `<svg viewBox="0 0 ${n * cell} ${n * cell}" width="168" height="168" role="img" aria-label="Codice QR del coupon"><rect width="100%" height="100%" fill="#fff"/>${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
-      }
+    },
+
+    /* ---------- STORIE: elenco con collezioni, filtri, ordinamento, autori e temi ---------- */
+    storie() {
+      const S = D.storie; const st = { cat: null, q: '', sort: 'nuove' };
+      const ICON_HEART_S = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+      const ICON_COMMENT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg>';
+      const count = (c) => S.filter((x) => x.cat === c).length;
+
+      $('#st-collections').innerHTML = D.storieCategorie.map((g) => `
+        <div class="collection"><p class="eyebrow">${esc(g.gruppo)}</p>
+          <div class="chips">${g.voci.map((v) => `<button type="button" class="pill" data-cat="${esc(v)}" aria-pressed="false">${esc(v)}${count(v) ? ` <span class="pill-n">${count(v)}</span>` : ''}</button>`).join('')}</div>
+        </div>`).join('');
+      $('#st-authors').innerHTML = D.storieAutori.map((a, i) => `
+        <li><span class="rank">${i + 1}</span><span class="ad-avatar">${esc(a.ini)}</span><span class="author-text"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${a.storie} storie</span></span></li>`).join('');
+      $('#st-tags').innerHTML = D.storieTag.map((t) => `<button type="button" class="tag" data-q="${esc(t)}">#${esc(t)}</button>`).join('');
+
+      const card = (x) => `
+        <article class="card story-card${x.img ? ' has-img' : ''}">
+          ${x.img ? `<div class="story-img"><img src="${D.unsplash(x.img, 480, 480)}" srcset="${D.unsplash(x.img, 480, 480)} 1x, ${D.unsplash(x.img, 900, 900)} 2x" alt="" loading="lazy" decoding="async"></div>` : ''}
+          <div class="story-text">
+          <span class="cat-label">${esc(x.cat)}</span>
+          <h3><a class="ad-link" href="storia.html?id=${x.id}">${esc(x.titolo)}</a></h3>
+          <p class="muted story-excerpt">${esc(x.estratto)}</p>
+          <p class="story-tags">${x.tag.map((t) => `#${esc(t)}`).join(' ')}</p>
+          <div class="story-meta">
+            <span class="ad-avatar">${esc(x.ini)}</span>
+            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+            <span class="story-stats"><span aria-label="${x.like} mi piace">${ICON_HEART_S}${x.like}</span><span aria-label="${x.commenti} commenti">${ICON_COMMENT}${x.commenti}</span></span>
+          </div>
+          </div>
+        </article>`;
+      const render = () => {
+        const q = st.q.toLowerCase();
+        let list = S.filter((x) => (!st.cat || x.cat === st.cat) && (!q || [x.titolo, x.autore, x.cat, x.estratto, ...x.tag].join(' ').toLowerCase().includes(q)));
+        if (st.sort === 'lette') list = [...list].sort((a, b) => b.like - a.like);
+        if (st.sort === 'commentate') list = [...list].sort((a, b) => b.commenti - a.commenti);
+        $('#st-list').innerHTML = list.length ? list.map(card).join('') : `<p class="empty">Nessuna storia ${st.cat ? `in “${esc(st.cat)}”` : ''}${st.q ? ` per “${esc(st.q)}”` : ''}. <a href="#scrivi">Scrivi la prima.</a></p>`;
+        $('#st-count').textContent = `${list.length} ${list.length === 1 ? 'storia' : 'storie'}`;
+        const active = [st.cat && `<button type="button" class="pill" aria-pressed="true" data-clear="cat">${esc(st.cat)} ✕</button>`, st.q && `<button type="button" class="pill" aria-pressed="true" data-clear="q">“${esc(st.q)}” ✕</button>`].filter(Boolean);
+        $('#st-active').innerHTML = active.join(''); $('#st-active').hidden = !active.length;
+        $$('#st-collections [data-cat]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.cat === st.cat));
+      };
+      document.addEventListener('click', (e) => {
+        const c = e.target.closest('[data-cat]'), t = e.target.closest('[data-q]'), x = e.target.closest('[data-clear]'), so = e.target.closest('[data-sort]');
+        if (c) { st.cat = st.cat === c.dataset.cat ? null : c.dataset.cat; render(); }
+        if (t) { st.q = t.dataset.q; $('#st-search').value = st.q; render(); $('#st-list').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); }
+        if (x) { st[x.dataset.clear] = x.dataset.clear === 'cat' ? null : ''; if (x.dataset.clear === 'q') $('#st-search').value = ''; render(); }
+        if (so) { st.sort = so.dataset.sort; $$('[data-sort]').forEach((b) => b.setAttribute('aria-selected', b === so)); render(); }
+      });
+      $('#st-search').addEventListener('input', (e) => { st.q = e.target.value.trim(); render(); });
+      $('#st-form').addEventListener('submit', (e) => { e.preventDefault(); $('#st-sent').hidden = false; });
+      render();
+    },
+
+    /* ---------- STORIA singola (storia.html?id=...) ---------- */
+    storia() {
+      const id = new URLSearchParams(location.search).get('id');
+      const x = D.storie.find((s) => s.id === id) || D.storie[0];
+      document.title = `Aguardiente · ${x.titolo}`;
+      let liked = false, saved = false;
+      $('#st-story').innerHTML = `
+        ${x.img ? `<div class="story-hero"><img src="${D.unsplash(x.img, 1400, 600)}" srcset="${D.unsplash(x.img, 1400, 600)} 1x, ${D.unsplash(x.img, 2400, 1030)} 2x" alt="" decoding="async"></div>` : ''}
+        <header class="story-head">
+          <span class="cat-label">${esc(x.cat)}</span>
+          <h1>${esc(x.titolo)}</h1>
+          <div class="story-meta">
+            <span class="ad-avatar">${esc(x.ini)}</span>
+            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+          </div>
+        </header>
+        <div class="story-body">${x.testo.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
+        <p class="story-tags">${x.tag.map((t) => `<a href="storie.html">#${esc(t)}</a>`).join(' ')}</p>
+        <div class="story-actions">
+          <button class="btn btn-ghost" type="button" data-like aria-pressed="false">Mi piace · <span>${x.like}</span></button>
+          <button class="btn btn-ghost" type="button" data-save aria-pressed="false">Salva</button>
+          <a class="btn btn-ghost" href="messaggi.html">Scrivi all’autore</a>
+          <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
+        </div>`;
+      $('[data-like]').addEventListener('click', (e) => { liked = !liked; const b = e.currentTarget; b.setAttribute('aria-pressed', liked); $('span', b).textContent = x.like + (liked ? 1 : 0); });
+      $('[data-save]').addEventListener('click', (e) => { saved = !saved; e.currentTarget.setAttribute('aria-pressed', saved); e.currentTarget.textContent = saved ? 'Salvata' : 'Salva'; });
+      const comments = [
+        { ini: 'NO', nick: 'Notturna', quando: '2 ore fa', testo: 'Scritta benissimo, mi hai fatto venire voglia di riprovarci.' },
+        { ini: 'GE', nick: 'Giulia & Enri', quando: 'ieri', testo: 'Ci siamo ritrovati in tante cose. Aspettiamo il seguito!' }
+      ];
+      const renderC = () => { $('#st-comments').innerHTML = comments.map((c) => `<div class="comment"><span class="ad-avatar">${esc(c.ini)}</span><div><strong>${esc(c.nick)}</strong> <span class="muted">${esc(c.quando)}</span><p>${esc(c.testo)}</p></div></div>`).join(''); };
+      $('#st-comment-form').addEventListener('submit', (e) => { e.preventDefault(); const i = $('input', e.currentTarget); if (!i.value.trim()) return; comments.push({ ini: 'OM', nick: 'Ombra & Mare', quando: 'ora', testo: i.value.trim() }); i.value = ''; renderC(); });
+      renderC();
+      $('#st-more').innerHTML = D.storie.filter((s) => s.id !== x.id).slice(0, 3).map((s) => `
+        <article class="card story-card story-mini">
+          ${s.img ? `<div class="story-img"><img src="${D.unsplash(s.img, 800, 450)}" alt="" loading="lazy" decoding="async"></div>` : ''}
+          <div class="story-text">
+          <span class="cat-label">${esc(s.cat)}</span>
+          <h3><a class="ad-link" href="storia.html?id=${s.id}">${esc(s.titolo)}</a></h3>
+          <p class="muted story-excerpt">${esc(s.estratto)}</p>
+          <p class="muted" style="font-size:14px;margin:0">di ${esc(s.autore)} · ${s.min} min</p>
+          </div>
+        </article>`).join('');
     },
 
     /* ---------- LUOGHI ---------- */

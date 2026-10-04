@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Aguardiente · Annuncio</title>
+  <title>Aguardiente · Storia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/style.css?v=202610031945">
 </head>
-<body data-page="annuncio">
+<body data-page="storia">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
     <nav class="nav nav-icons" aria-label="Principale">
-      <a class="nav-icon" href="annunci.html" aria-current="page" aria-label="Annunci"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l6.2 4.1a.8.8 0 0 0 1.3-.7V5.6a.8.8 0 0 0-1.3-.7L7 9H4.5A1.5 1.5 0 0 0 3 10.5z"/><path d="M18 9a4 4 0 0 1 0 6M7 15l1.2 4.2a1 1 0 0 0 1 .8H10"/></svg><span class="nav-tip" aria-hidden="true">Annunci</span></a>
+      <a class="nav-icon" href="annunci.html" aria-label="Annunci"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M3 10.5v3a1.5 1.5 0 0 0 1.5 1.5H7l6.2 4.1a.8.8 0 0 0 1.3-.7V5.6a.8.8 0 0 0-1.3-.7L7 9H4.5A1.5 1.5 0 0 0 3 10.5z"/><path d="M18 9a4 4 0 0 1 0 6M7 15l1.2 4.2a1 1 0 0 0 1 .8H10"/></svg><span class="nav-tip" aria-hidden="true">Annunci</span></a>
       <a class="nav-icon" href="cerca.html" aria-label="Cerca"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="fillable" cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span class="nav-tip" aria-hidden="true">Cerca</span></a>
       <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="fillable" x="3.5" y="3.5" width="17" height="17" rx="5"/><path class="cut" d="M12 8.5v7M8.5 12h7"/></svg><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
-      <a class="nav-icon" href="storie.html" aria-label="Storie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M12 6.5C10.5 5 8.3 4.5 4 4.5v13c4.3 0 6.5.5 8 2 1.5-1.5 3.7-2 8-2v-13c-4.3 0-6.5.5-8 2z"/><path d="M12 6.5v13"/></svg><span class="nav-tip" aria-hidden="true">Storie</span></a>
+      <a class="nav-icon" href="storie.html" aria-current="page" aria-label="Storie"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M12 6.5C10.5 5 8.3 4.5 4 4.5v13c4.3 0 6.5.5 8 2 1.5-1.5 3.7-2 8-2v-13c-4.3 0-6.5.5-8 2z"/><path d="M12 6.5v13"/></svg><span class="nav-tip" aria-hidden="true">Storie</span></a>
       <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="fillable" d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
     </nav>
     <div class="header-actions">
@@ -24,12 +24,20 @@
     </div>
   </header>
 
-  <main class="container" style="padding-block:24px 96px">
-    <a href="annunci.html" style="display:inline-block;padding:12px 0;margin-bottom:12px">Tutti gli annunci</a>
-    <div id="ad-detail"></div>
-    <section style="margin-top:24px">
-      <div class="section-head"><h2>Annunci simili</h2><a href="annunci.html">Vedi tutti</a></div>
-      <div class="grid grid-3 grid-scroll" id="ad-similar"></div>
+  <main class="container story-page">
+    <a href="storie.html" style="display:inline-block;padding:12px 0">Tutte le storie</a>
+    <article class="story" id="st-story"></article>
+    <section class="story-comments">
+      <h2 style="font-size:28px;margin-bottom:16px">Commenti</h2>
+      <div id="st-comments" class="comments"></div>
+      <form class="comment-form" id="st-comment-form">
+        <label class="field" style="flex:1 1 260px"><span class="sr-only">Scrivi un commento</span><input type="text" placeholder="Scrivi un commento" autocomplete="off"></label>
+        <button class="btn btn-primary" type="submit">Pubblica</button>
+      </form>
+    </section>
+    <section style="margin-top:48px">
+      <div class="section-head"><h2>Altre storie</h2><a href="storie.html">Vedi tutte</a></div>
+      <div class="grid grid-3 grid-scroll" id="st-more"></div>
     </section>
   </main>
   <footer class="site-footer">

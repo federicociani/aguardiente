@@ -34,6 +34,8 @@ python3 -m http.server --directory site 8080
 │  ├─ annunci.html          bacheca annunci con filtri per categoria
 │  ├─ annuncio.html         annuncio singolo (?id=…)
 │  ├─ pubblica.html         pubblica un annuncio con foto di lancio
+│  ├─ storie.html           storie della community
+│  ├─ storia.html           storia singola (?id=…)
 │  ├─ cerca.html            ricerca profili
 │  ├─ messaggi.html         chat
 │  ├─ profilo.html          profilo utente
@@ -61,7 +63,7 @@ python3 -m http.server --directory site 8080
 - **Design token**: colori, gradiente e font sono variabili CSS in cima a `site/assets/style.css`.
 - **Pagine**: ogni HTML dichiara `<body data-page="...">`; `app.js` avvia solo il modulo di quella pagina.
 - **Dati**: liste di annunci, profili, conversazioni e luoghi vengono da `data.js`, al posto delle future API.
-- **Logo**: la fiammella animata viene inserita via JS in ogni elemento `.logo`; l'animazione rispetta `prefers-reduced-motion`.
+- **Logo**: solo testo, con un bagliore che passa ogni 6 secondi (`@keyframes logo-glow` in `style.css`); fermo con `prefers-reduced-motion`.
 
 ## Cache
 
@@ -73,7 +75,7 @@ V=$(date +%Y%m%d%H%M); sed -i -E "s#assets/(style\.css|data\.js|app\.js)(\?v=[0-
 
 ## Foto
 
-Le foto dei profili in "Online adesso" sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
+Le foto dei profili in "Online ora", le foto di lancio di esempio e le foto prodotto dello shop sono di [Unsplash](https://unsplash.com/license) (uso gratuito), caricate direttamente da `images.unsplash.com` e accreditate sotto la sezione. Sono silhouette senza volti riconoscibili: le persone ritratte non sono iscritte e non devono sembrarlo. Gli ID e gli autori sono in `site/assets/data.js` (campo `foto`).
 
 ## Foto di lancio degli annunci
 
