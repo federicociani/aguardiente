@@ -13,8 +13,8 @@
 | `--text-2` | `#D6BEC6` | Testo secondario |
 | `--muted` | `#BC9DA8` | Didascalie |
 | `--accent` | `#FF6B8F` | Link, icone, etichette |
-| `--grad` | `#7B2FF7 → #D61E52` | Bottoni primari, stati attivi |
-| `--grad-deep` | `#4E1A9E → #9E1238` | Card in evidenza |
+| `--grad` | `#9E1238 → #770303` | Bottoni primari, stati attivi |
+| `--grad-deep` | `#770303 → #9E1238` | Card in evidenza |
 
 Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a sinistra). Le pagine Business (`body.business`) invertono la posizione dei bagliori per distinguersi.
 
