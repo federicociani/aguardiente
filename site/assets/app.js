@@ -325,12 +325,23 @@
   if (document.body.hasAttribute('data-gate') && !isIn()) {
     document.body.classList.add('is-gated');
     const next = encodeURIComponent(location.pathname.split('/').pop() + location.search);
+    // Titolo e testo del pannello con il nome della sezione
+    const q = new URLSearchParams(location.search);
+    const room = D.webcam && D.webcam.stanze.find((r) => r.id === q.get('id'));
+    const story = D.storie && D.storie.find((x) => x.id === q.get('id'));
+    const G = {
+      vetrina: ['Entra per vedere la Vetrina', 'Foto e video dei creator sono riservati agli iscritti che hanno verificato età e identità.'],
+      webcam: ['Entra per vedere le Webcam', 'Le dirette dei creator sono riservate agli iscritti che hanno verificato età e identità.'],
+      live: [room ? `Entra per vedere la diretta di ${room.nick}` : 'Entra per vedere questa diretta', 'Le dirette dei creator sono riservate agli iscritti che hanno verificato età e identità.'],
+      storie: ['Entra per leggere le Storie', 'I racconti della community sono riservati agli iscritti che hanno verificato età e identità.'],
+      storia: [story ? `Entra per leggere “${story.titolo}”` : 'Entra per leggere questa storia', 'I racconti della community sono riservati agli iscritti che hanno verificato età e identità.']
+    }[document.body.dataset.page] || ['Entra per vedere questa sezione', 'Questa sezione è riservata agli iscritti che hanno verificato età e identità.'];
     document.body.insertAdjacentHTML('beforeend', `
       <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
         <div class="gate-card">
           <p class="eyebrow">Solo maggiorenni verificati</p>
-          <h2 id="gate-title">Entra per vedere questa sezione</h2>
-          <p class="muted">Vetrina, webcam e storie sono riservate agli iscritti che hanno verificato età e identità. L’iscrizione è gratuita.</p>
+          <h2 id="gate-title">${esc(G[0])}</h2>
+          <p class="muted">${esc(G[1])} L’iscrizione è gratuita.</p>
           <a class="btn btn-primary btn-lg btn-block" href="iscrizione.html?next=${next}">Entra o iscriviti</a>
           <button class="btn btn-ghost btn-block" type="button" data-gate-ok>Ho già un account (prototipo)</button>
           <a class="gate-back" href="index.html">Torna alla home</a>
