@@ -23,6 +23,10 @@ Lo sfondo ha due bagliori radiali tenui (rosso scuro in alto a destra, viola a s
 - **Bricolage Grotesque** (500, 700) per titoli e logo
 - **Inter** (400, 500, 600) per il testo
 
+## Badge
+
+Tutti i badge ed etichette su foto (`.badge`, `.cert`, `.vt-pill`, `.live-badge`, `.ad-cover-tag`, `.photo-tag`, `.logo-tag`…) usano Inter 500, maiuscolo, `letter-spacing: .06em`, corpo 11px.
+
 ## Bottoni
 
 - **Un solo `.btn-primary` per schermata** (ogni finestra/pannello conta come schermata a sé): pieno con `--grad`. Tutte le altre azioni sono `.btn-ghost`.
