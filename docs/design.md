@@ -56,9 +56,13 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 Tutti i menu di navigazione usano solo icone, mai parole visibili: stesso stile (24px, tratto 1,8), contorno a riposo e **piena** quando la pagina o la sezione è quella attiva (`aria-current="page"` per le pagine, `aria-current="location"` per le sezioni della stessa pagina, aggiornato allo scroll). Ogni icona ha `aria-label`; su desktop il nome compare come tooltip al passaggio del mouse o con Tab.
 
 - Utente: Annunci, Cerca, Pubblica, Storie, Vetrina, Webcam, Messaggi (+ avatar profilo)
-- Home pubblica: Annunci, Cerca profili, Storie, Vetrina, Webcam, Come funziona, Per le aziende (+ CTA Entra)
+- Home pubblica: Annunci, Cerca profili, Storie, Vetrina, Webcam, Come funziona (icona info), Per le aziende (+ CTA Entra)
 - Business: Come funziona, Per i locali, Eventi, Come guadagni, Piani, Area aziende (+ CTA Registra l’attività su desktop)
 - Area aziende: rail verticale su desktop, riga che scorre su mobile
+
+## Foto di esempio
+
+Ogni avatar, profilo, locale e galleria usa una foto di esempio (Unsplash, mappa `D.avatar` in `data.js` per nickname e locali; campo `foto`/`img` per profili, luoghi, annunci, storie, prodotti). Le iniziali restano solo come ripiego se manca la foto.
 
 ## Sezioni riservate
 
@@ -71,6 +75,7 @@ Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel men
 - **Pillole e chip** (filtri, categorie, servizi, interessi, chip interattivi): una sola riga che scorre in orizzontale, come le card; anche coupon e servizi di un locale scorrono come card.
 - **Messaggi**: lista o conversazione, con tasto indietro; il campo di scrittura resta agganciato sopra la tab bar.
 - **Cerca**: i filtri si aprono con il tasto "Filtri"; profili su due colonne.
+- **Scheda struttura**: barra fissa in basso con prezzo e "Richiedi"; il modulo di prenotazione si apre dal basso (chiusura con X, tocco fuori, Esc o trascinando giù).
 - **Shop**: prodotti su due colonne; il carrello è un'icona nella navbar (piena con badge quando contiene articoli) che apre un pannello dal basso, trascinabile per chiuderlo. Su desktop lo stesso pannello si apre da destra.
 - **Dashboard**: il menu laterale diventa una riga che scorre sotto il logo.
 - Margini di sicurezza per notch e barra home (`env(safe-area-inset-*)`, `viewport-fit=cover`).
