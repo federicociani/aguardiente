@@ -56,9 +56,13 @@ I blocchi compaiono allo scroll (`.reveal`). Con `prefers-reduced-motion` tutte 
 Tutti i menu di navigazione usano solo icone, mai parole visibili: stesso stile (24px, tratto 1,8), contorno a riposo e **piena** quando la pagina o la sezione è quella attiva (`aria-current="page"` per le pagine, `aria-current="location"` per le sezioni della stessa pagina, aggiornato allo scroll). Ogni icona ha `aria-label`; su desktop il nome compare come tooltip al passaggio del mouse o con Tab.
 
 - Utente: Annunci, Cerca, Pubblica, Storie, Vetrina, Webcam, Messaggi (+ avatar profilo)
-- Home pubblica: Annunci, Cerca profili, Storie, Come funziona, Per le aziende (+ CTA Entra)
+- Home pubblica: Annunci, Cerca profili, Storie, Vetrina, Webcam, Come funziona, Per le aziende (+ CTA Entra)
 - Business: Come funziona, Per i locali, Eventi, Come guadagni, Piani, Area aziende (+ CTA Registra l’attività su desktop)
 - Area aziende: rail verticale su desktop, riga che scorre su mobile
+
+## Sezioni riservate
+
+Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel menu della home e anteprime sfocate nella sezione "Vetrina e dirette"), ma la pagina si apre sfocata sotto un pannello "Entra per vedere questa sezione". Nel prototipo l'accesso è un flag nel browser (`agu.entrato`) che si attiva iscrivendosi, accedendo o con "Ho già un account (prototipo)".
 
 ## Mobile (≤ 720px)
 
