@@ -960,6 +960,26 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 @media (prefers-reduced-motion: reduce) { .stage img, .live-dot { animation: none; } }
 @media (max-width: 960px) { .room-grid { grid-template-columns: minmax(0, 1fr); } .room-chat { position: static; height: 420px; } }
 
+/* ---------- Home: anteprime di Vetrina, Webcam, Storie ---------- */
+.teasers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.teaser { padding: 0; overflow: hidden; display: flex; flex-direction: column; color: var(--text); text-decoration: none; }
+.teaser:hover { color: var(--text); border-color: var(--accent); }
+.teaser-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; height: 180px; }
+.teaser-tile { overflow: hidden; background: var(--surface-2); }
+.teaser-tile img { width: 100%; height: 100%; object-fit: cover; display: block; filter: blur(14px) saturate(1.2); transform: scale(1.2); }
+.teaser-body { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px 20px; }
+.teaser-ico { width: 44px; height: 44px; flex-shrink: 0; border-radius: 14px; display: grid; place-items: center; background: #3A1230; color: var(--accent); }
+.teaser-ico .fillable { fill: currentColor; } .teaser-ico .cut { stroke: #3A1230; }
+@media (max-width: 960px) { .teasers { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Pannello di accesso per le sezioni riservate ---------- */
+body.is-gated main, body.is-gated footer { filter: blur(16px); pointer-events: none; user-select: none; }
+.gate { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; padding: 20px; background: rgba(10,2,5,.55); }
+.gate-card { width: min(440px, 100%); display: flex; flex-direction: column; gap: 14px; padding: 32px; border-radius: 32px; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 40px 80px -20px rgba(0,0,0,.8); text-align: center; }
+.gate-card h2 { font-size: 28px; }
+.gate-card .eyebrow { color: var(--accent); }
+.gate-back { font-size: 14px; color: var(--muted); }
+
 /* ==========================================================
    MOBILE (≤ 720px)
    ========================================================== */
@@ -1250,4 +1270,11 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
   .tips #rm-private { margin-left: 0; width: 100%; }
   .tips .wallet { width: 100%; }
   .nav-icons .nav-icon { width: 50px; }
+
+  .teasers { display: flex; overflow-x: auto; margin-inline: -20px; padding: 2px 20px 10px; gap: 12px; scrollbar-width: none; scroll-snap-type: x mandatory; }
+  .teasers::-webkit-scrollbar { display: none; }
+  .teasers > .teaser { flex: 0 0 84%; scroll-snap-align: start; }
+  .teaser-tiles { height: 150px; }
+  .gate { padding: 16px; align-items: end; padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .gate-card { padding: 24px; }
 }

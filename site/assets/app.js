@@ -316,6 +316,30 @@
   const ICON_COIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5c-.5-.9-1.4-1.4-2.5-1.4-1.6 0-2.7 1-2.7 2.2 0 2.9 5.6 1.5 5.6 4.3 0 1.2-1.2 2.2-2.9 2.2-1.2 0-2.2-.6-2.6-1.5M12 6.5v1.6M12 16v1.5"/></svg>';
   const walletHTML = (v) => `${ICON_COIN}<strong>${v}</strong> crediti <button type="button" class="wallet-add" data-topup aria-label="Ricarica crediti">+</button>`;
 
+  /* ---------- Accesso: le sezioni per adulti (Vetrina, Webcam, Storie) chiedono di entrare ----------
+     Nel prototipo "essere entrati" è un flag nel browser: si attiva iscrivendosi, accedendo o con il tasto del pannello. */
+  const AUTH_KEY = 'agu.entrato';
+  const isIn = () => { try { return localStorage.getItem(AUTH_KEY) === '1'; } catch (e) { return false; } };
+  const setIn = () => { try { localStorage.setItem(AUTH_KEY, '1'); } catch (e) { /* ignorato */ } };
+  $$('[data-login]').forEach((el) => el.addEventListener(el.tagName === 'FORM' ? 'submit' : 'click', setIn));
+  if (document.body.hasAttribute('data-gate') && !isIn()) {
+    document.body.classList.add('is-gated');
+    const next = encodeURIComponent(location.pathname.split('/').pop() + location.search);
+    document.body.insertAdjacentHTML('beforeend', `
+      <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+        <div class="gate-card">
+          <p class="eyebrow">Solo maggiorenni verificati</p>
+          <h2 id="gate-title">Entra per vedere questa sezione</h2>
+          <p class="muted">Vetrina, webcam e storie sono riservate agli iscritti che hanno verificato età e identità. L’iscrizione è gratuita.</p>
+          <a class="btn btn-primary btn-lg btn-block" href="iscrizione.html?next=${next}">Entra o iscriviti</a>
+          <button class="btn btn-ghost btn-block" type="button" data-gate-ok>Ho già un account (prototipo)</button>
+          <a class="gate-back" href="index.html">Torna alla home</a>
+        </div>
+      </div>`);
+    const ok = $('[data-gate-ok]'); ok.focus();
+    ok.addEventListener('click', () => { setIn(); document.body.classList.remove('is-gated'); $('.gate').remove(); });
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -340,6 +364,14 @@
         </a>`).join('');
       $('#regions').innerHTML = D.regioni.map((r) => `<a href="annunci.html">${esc(r)}</a>`).join('');
       comeFunziona();
+      // Anteprime sfocate di Vetrina, Webcam e Storie (contenuti visibili solo dopo l'accesso)
+      const tiles = (ids) => ids.map((id) => `<span class="teaser-tile"><img src="${D.unsplash(id, 300, 375)}" alt="" loading="lazy" decoding="async"></span>`).join('');
+      if ($('#teaser-vetrina')) {
+        $('#teaser-vetrina').innerHTML = tiles(D.vetrina.post.slice(0, 3).map((p) => p.img));
+        $('#teaser-webcam').innerHTML = tiles(D.webcam.stanze.filter((r) => r.live).slice(0, 3).map((r) => r.img));
+        $('#teaser-storie').innerHTML = tiles(D.storie.slice(0, 3).map((x) => x.img));
+        $('#teaser-live-n').textContent = D.webcam.stanze.filter((r) => r.live).length;
+      }
       searchSheet();
     },
 
