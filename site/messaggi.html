@@ -6,7 +6,7 @@
   <title>Aguardiente · Messaggi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610041923">
+  <link rel="stylesheet" href="assets/style.css?v=202610051243">
 </head>
 <body data-page="messaggi">
   <header class="site-header">
@@ -41,6 +41,9 @@
       </div>
       <div class="thread-body" id="thread-msgs"></div>
       <form class="composer" id="composer">
+        <button class="btn btn-ghost btn-icon share-btn prop-btn" type="button" id="prop-open" aria-haspopup="dialog" aria-controls="prop-dialog" aria-label="Proponi un evento, un luogo o un prodotto" title="Proponi dove andare">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        </button>
         <button class="btn btn-ghost btn-icon share-btn" type="button" id="share-open" aria-haspopup="dialog" aria-controls="share-dialog" aria-label="Condividi un tuo contatto" title="Condividi un contatto">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.9-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h4M14.5 13.5h3"/></svg>
         </button>
@@ -52,13 +55,32 @@
       </form>
     </section>
 
-    <aside class="chat-aside" aria-label="Sicurezza">
-      <h2 style="font-size:20px">Sicurezza</h2>
-      <p class="muted">Puoi bloccare o segnalare in qualsiasi momento, senza che l’altra persona lo sappia.</p>
-      <button class="btn btn-ghost" type="button">Blocca</button>
-      <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
+    <aside class="chat-aside" aria-label="Proponi e sicurezza">
+      <section class="prop-panel">
+        <div class="heading-group"><p class="eyebrow">Organizza</p><h2 style="font-size:20px">Proponi dove andare</h2></div>
+        <div class="tabs home-tabs prop-tabs" role="tablist" aria-label="Cosa proporre"><button type="button" role="tab" aria-selected="true" data-prop-tab="eventi">Eventi</button><button type="button" role="tab" aria-selected="false" data-prop-tab="luoghi">Luoghi</button><button type="button" role="tab" aria-selected="false" data-prop-tab="shop">Shop</button></div>
+        <div class="prop-list" data-prop-list></div>
+      </section>
+      <details class="safety">
+        <summary>Sicurezza</summary>
+        <p class="muted">Puoi bloccare o segnalare in qualsiasi momento, senza che l’altra persona lo sappia.</p>
+        <div class="sheet-actions"><button class="btn btn-ghost" type="button">Blocca</button><button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button></div>
+      </details>
     </aside>
   </main>
+
+  <dialog class="drawer" id="prop-dialog" aria-labelledby="prop-title">
+    <div class="drawer-panel">
+      <div class="drawer-head">
+        <span class="bs-handle" aria-hidden="true"></span>
+        <div class="bs-title-row"><h2 id="prop-title">Proponi dove andare</h2><button class="bs-close" type="button" data-close aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      </div>
+      <div class="drawer-body">
+        <div class="tabs home-tabs prop-tabs" role="tablist" aria-label="Cosa proporre"><button type="button" role="tab" aria-selected="true" data-prop-tab="eventi">Eventi</button><button type="button" role="tab" aria-selected="false" data-prop-tab="luoghi">Luoghi</button><button type="button" role="tab" aria-selected="false" data-prop-tab="shop">Shop</button></div>
+        <div class="prop-list" data-prop-list></div>
+      </div>
+    </div>
+  </dialog>
 
   <dialog class="drawer share-sheet" id="share-dialog" aria-labelledby="share-title">
     <div class="drawer-panel">
@@ -78,7 +100,7 @@
     </div>
   </dialog>
 
-  <script src="assets/data.js?v=202610041923"></script>
-  <script src="assets/app.js?v=202610041923"></script>
+  <script src="assets/data.js?v=202610051243"></script>
+  <script src="assets/app.js?v=202610051243"></script>
 </body>
 </html>

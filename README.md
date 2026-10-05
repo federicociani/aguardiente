@@ -33,7 +33,8 @@ python3 -m http.server --directory site 8080
 │  ├─ iscrizione.html       iscrizione Utente / Azienda (?tipo=azienda)
 │  ├─ annunci.html          bacheca annunci con filtri per categoria
 │  ├─ annuncio.html         annuncio singolo (?id=…)
-│  ├─ pubblica.html         pubblica un annuncio con foto di lancio
+│  ├─ pubblica.html         pubblica un annuncio o un last di 24 ore
+│  ├─ utente.html           profilo pubblico (?u=…) con recensioni
 │  ├─ vetrina.html          vetrina dei creator (foto e video gratis o a pagamento)
 │  ├─ webcam.html           dirette webcam
 │  ├─ live.html             stanza in diretta (?id=…)

@@ -44,6 +44,10 @@ Questo documento elenca i punti emersi in fase di progettazione. **Non è una co
 - Crediti: prezzi e conversione in euro chiari prima dell'acquisto, nessuna scadenza nascosta, rimborso dei crediti non usati secondo il Codice del Consumo.
 - Blocco geografico su richiesta del creator e strumenti di blocco/segnalazione degli spettatori.
 
+## Recensioni tra utenti
+- Solo dopo un incontro confermato da entrambi; niente dati personali o dettagli intimi nel testo; segnalazione e moderazione delle recensioni.
+- Diritto di replica della persona recensita e rimozione di recensioni diffamatorie.
+
 ## Storie della community
 - Moderazione prima della pubblicazione; regole esplicite: niente minori (neanche come riferimento o ambientazione scolastica), niente incesto, niente violenza o assenza di consenso, niente nomi reali o persone riconoscibili.
 - Ritenere i contenuti testuali come contenuti per adulti ai fini della verifica dell'età: visibili solo agli iscritti verificati.

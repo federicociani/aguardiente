@@ -272,6 +272,31 @@ window.DATA = {
     chat: ['Ciao a tutti!', 'Che bella luce stasera', 'Sono di Ravenna anche io', 'Bel tema!', 'Arrivo dal club, serata tranquilla', 'Che musica è?', 'Mandate cuori al goal', 'Ciao dal mare']
   },
 
+  /* Last: contenuti che durano 24 ore (foto + frase), come le storie dei social */
+  last: [
+    { nick: 'Luna & Matteo', img: '1702725365144-6e8584ea54e4', testo: 'Aperitivo sul porto, chi passa?', ore: 1 },
+    { nick: 'Sole_83', img: '1586211082529-b7c6b640abff', testo: 'Stasera luce bassa e musica giusta', ore: 3 },
+    { nick: 'Nikki', img: '1518893063132-36e46dbe2428', testo: 'Nuovo kimono, nuova serata', ore: 5 },
+    { nick: 'Kira.rn', img: '1617055407123-3d7130c1f940', testo: 'Rimini, weekend libero', ore: 8 },
+    { nick: 'Giulia & Enri', img: '1597075687490-8f673c6c17f6', testo: 'Cena in terrazza, posti liberi: 2', ore: 12 },
+    { nick: 'Davide_RA', img: '1640902106532-47dd3a2e833e', testo: 'Bar sotto casa, ultimo giro', ore: 20 }
+  ],
+
+  /* Profili pubblici: dettagli extra (seguaci, foto, video, recensioni) — dati di esempio */
+  utenti: {
+    'Luna & Matteo': { bio: 'Coppia curiosa, alle prime esperienze. Ci piace conoscerci con calma: prima un aperitivo, poi si vedrà.', seguaci: 214, seguiti: 87,
+      foto: ['1570135497084-0debfc780ed8', '1702725365144-6e8584ea54e4', '1606259458027-54d2a728b6ab', '1426543881949-cbd9a76740a4', '1568815641398-b3f655da2f8a', '1615966650071-855b15f29ad1'],
+      video: [{ img: '1468056961052-15507578a50d', durata: '0:42' }, { img: '1597075687490-8f673c6c17f6', durata: '1:15' }],
+      recensioni: [
+        { da: 'Giulia & Enri', stelle: 5, testo: 'Simpatici e rispettosi, serata piacevolissima. Puntuali e sinceri su cosa cercavano.', data: 'settembre 2026' },
+        { da: 'Sole_83', stelle: 4, testo: 'Molto carini, un po’ timidi all’inizio ma poi tutto naturale.', data: 'agosto 2026' }
+      ] },
+    'Sole_83': { bio: 'Quarant’anni e nessuna voglia di nascondermi. Club il sabato, chiacchiere il resto della settimana.', seguaci: 356, seguiti: 120,
+      foto: ['1586211082529-b7c6b640abff', '1617055407123-3d7130c1f940', '1518893063132-36e46dbe2428', '1612744192242-35cd7a7d35e6'],
+      video: [{ img: '1543007630-9710e4a00a20', durata: '0:30' }],
+      recensioni: [ { da: 'Luna & Matteo', stelle: 5, testo: 'Solare come il nickname. Ci ha fatto sentire subito a nostro agio al club.', data: 'settembre 2026' } ] }
+  },
+
   regioni: ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
             'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto']
 };
