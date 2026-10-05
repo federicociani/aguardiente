@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Aguardiente · Richiesta inviata</title>
+  <title>Aguardiente · Profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/style.css?v=202610051243">
 </head>
-<body data-page="prenotazione">
+<body data-page="utente">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
     <nav class="nav nav-icons" aria-label="Principale">
@@ -25,30 +25,31 @@
     </div>
   </header>
 
-  <main class="container pren">
-    <div class="pren-done card">
-      <span class="pren-check" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-      <div>
-        <h1>Richiesta inviata a Villa Ombrosa</h1>
-        <p class="lead" style="margin-top:10px">Ven 17 – Dom 19, 2 adulti, suite con terrazza. Lo sconto iscritti del 15% è già applicato. Ti rispondono in chat, di solito entro poche ore.</p>
+  <main class="container">
+    <a class="btn btn-ghost btn-sm btn-back" href="cerca.html" style="margin-top:20px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Cerca profili</span></a>
+    <section class="profile-hero" id="u-hero"></section>
+
+    <div class="u-tabs-wrap">
+      <div class="tabs home-tabs u-tabs" role="tablist" aria-label="Sezioni del profilo" id="u-tabs">
+        <button type="button" role="tab" aria-selected="true" data-tab="foto">Foto</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="video">Video</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="annunci">Annunci</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="recensioni">Recensioni</button>
       </div>
     </div>
 
-    <div class="pren-grid">
-      <section>
-        <h2 style="font-size:clamp(28px,3.4vw,40px)">Vuoi trovare qualcosa in camera?</h2>
-        <p class="lead" style="margin-top:10px">Gli extra li prepara la struttura o un negozio convenzionato e li trovi all’arrivo. Si pagano solo se la prenotazione viene confermata.</p>
-        <div class="extras" id="extras"></div>
-      </section>
-
-      <aside class="card pren-sum" aria-label="Riepilogo extra">
-        <h2 style="font-size:24px">Riepilogo extra</h2>
-        <ul class="totals" id="extra-summary"></ul>
-        <ul class="totals"><li class="grand"><span>Totale extra</span><span id="extra-total"></span></li></ul>
-        <a class="btn btn-primary btn-cta btn-lg btn-block" href="messaggi.html" id="extra-confirm">Continua senza extra</a>
-        <p class="muted" style="font-size:14px">I prodotti arrivano sigillati e in confezione neutra. Puoi annullarli fino a 24 ore prima dell’arrivo.</p>
-      </aside>
-    </div>
+    <section class="u-panel" id="u-foto" role="tabpanel"></section>
+    <section class="u-panel" id="u-video" role="tabpanel" hidden></section>
+    <section class="u-panel" id="u-annunci" role="tabpanel" hidden></section>
+    <section class="u-panel" id="u-recensioni" role="tabpanel" hidden>
+      <div class="reviews-grid">
+        <div>
+          <div class="review-summary" id="u-rev-summary"></div>
+          <div class="review-list" id="u-rev-list"></div>
+        </div>
+        <aside class="card review-box" id="u-rev-box"></aside>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="container">

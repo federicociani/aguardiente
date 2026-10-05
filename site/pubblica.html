@@ -6,7 +6,7 @@
   <title>Aguardiente · Pubblica annuncio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610041923">
+  <link rel="stylesheet" href="assets/style.css?v=202610051243">
 </head>
 <body data-page="pubblica">
   <header class="site-header">
@@ -27,13 +27,19 @@
 
   <main class="container pub">
     <div class="pub-head">
-      <h1>Pubblica un annuncio</h1>
+      <h1 id="pub-h1">Pubblica un annuncio</h1>
+      <div class="tabs home-tabs" role="tablist" aria-label="Cosa vuoi pubblicare" id="pub-mode"><button type="button" role="tab" aria-selected="true" data-mode="annuncio">Annuncio</button><button type="button" role="tab" aria-selected="false" data-mode="last">Last · 24 ore</button></div>
       <p class="lead">La foto di lancio è quella che vede chi scorre la bacheca. Non deve essere la tua foto profilo: può essere un luogo, un’atmosfera, un dettaglio.</p>
     </div>
 
     <div class="pub-grid">
       <form id="pub-form" class="card pub-form" novalidate>
-        <fieldset class="pub-step">
+        <fieldset class="pub-step" id="last-step" hidden>
+          <legend>1. Il tuo last</legend>
+          <label class="field">Frase sulla foto<input name="frase" type="text" maxlength="80" value="Stasera aperitivo sul porto, chi passa?" autocomplete="off"></label>
+          <p class="muted" style="margin:0">Resta visibile 24 ore in cima alla bacheca, poi sparisce da solo. Chi lo guarda può risponderti in chat.</p>
+        </fieldset>
+        <fieldset class="pub-step" id="ad-step">
           <legend>1. L’annuncio</legend>
           <label class="field">Categoria<select name="cat"><option>Coppia cerca coppia</option><option>Coppia cerca lei</option><option>Coppia cerca lui</option><option>Lei cerca lui</option><option>Lei cerca coppia</option><option>Lui cerca lei</option><option>Lui cerca coppia</option><option>Lei cerca lei</option><option>Lui cerca lui</option><option>Trans</option></select></label>
           <label class="field">Zona<input name="zona" type="text" value="Ravenna" autocomplete="off"></label>
@@ -43,12 +49,12 @@
         </fieldset>
 
         <fieldset class="pub-step">
-          <legend>2. Foto di lancio</legend>
+          <legend id="photo-legend">2. Foto di lancio</legend>
           <p class="muted" style="margin:-4px 0 6px">È separata dalla foto profilo: l’avatar accanto al nickname resta quello del profilo.</p>
           <div class="radio-tiles" role="radiogroup" aria-label="Origine della foto">
             <label><input type="radio" name="fonte" value="carica" checked> Carica una foto</label>
             <label><input type="radio" name="fonte" value="esempi"> Scegli un’atmosfera</label>
-            <label><input type="radio" name="fonte" value="nessuna"> Nessuna foto</label>
+            <label id="fonte-nessuna"><input type="radio" name="fonte" value="nessuna"> Nessuna foto</label>
           </div>
 
           <div id="src-upload" class="upload">
@@ -77,7 +83,7 @@
           <p class="notice">Ogni foto passa dalla moderazione prima di andare online. Non sono ammessi nudo esplicito, minori, volti di altre persone senza il loro consenso, numeri di telefono o link.</p>
         </fieldset>
 
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Pubblica l’annuncio</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" id="pub-submit">Pubblica l’annuncio</button>
         <p id="pub-done" class="notice" hidden role="status">Annuncio inviato. Lo controlliamo e sarà online in bacheca entro poche ore. <a href="annunci.html">Vai agli annunci</a></p>
       </form>
 
@@ -99,7 +105,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610041923"></script>
-  <script src="assets/app.js?v=202610041923"></script>
+  <script src="assets/data.js?v=202610051243"></script>
+  <script src="assets/app.js?v=202610051243"></script>
 </body>
 </html>
