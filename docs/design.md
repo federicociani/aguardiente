@@ -91,6 +91,12 @@ Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel men
 - **Dashboard**: il menu laterale diventa una riga che scorre sotto il logo.
 - Margini di sicurezza per notch e barra home (`env(safe-area-inset-*)`, `viewport-fit=cover`).
 
+## Animazioni
+
+- **Scroll**: titoli, testi, card e voci delle griglie entrano dal basso con dissolvenza quando arrivano nella viewport ed escono morbidi (verso l'alto o verso il basso) quando la lasciano. Gli elementi fratelli entrano sfalsati di 70ms (massimo 6). Classe `.anim` aggiunta via JS, anche ai contenuti generati dopo (MutationObserver).
+- **Intro della home** (prima visita della sessione): "Esplora." → "Gioca." → "Godi." e il sottotitolo arrivano lenti e sfocati, prima di tutto il resto; poi la navbar scende dall'alto e compaiono bottoni, ricerca e sezioni. Dalle visite successive la sequenza è breve e la navbar è subito visibile.
+- Tutto disattivato con `prefers-reduced-motion`.
+
 ## Accessibilità
 
 - Target touch di almeno 44px

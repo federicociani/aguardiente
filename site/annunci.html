@@ -6,7 +6,7 @@
   <title>Aguardiente · Annunci</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610041824">
+  <link rel="stylesheet" href="assets/style.css?v=202610061902">
 </head>
 <body data-page="annunci">
   <header class="site-header">
@@ -33,6 +33,9 @@
         <label class="field">Ordina<select><option>Più recenti</option><option>Più vicini</option><option>Solo verificati</option></select></label>
       </div>
     </div>
+    <section class="last-strip" aria-label="Last di oggi">
+      <div class="last-row" id="last-row"></div>
+    </section>
     <div class="chips" id="ad-filters" role="group" aria-label="Filtra per categoria" style="margin-bottom:28px"></div>
     <div class="grid grid-3" id="ads"></div>
 
@@ -41,6 +44,19 @@
       <span class="badge" style="background:rgba(0,0,0,.25);color:#fff">Sponsorizzato</span>
     </a>
   </main>
+
+  <dialog class="last-viewer" id="last-viewer" aria-label="Last">
+    <div class="lv-bars" id="lv-bars"></div>
+    <div class="lv-head">
+      <a class="lv-who" id="lv-who" href="#"></a>
+      <button class="bs-close" type="button" data-lv-close aria-label="Chiudi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <img class="lv-img" id="lv-img" alt="">
+    <p class="lv-text" id="lv-text"></p>
+    <button class="lv-nav lv-prev" type="button" data-lv="-1" aria-label="Last precedente"></button>
+    <button class="lv-nav lv-next" type="button" data-lv="1" aria-label="Last successivo"></button>
+    <form class="lv-reply" id="lv-reply"><label class="sr-only" for="lv-input">Rispondi</label><input id="lv-input" type="text" placeholder="Rispondi" autocomplete="off"><button class="btn btn-ghost btn-icon" type="submit" aria-label="Invia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button></form>
+  </dialog>
   <footer class="site-footer">
     <div class="container">
       <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
@@ -53,7 +69,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610041824"></script>
-  <script src="assets/app.js?v=202610041824"></script>
+  <script src="assets/data.js?v=202610061902"></script>
+  <script src="assets/app.js?v=202610061902"></script>
 </body>
 </html>

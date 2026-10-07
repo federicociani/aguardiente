@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Aguardiente · Locali e strutture</title>
+  <title>Aguardiente · Profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/style.css?v=202610061902">
 </head>
-<body data-page="luoghi">
+<body data-page="utente">
   <header class="site-header">
     <a class="logo" href="index.html">aguardiente</a>
     <nav class="nav nav-icons" aria-label="Principale">
@@ -25,17 +25,31 @@
     </div>
   </header>
 
-  <main class="container" style="padding-block:48px 96px;display:flex;flex-direction:column;gap:28px">
-    <div>
-      <h1 style="font-size:52px">Locali e strutture friendly</h1>
-      <p class="lead" style="margin-top:12px">Attività verificate che conoscono la community. Gli iscritti Premium vedono le offerte riservate.</p>
+  <main class="container">
+    <a class="btn btn-ghost btn-sm btn-back" href="cerca.html" style="margin-top:20px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg><span>Cerca profili</span></a>
+    <section class="profile-hero" id="u-hero"></section>
+
+    <div class="u-tabs-wrap">
+      <div class="tabs home-tabs u-tabs" role="tablist" aria-label="Sezioni del profilo" id="u-tabs">
+        <button type="button" role="tab" aria-selected="true" data-tab="foto">Foto</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="video">Video</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="annunci">Annunci</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="recensioni">Recensioni</button>
+      </div>
     </div>
-    <div class="field-row" style="align-items:flex-end">
-      <label class="field" style="flex:1 1 280px">Dove<input type="search" value="Ravenna" placeholder="Città o provincia"></label>
-      <label class="field" style="flex:0 1 140px">Raggio<select><option>30 km</option><option>50 km</option><option>100 km</option></select></label>
-    </div>
-    <div class="chips" id="place-filters" role="group" aria-label="Categoria"></div>
-    <div class="grid grid-3" id="places"></div>
+
+    <section class="u-panel" id="u-foto" role="tabpanel"></section>
+    <section class="u-panel" id="u-video" role="tabpanel" hidden></section>
+    <section class="u-panel" id="u-annunci" role="tabpanel" hidden></section>
+    <section class="u-panel" id="u-recensioni" role="tabpanel" hidden>
+      <div class="reviews-grid">
+        <div>
+          <div class="review-summary" id="u-rev-summary"></div>
+          <div class="review-list" id="u-rev-list"></div>
+        </div>
+        <aside class="card review-box" id="u-rev-box"></aside>
+      </div>
+    </section>
   </main>
   <footer class="site-footer">
     <div class="container">
@@ -48,7 +62,6 @@
       </nav>
     </div>
   </footer>
-
   <script src="assets/data.js?v=202610061902"></script>
   <script src="assets/app.js?v=202610061902"></script>
 </body>

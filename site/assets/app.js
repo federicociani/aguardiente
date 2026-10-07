@@ -94,6 +94,38 @@
     a.addEventListener('mouseenter', place); a.addEventListener('focus', place);
   });
 
+  /* ---------- Intro della home: prima il titolo e il sottotitolo, poi il resto (una volta per sessione) ---------- */
+  if (document.documentElement.classList.contains('intro-play')) {
+    try { sessionStorage.setItem('agu.intro', '1'); } catch (e) { /* ignorato */ }
+    setTimeout(() => document.documentElement.classList.add('intro-done'), 4300);
+  }
+
+  /* ---------- Animazioni allo scroll: entrata ed uscita morbide, anche sui testi ----------
+     Si applicano a titoli, testi, card e voci delle griglie; i fratelli entrano con un piccolo sfasamento. */
+  const ANIM_SEL = ['main h1', 'main h2', 'main .lead', 'main .eyebrow', 'main .section-head > a', 'main .card', 'main .ad', 'main .story-card', 'main .vt-tile', 'main .wc-tile', 'main .product',
+    'main .place', 'main .creator-card', 'main .teaser', 'main .cat-link', 'main .online-item', 'main .event', 'main .offer', 'main .plan', 'main .stat-mini', 'main .extra',
+    'main .steps-big li', 'main .cf-list li', 'main .faq-item', 'main .chips', 'main .story-body p', 'main .comment', 'main .regions a', 'main p.muted', 'footer .container'].join(',');
+  const ANIM_SKIP = 'header, dialog, .gate, .drawer, .book-form, .book-bar, .search-fab, .nav, .hero, .reveal, .cf-panel, [hidden]';
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const animIO = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const el = e.target;
+      if (e.isIntersecting) { el.classList.remove('out-up', 'out-down'); el.classList.add('is-in'); }
+      else if (el.classList.contains('is-in')) { el.classList.remove('is-in'); el.classList.add(e.boundingClientRect.top < 0 ? 'out-up' : 'out-down'); }
+    }), { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    const scanAnim = () => {
+      const found = $$(ANIM_SEL).filter((el) => !el.classList.contains('anim') && !el.closest(ANIM_SKIP));
+      const set = new Set(found);
+      found.filter((el) => { let p = el.parentElement; while (p) { if (set.has(p) || p.classList.contains('anim')) return false; p = p.parentElement; } return true; })
+        .forEach((el) => {
+          const sibs = [...el.parentElement.children].filter((c) => c.matches(ANIM_SEL));
+          el.style.setProperty('--d', `${Math.min(sibs.indexOf(el), 6) * 70}ms`);
+          el.classList.add('anim'); animIO.observe(el);
+        });
+    };
+    scanAnim();
+    let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(scanAnim, 60); }).observe(document.body, { childList: true, subtree: true });
+  }
+
   /* Interruttori role="switch" generici */
   $$('[role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
     sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
@@ -115,6 +147,7 @@
   function profileOf(nick) { return (D.profili || []).find((p) => p.nick === nick); }
   // Avatar con foto di esempio se disponibile, altrimenti iniziali
   function photoOf(nick) { const p = profileOf(nick); return (p && p.foto && p.foto.id) || (D.avatar && D.avatar[nick]) || null; }
+  const userHref = (nick) => `utente.html?u=${encodeURIComponent(nick)}`;
   function av(nick, ini, cls = 'ad-avatar', size = 120) {
     const id = photoOf(nick);
     return id ? `<span class="${cls}"><img src="${D.unsplash(id, size, size)}" alt="" loading="lazy"></span>` : `<span class="${cls}">${esc(ini || '')}</span>`;
@@ -144,7 +177,7 @@
         <div class="ad-body">
           <div class="ad-head">
             ${avatarHTML(a)}
-            <div class="ad-who"><strong>${esc(a.nick)}</strong><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
+            <div class="ad-who"><strong>${preview ? esc(a.nick) : `<a class="ad-link-plain" href="${userHref(a.nick)}">${esc(a.nick)}</a>`}</strong><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
           </div>
           ${hasCover ? '' : `<span class="ad-meta">${metaHTML(a)}</span>`}
           <span class="cat-label">${esc(a.cat)}</span>
@@ -379,6 +412,21 @@
     ok.addEventListener('click', () => { setIn(); document.body.classList.remove('is-gated'); $('.gate').remove(); });
   }
 
+  /* ---------- Proposte in chat: eventi, luoghi e prodotti dello shop ---------- */
+  function propItems(kind) {
+    const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2 });
+    if (kind === 'eventi') return (D.eventi || []).map((e) => ({ kind, id: e.id, img: e.cover, titolo: e.titolo, meta: `${e.locale}, ${e.quando}`, extra: `${eur(e.prevendita)} in prevendita`, href: 'index.html#bacheca' }));
+    if (kind === 'luoghi') return (D.luoghi || []).map((l, i) => ({ kind, id: 'l' + i, img: l.img, titolo: l.nome, meta: `${l.cat}, ${l.citta}`, extra: l.offerta || '', href: l.link || 'scheda.html' }));
+    return ((D.shop && D.shop.prodotti) || []).map((p) => ({ kind: 'shop', id: p.id, img: p.img, titolo: p.nome, meta: `${D.shop.nome}`, extra: eur(p.prezzo), href: 'shop.html' }));
+  }
+  function propItem(ref) { return propItems(ref.kind).find((x) => x.id === ref.id) || { titolo: '', meta: '', href: '#' }; }
+  function propCard(ref, mine) {
+    const x = propItem(ref); const lab = { eventi: 'Evento', luoghi: 'Luogo', shop: 'Dallo shop' }[ref.kind];
+    return `<div class="prop-card">${x.img ? `<img src="${D.unsplash(x.img, 240, 240)}" alt="">` : ''}
+      <span class="contact-text"><span class="contact-k">${mine ? 'Hai proposto' : 'Ti propone'} · ${lab}</span><strong>${esc(x.titolo)}</strong><span class="muted" style="font-size:13px">${esc(x.meta)}${x.extra ? ` · ${esc(x.extra)}` : ''}</span></span>
+      <a class="btn btn-ghost contact-open" href="${esc(x.href)}">Apri</a></div>`;
+  }
+
   const pages = {
 
     /* ---------- HOME ---------- */
@@ -437,6 +485,34 @@
         $('#ads-count').textContent = `${items.length} annunci`;
         list.innerHTML = items.length ? items.map((a) => adCard(a)).join('') : '<p class="empty">Nessun annuncio in questa categoria. Pubblica il primo.</p>';
       };
+      // Last: contenuti di 24 ore in cima alla bacheca
+      const L = D.last; const SEEN = 'agu.last.visti';
+      const seen = () => { try { return JSON.parse(localStorage.getItem(SEEN) || '[]'); } catch (e) { return []; } };
+      const renderLast = () => {
+        const v = seen();
+        $('#last-row').innerHTML = `<a class="last-item last-mine" href="pubblica.html?tipo=last"><span class="last-ring"><span class="last-av">${av('Ombra & Mare', 'OM', 'last-img')}</span><span class="last-plus" aria-hidden="true">+</span></span><span class="last-name">Il tuo last</span></a>` +
+          L.map((l, i) => `<button type="button" class="last-item${v.includes(l.nick) ? ' is-seen' : ''}" data-last="${i}"><span class="last-ring"><span class="last-av">${av(l.nick, '', 'last-img')}</span></span><span class="last-name">${esc(l.nick)}</span></button>`).join('');
+      };
+      renderLast();
+      const lv = $('#last-viewer'); let li = 0, timer = null;
+      const showLast = (i) => {
+        if (i < 0 || i >= L.length) { lv.close(); return; }
+        li = i; const l = L[i];
+        $('#lv-bars').innerHTML = L.map((_, k) => `<span class="${k < i ? 'done' : ''}${k === i ? ' now' : ''}"><i></i></span>`).join('');
+        $('#lv-who').href = userHref(l.nick);
+        $('#lv-who').innerHTML = `${av(l.nick, '', 'last-img')}<span><strong>${esc(l.nick)}</strong> <span class="muted">${l.ore} h fa</span></span>`;
+        $('#lv-img').src = D.unsplash(l.img, 900, 1600);
+        $('#lv-text').textContent = l.testo;
+        $('#lv-input').placeholder = `Rispondi a ${l.nick}`;
+        const v = seen(); if (!v.includes(l.nick)) { v.push(l.nick); try { localStorage.setItem(SEEN, JSON.stringify(v)); } catch (e) { /* ignorato */ } }
+        clearTimeout(timer); if (!reduceMotion) timer = setTimeout(() => showLast(li + 1), 5000);
+      };
+      $('#last-row').addEventListener('click', (e) => { const b = e.target.closest('[data-last]'); if (!b) return; lv.showModal(); showLast(+b.dataset.last); });
+      lv.addEventListener('click', (e) => { const n = e.target.closest('[data-lv]'); if (n) showLast(li + +n.dataset.lv); if (e.target.closest('[data-lv-close]')) lv.close(); });
+      lv.addEventListener('close', () => { clearTimeout(timer); renderLast(); });
+      $('#lv-input').addEventListener('focus', () => clearTimeout(timer));
+      $('#lv-reply').addEventListener('submit', (e) => { e.preventDefault(); location.href = 'messaggi.html'; });
+
       // Regione arrivata dalla home (?regione=...) o scelta qui
       const regSel = $('#ads-region-select');
       const reg = new URLSearchParams(location.search).get('regione');
@@ -459,10 +535,10 @@
           <article class="card profile-card">
             <div class="photo">${p.foto ? `<img src="${D.unsplash(p.foto.id, 420, 400)}" alt="" loading="lazy" decoding="async">` : esc(p.ini)}
               ${p.online ? '<span class="tag-online"><span class="online-dot"></span>Online</span>' : ''}
-              ${p.ver ? `<span class="tag-ver" aria-label="Verificato" style="color:#fff">${ICON_CHECK}</span>` : ''}
+              ${p.ver ? `<span class="tag-ver" aria-label="Verificato" style="color:#fff">${ICON_SEAL}</span>` : ''}
             </div>
             <div class="body">
-              <strong>${esc(p.nick)}</strong>
+              <strong><a class="ad-link-plain" href="${userHref(p.nick)}">${esc(p.nick)}</a></strong>
               <span class="muted">${esc(p.tipo)}, ${esc(p.eta)}, ${esc(p.citta)}</span>
               <span style="color:var(--text-2)">Cerca: ${esc(p.cerca)}</span>
               <div class="row">
@@ -501,7 +577,7 @@
           return `<button type="button" class="conv" data-i="${i}" aria-current="${i === sel}">
             ${av(c.nome, c.ini)}
             <span class="conv-text"><span style="display:flex;justify-content:space-between;gap:8px"><strong>${esc(c.nome)}</strong><span class="muted" style="font-size:13px">${esc(c.ora)}</span></span>
-            <span class="preview">${last.mine ? 'Tu: ' : ''}${last.contact ? `Contatto ${EXT[last.contact.type].label}` : esc(last.testo)}</span></span>
+            <span class="preview">${last.mine ? 'Tu: ' : ''}${last.prop ? `Proposta: ${esc(propItem(last.prop).titolo)}` : last.contact ? `Contatto ${EXT[last.contact.type].label}` : esc(last.testo)}</span></span>
             ${c.nuovi && i !== sel ? `<span class="unread">${c.nuovi}</span>` : ''}
           </button>`;
         }).join('');
@@ -509,10 +585,12 @@
       const renderThread = () => {
         const c = convs[sel];
         $('#thread-ini').innerHTML = photoOf(c.nome) ? `<img src="${D.unsplash(photoOf(c.nome), 120, 120)}" alt="">` : esc(c.ini);
-        $('#thread-name').textContent = c.nome;
+        $('#thread-name').innerHTML = profileOf(c.nome) ? `<a class="ad-link-plain" href="${userHref(c.nome)}">${esc(c.nome)}</a>` : esc(c.nome);
         $('#thread-sub').textContent = c.sotto;
         $('#thread-link').href = c.link; $('#thread-link').textContent = c.linkLabel;
-        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => m.contact
+        $('#thread-msgs').innerHTML = `<p class="system-note">I messaggi sono visibili solo a voi due.</p>` + c.msgs.map((m) => m.prop
+          ? `<div class="msg ${m.mine ? 'mine' : ''} msg-contact">${propCard(m.prop, m.mine)}<time>${esc(m.ora)}</time></div>`
+          : m.contact
           ? `<div class="msg ${m.mine ? 'mine' : ''} msg-contact">${extCard(m.contact.type, m.contact.h, m.mine)}<time>${esc(m.ora)}</time></div>`
           : `<div class="msg ${m.mine ? 'mine' : ''}"><div class="bubble">${esc(m.testo)}</div><time>${esc(m.ora)}</time></div>`).join('');
         const body = $('#thread-msgs'); body.scrollTop = body.scrollHeight;
@@ -552,6 +630,29 @@
           renderList(); renderThread(); closeShare();
         });
       }
+      // Proponi dove andare: lista a destra (desktop) o pannello dal basso (mobile)
+      let propTab = 'eventi';
+      const renderProps = () => {
+        $$('[data-prop-tab]').forEach((b) => b.setAttribute('aria-selected', b.dataset.propTab === propTab));
+        $$('[data-prop-list]').forEach((el) => { el.innerHTML = propItems(propTab).map((x) => `
+          <div class="prop-item">${x.img ? `<img src="${D.unsplash(x.img, 160, 160)}" alt="" loading="lazy">` : ''}
+            <span class="contact-text"><strong>${esc(x.titolo)}</strong><span class="muted" style="font-size:13px">${esc(x.meta)}</span>${x.extra ? `<span class="accent" style="font-size:13px">${esc(x.extra)}</span>` : ''}</span>
+            <button class="btn btn-ghost btn-sm" type="button" data-propose="${x.kind}|${x.id}">Proponi</button></div>`).join(''); });
+      };
+      const propDlg = $('#prop-dialog');
+      const closeProp = propDlg ? sheetClose(propDlg, $('.drawer-head', propDlg)) : () => {};
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-prop-tab]'); if (t) { propTab = t.dataset.propTab; renderProps(); }
+        const pr = e.target.closest('[data-propose]');
+        if (pr) {
+          const [kind, id] = pr.dataset.propose.split('|'); const d = new Date(); const ora = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+          convs[sel].msgs.push({ mine: true, prop: { kind, id }, ora }); convs[sel].ora = ora;
+          renderList(); renderThread(); if (propDlg && propDlg.open) closeProp();
+          pr.textContent = 'Proposto'; setTimeout(() => { pr.textContent = 'Proponi'; }, 1500);
+        }
+      });
+      const po = $('#prop-open'); if (po) po.addEventListener('click', () => propDlg.showModal());
+      renderProps();
       renderList(); renderThread();
     },
 
@@ -576,6 +677,19 @@
         $('#vis-group').hidden = src === 'nessuna';
       };
 
+      let mode = new URLSearchParams(location.search).get('tipo') === 'last' ? 'last' : 'annuncio';
+      const setMode = (m) => {
+        mode = m;
+        $$('#pub-mode [data-mode]').forEach((b) => b.setAttribute('aria-selected', b.dataset.mode === m));
+        $('#ad-step').hidden = m === 'last'; $('#last-step').hidden = m !== 'last';
+        $('#fonte-nessuna').hidden = m === 'last';
+        if (m === 'last' && form.fonte.value === 'nessuna') { form.fonte.value = 'esempi'; }
+        $('#pub-h1').textContent = m === 'last' ? 'Pubblica un last' : 'Pubblica un annuncio';
+        $('#photo-legend').textContent = m === 'last' ? '2. La foto' : '2. Foto di lancio';
+        $('#pub-submit').textContent = m === 'last' ? 'Pubblica il last' : 'Pubblica l’annuncio';
+        showSource(); update();
+      };
+      $('#pub-mode').addEventListener('click', (e) => { const b = e.target.closest('[data-mode]'); if (b) setMode(b.dataset.mode); });
       const update = () => {
         const fd = new FormData(form);
         const fonte = fd.get('fonte');
@@ -586,7 +700,10 @@
         });
         if (fonte === 'carica' && uploaded) a.coverSrc = uploaded;
         if (fonte === 'esempi' && sample) a.cover = sample;
-        $('#pub-preview').innerHTML = adCard(a, { preview: true });
+        if (mode === 'last') {
+          const src = a.coverSrc || (a.cover && D.unsplash(a.cover.id, 600, 1000)) || '';
+          $('#pub-preview').innerHTML = `<div class="last-preview">${src ? `<img src="${src}" alt="">` : '<span class="muted">Scegli una foto</span>'}<span class="lp-head">${av('Ombra & Mare', 'OM', 'last-img')}<strong>Ombra &amp; Mare</strong> <span>ora</span></span><span class="lp-text">${esc(fd.get('frase') || '')}</span></div>`;
+        } else $('#pub-preview').innerHTML = adCard(a, { preview: true });
         $('#title-count').textContent = `${a.titolo.length}/60`;
         $('#pub-credits').innerHTML = fonte === 'esempi' && sample ? coverCredits([sample]) : '';
       };
@@ -605,9 +722,10 @@
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         $('#pub-done').hidden = false;
+        $('#pub-done').innerHTML = mode === 'last' ? 'Last pubblicato: resta in cima alla bacheca per 24 ore. <a href="annunci.html">Vai agli annunci</a>' : 'Annuncio inviato. Lo controlliamo e sarà online in bacheca entro poche ore. <a href="annunci.html">Vai agli annunci</a>';
         $('#pub-done').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
       });
-      showSource(); update();
+      showSource(); update(); if (mode === 'last') setMode('last');
     },
 
     /* ---------- SHOP ONLINE di un'attività ---------- */
@@ -728,6 +846,7 @@
               <div><strong style="font-size:20px">${esc(a.nick)}</strong><br><span class="muted">${esc(a.tipo)}, ${esc(a.eta)}, ${esc(a.zona)}</span></div>
               ${prof && prof.online ? '<span class="tag-inline"><span class="online-dot"></span>Online ora</span>' : ''}
               <a class="btn btn-primary btn-lg btn-block" href="messaggi.html">Scrivi a ${esc(a.nick)}</a>
+              <a class="btn btn-ghost btn-block" href="${userHref(a.nick)}">Vedi il profilo</a>
               <div class="author-actions">
                 <button class="btn btn-ghost" type="button" data-save aria-pressed="false">Salva</button>
                 <button class="btn btn-ghost" type="button" style="color:var(--accent)">Segnala</button>
@@ -813,7 +932,7 @@
           <p class="story-tags">${x.tag.map((t) => `#${esc(t)}`).join(' ')}</p>
           <div class="story-meta">
             ${av(x.autore, x.ini)}
-            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+            <span class="story-by">di <strong><a class="ad-link-plain" href="${userHref(x.autore)}">${esc(x.autore)}</a></strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
             <span class="story-stats"><span aria-label="${x.like} mi piace">${ICON_HEART_S}${x.like}</span><span aria-label="${x.commenti} commenti">${ICON_COMMENT}${x.commenti}</span></span>
           </div>
           </div>
@@ -854,7 +973,7 @@
           <h1>${esc(x.titolo)}</h1>
           <div class="story-meta">
             ${av(x.autore, x.ini)}
-            <span class="story-by">di <strong>${esc(x.autore)}</strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
+            <span class="story-by">di <strong><a class="ad-link-plain" href="${userHref(x.autore)}">${esc(x.autore)}</a></strong><br><span class="muted">${esc(x.data)} · ${x.min} min di lettura</span></span>
           </div>
         </header>
         <div class="story-body">${x.testo.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
@@ -1076,6 +1195,90 @@
       setInterval(() => { add(nicks[Math.floor(Math.random() * nicks.length)], W.chat[Math.floor(Math.random() * W.chat.length)]); viewers = Math.max(5, viewers + Math.round(Math.random() * 6 - 3)); paint(); }, 3500);
       setInterval(() => { if (Math.random() < .5) { const n = [5, 10, 25][Math.floor(Math.random() * 3)]; goal += n; add(nicks[Math.floor(Math.random() * nicks.length)], `ha mandato ${n} crediti`, 'is-tip'); hearts(n); paint(); } }, 6000);
       paint();
+    },
+
+    /* ---------- PROFILO PUBBLICO (utente.html?u=nickname) ---------- */
+    utente() {
+      const nick = new URLSearchParams(location.search).get('u') || 'Luna & Matteo';
+      const base = profileOf(nick) || { nick, tipo: '', eta: '', citta: '', ver: false, online: false };
+      const ex = (D.utenti || {})[nick] || {};
+      const photo = photoOf(nick);
+      const fotos = ex.foto || [photo, ...D.storie.slice(0, 3).map((x) => x.img)].filter(Boolean);
+      const videos = ex.video || [];
+      const ads = D.annunci.filter((a) => a.nick === nick);
+      const RV_KEY = 'agu.recensioni', MEET_KEY = 'agu.incontri';
+      const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || d); } catch (e) { return JSON.parse(d); } };
+      const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignorato */ } };
+      const reviews = () => [...(ex.recensioni || []), ...(load(RV_KEY, '{}')[nick] || [])];
+      const stars = (n) => `<span class="stars" aria-label="${n} stelle su 5">${[1, 2, 3, 4, 5].map((i) => `<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" class="${i <= Math.round(n) ? 'on' : ''}"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg>`).join('')}</span>`;
+      let following = load('agu.seguiti', '[]').includes(nick);
+      document.title = `Aguardiente · ${nick}`;
+
+      const renderHero = () => {
+        const r = reviews(); const avg = r.length ? r.reduce((t, x) => t + x.stelle, 0) / r.length : 0;
+        const seguaci = (ex.seguaci || 48) + (following ? 1 : 0);
+        $('#u-hero').innerHTML = `
+          <div class="profile-cover">${fotos[1] || photo ? `<img src="${D.unsplash(fotos[1] || photo, 1600, 500)}" alt="">` : ''}</div>
+          <div class="profile-info">
+            <div class="profile-avatar">${photo ? `<img src="${D.unsplash(photo, 300, 300)}" alt="">` : esc(base.ini || '')}</div>
+            <div style="flex-grow:1;display:flex;flex-direction:column;gap:6px;padding-bottom:6px;min-width:0">
+              <div class="chips chips-wrap" style="align-items:center">
+                <h1 style="font-size:clamp(32px,5vw,44px)">${esc(nick)}</h1>
+                ${base.ver ? `<span class="badge">${ICON_SEAL}Verificato</span>` : ''}
+                ${base.online ? '<span class="badge"><span class="online-dot" style="width:8px;height:8px"></span>Online</span>' : ''}
+              </div>
+              <span class="muted" style="font-size:17px">${[base.tipo, base.eta, base.citta].filter(Boolean).map(esc).join(', ')}</span>
+              <div class="u-stats">
+                <span><strong>${seguaci}</strong> seguaci</span><span><strong>${ex.seguiti || 31}</strong> seguiti</span>
+                <span><strong>${r.length ? avg.toFixed(1) : '—'}</strong> ${r.length ? stars(avg) : ''} ${r.length} ${r.length === 1 ? 'recensione' : 'recensioni'}</span>
+              </div>
+            </div>
+            <div class="actions" style="padding-bottom:6px">
+              <button class="btn btn-ghost" type="button" data-follow aria-pressed="${following}">${following ? 'Segui già' : 'Segui'}</button>
+              <a class="btn btn-primary" href="messaggi.html">Scrivi</a>
+              <button class="btn btn-ghost btn-icon" type="button" aria-label="Segnala o blocca" title="Segnala o blocca"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+            </div>
+          </div>
+          ${ex.bio ? `<p class="u-bio">${esc(ex.bio)}</p>` : ''}`;
+      };
+      $('#u-foto').innerHTML = `<div class="u-grid">${fotos.map((id, i) => `<div class="u-tile${i >= fotos.length - 2 && fotos.length > 3 ? ' is-private' : ''}"><img src="${D.unsplash(id, 500, 500)}" alt="" loading="lazy">${i >= fotos.length - 2 && fotos.length > 3 ? '<span class="photo-tag">Solo contatti</span>' : ''}</div>`).join('')}</div>`;
+      $('#u-video').innerHTML = videos.length ? `<div class="u-grid">${videos.map((v) => `<div class="u-tile"><img src="${D.unsplash(v.img, 500, 500)}" alt="" loading="lazy"><span class="vt-pill u-dur"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>${esc(v.durata)}</span></div>`).join('')}</div>` : '<p class="empty">Nessun video pubblicato.</p>';
+      $('#u-annunci').innerHTML = ads.length ? `<div class="grid grid-3">${ads.map((a) => adCard(a)).join('')}</div>` : '<p class="empty">Nessun annuncio attivo.</p>';
+
+      const renderReviews = () => {
+        const r = reviews(); const avg = r.length ? r.reduce((t, x) => t + x.stelle, 0) / r.length : 0;
+        $('#u-rev-summary').innerHTML = r.length ? `<strong class="rev-avg">${avg.toFixed(1)}</strong>${stars(avg)}<span class="muted">${r.length} ${r.length === 1 ? 'recensione' : 'recensioni'} da incontri confermati</span>` : '<p class="muted">Ancora nessuna recensione.</p>';
+        $('#u-rev-list').innerHTML = r.map((x) => `<article class="review">${av(x.da, x.da.slice(0, 2).toUpperCase())}<div><div class="review-head"><a class="ad-link-plain" href="utente.html?u=${encodeURIComponent(x.da)}"><strong>${esc(x.da)}</strong></a>${stars(x.stelle)}</div><p>${esc(x.testo)}</p><span class="muted" style="font-size:13px">${esc(x.data)} · <span class="meta-ver">${ICON_CHECK}Incontro confermato</span></span></div></article>`).join('');
+        const met = load(MEET_KEY, '[]').includes(nick);
+        $('#u-rev-box').innerHTML = met ? `
+          <h2 style="font-size:22px">Lascia una recensione</h2>
+          <form id="u-rev-form" class="rev-form">
+            <fieldset class="star-input"><legend>Il tuo voto</legend>${[5, 4, 3, 2, 1].map((n) => `<input type="radio" name="stelle" id="st${n}" value="${n}"${n === 5 ? ' checked' : ''}><label for="st${n}" aria-label="${n} stelle"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg></label>`).join('')}</fieldset>
+            <label class="field">Com’è andata<textarea name="testo" rows="4" maxlength="500" placeholder="Racconta in poche righe: puntualità, rispetto, sintonia."></textarea></label>
+            <button class="btn btn-ghost btn-block" type="submit">Pubblica recensione</button>
+          </form>`
+          : `<h2 style="font-size:22px">Recensioni solo dopo un incontro</h2>
+          <p class="muted" style="margin:0">Per evitare recensioni false, puoi scriverne una solo se ${esc(nick)} conferma che vi siete incontrati.</p>
+          <button class="btn btn-ghost btn-block" type="button" data-meet>Abbiamo avuto un incontro</button>
+          <p class="muted" id="u-meet-msg" aria-live="polite" style="font-size:14px;margin:0"></p>`;
+      };
+      document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-follow]')) { following = !following; const l = load('agu.seguiti', '[]').filter((x) => x !== nick); if (following) l.push(nick); save('agu.seguiti', l); renderHero(); }
+        if (e.target.closest('[data-meet]')) {
+          const b = e.target.closest('[data-meet]'); b.disabled = true; $('#u-meet-msg').textContent = `Richiesta inviata a ${nick}…`;
+          setTimeout(() => { const l = load(MEET_KEY, '[]'); l.push(nick); save(MEET_KEY, l); renderReviews(); }, 1600);
+        }
+        const t = e.target.closest('#u-tabs [data-tab]');
+        if (t) { $$('#u-tabs [data-tab]').forEach((x) => x.setAttribute('aria-selected', x === t)); ['foto', 'video', 'annunci', 'recensioni'].forEach((k) => { $(`#u-${k}`).hidden = k !== t.dataset.tab; }); }
+      });
+      document.addEventListener('submit', (e) => {
+        if (e.target.id !== 'u-rev-form') return; e.preventDefault();
+        const f = e.target; const testo = f.testo.value.trim(); if (!testo) { f.testo.focus(); return; }
+        const all = load(RV_KEY, '{}'); (all[nick] = all[nick] || []).push({ da: 'Ombra & Mare', stelle: +f.stelle.value, testo, data: 'ora' }); save(RV_KEY, all);
+        renderReviews(); renderHero();
+      });
+      if (location.hash === '#recensioni') $('#u-tabs [data-tab="recensioni"]').click();
+      renderHero(); renderReviews();
     },
 
     /* ---------- LUOGHI ---------- */

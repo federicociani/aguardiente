@@ -6,16 +6,17 @@
 |---|---|---|
 | `index.html` | Home pubblica: ricerca rapida, categorie, online ora, tab Annunci/Eventi (eventi dei locali con prevendita del biglietto), regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
 | `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
-| `annunci.html` | Bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
+| `annunci.html` | Last di 24 ore in cima (visualizzatore a schermo intero con risposta); bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
 | `vetrina.html` | Vetrina dei creator: creator verificati con abbonamento, contenuti gratis / a pagamento / per abbonati con anteprima sfocata, sblocco e abbonamento, form Diventa creator con dichiarazioni di consenso | messaggi |
 | `webcam.html` | Dirette in corso (filtri), prossime dirette con avviso, sezione Vai in diretta con prova della webcam in locale | live |
 | `live.html?id=…` | Stanza in diretta: anteprima, spettatori, obiettivo a crediti, mance, show privato, chat | webcam |
 | `storie.html` | Storie della community: collezioni, ricerca, ordinamento (nuove, più lette, più commentate), autori della settimana, temi, form Scrivi la tua storia con regole di moderazione | storia, messaggi |
 | `storia.html?id=…` | Storia singola: lettura, mi piace, salva, scrivi all’autore, segnala, commenti, altre storie | storie, messaggi |
+| `utente.html?u=…` | Profilo pubblico: foto, video, annunci, seguaci/seguiti, Segui, Scrivi, recensioni con stelle (solo dopo un incontro confermato da entrambi) | messaggi |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
-| `messaggi.html` | Lista conversazioni + chat + pannello sicurezza | annuncio ("Vedi annuncio"), scheda |
+| `messaggi.html` | Lista conversazioni + chat; a destra Proponi dove andare (eventi, luoghi, shop) da inviare come card; sicurezza | annuncio ("Vedi annuncio"), scheda |
 | `profilo.html` | Profilo personale, foto con visibilità, privacy, Premium | annunci, luoghi |
 
 ## Lato aziende
