@@ -474,7 +474,93 @@
       };
       tabs.forEach((t) => t.addEventListener('click', () => select(t.dataset.type)));
       // iscrizione.html?tipo=azienda apre direttamente il form aziende
-      select(new URLSearchParams(location.search).get('tipo') === 'azienda' ? 'azienda' : 'utente');
+      const qs = new URLSearchParams(location.search);
+      select(qs.get('tipo') === 'azienda' ? 'azienda' : 'utente');
+      // Utente: dopo i dati di accesso si passa alla verifica dell'età (passo 2)
+      $('#form-utente').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const tipo = ($('#form-utente input[name="tipo"]:checked') || {}).value || 'coppia';
+        const next = qs.get('next') || 'annunci.html';
+        location.href = `verifica.html?tipo=${encodeURIComponent(tipo)}&next=${encodeURIComponent(next)}`;
+      });
+    },
+
+    /* ---------- VERIFICA ETÀ: doppio anonimato (simulazione del fornitore) ----------
+       Una verifica per ogni persona del profilo (due per le coppie). Si salva solo un codice anonimo. */
+    verifica() {
+      const qs = new URLSearchParams(location.search);
+      const tipo = qs.get('tipo') || 'coppia';
+      const next = qs.get('next') || 'annunci.html';
+      const couple = tipo === 'coppia';
+      const KEY = 'agu.verifica';
+      const people = couple ? ['Persona 1', 'Persona 2'] : ['La tua verifica'];
+      let state = { tipo, persone: people.map(() => null), badge: false };
+      try { const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if (s && s.tipo === tipo) state = s; } catch (e) { /* ignorato */ }
+      const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignorato */ } };
+      const METHODS = { spid: 'SPID', cie: 'Carta d’identità elettronica', doc: 'Documento e selfie' };
+      const SHORT = { spid: 'SPID', cie: 'CIE', doc: 'Documento' };
+      const today = () => new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
+
+      $('#v-kind').textContent = couple ? 'Profilo di coppia' : `Profilo ${tipo}`;
+      $('#v-title').textContent = couple ? 'Verificate entrambi' : 'Verifica la tua età';
+      $('#v-sub').textContent = couple
+        ? 'Ogni persona del profilo fa la propria verifica, anche da due telefoni diversi.'
+        : 'Ci vuole circa un minuto. Puoi usare SPID, la carta d’identità elettronica o un documento.';
+      $('#v-later').href = next;
+
+      const render = () => {
+        $('#people').innerHTML = people.map((name, i) => {
+          const v = state.persone[i];
+          return `<li class="person${v ? ' is-ok' : ''}">
+            <span class="person-ico" aria-hidden="true">${v ? ICON_SEAL : i + 1}</span>
+            <span class="person-text"><strong>${esc(name)}</strong>
+              <span class="muted">${v ? `Confermata: ${esc(v.data)} · ${esc(SHORT[v.metodo])}` : 'Da verificare'}</span></span>
+            ${v ? '<span class="badge">Verificata</span>' : `<button type="button" class="btn btn-ghost btn-sm" data-verify="${i}">Verifica</button>`}
+          </li>`;
+        }).join('');
+        const all = state.persone.every(Boolean);
+        const btn = $('#v-continue');
+        btn.disabled = !all;
+        btn.textContent = all ? 'Continua e completa il profilo' : (couple ? 'Servono entrambe le verifiche' : 'Completa la verifica per continuare');
+        $('#v-notice').hidden = all;
+        $('#sw-badge').setAttribute('aria-checked', String(!!state.badge));
+        $$('[data-verify]').forEach((b) => b.addEventListener('click', () => open(+b.dataset.verify)));
+      };
+
+      const dlg = $('#verify-dialog');
+      sheetClose(dlg);
+      const step = (name) => $$('[data-vstep]', dlg).forEach((s) => { s.hidden = s.dataset.vstep !== name; });
+      let current = 0;
+      const open = (i) => {
+        current = i;
+        $('[data-who]', dlg).textContent = couple ? `· ${people[i]}` : '';
+        step('metodo');
+        dlg.showModal();
+      };
+      $$('[data-method]', dlg).forEach((m) => m.addEventListener('click', () => {
+        const metodo = m.dataset.method;
+        $('[data-method-label]', dlg).textContent = `Metodo: ${METHODS[metodo]}`;
+        step('attesa');
+        setTimeout(() => {
+          const token = 'age-' + Math.random().toString(36).slice(2, 8) + '-' + Math.random().toString(36).slice(2, 6);
+          state.persone[current] = { metodo, data: today(), token };
+          save(); render();
+          $('[data-token]', dlg).textContent = `esito: maggiorenne · codice ${token}`;
+          step('ok');
+        }, reduceMotion ? 300 : 1600);
+      }));
+      dlg.addEventListener('close', render);
+
+      $('#sw-badge').addEventListener('click', () => {
+        state.badge = $('#sw-badge').getAttribute('aria-checked') === 'true';
+        save();
+      });
+      $('#v-continue').addEventListener('click', () => {
+        if (!state.persone.every(Boolean)) return;
+        setIn();
+        location.href = next;
+      });
+      render();
     },
 
     /* ---------- ANNUNCI ---------- */

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aguardiente · Verifica dell'età</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/style.css?v=202610081437">
+</head>
+<body data-page="verifica">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+  </header>
+
+  <main class="container signup">
+    <div class="signup-intro">
+      <h1 style="font-size:52px">Verifica la tua età</h1>
+      <p class="lead">Un servizio esterno conferma che sei maggiorenne. Noi riceviamo solo l’esito: mai il tuo documento, mai il tuo nome.</p>
+      <ol class="steps">
+        <li class="done"><span class="n">1</span>Dati di accesso</li>
+        <li class="current"><span class="n">2</span>Verifica età e identità</li>
+        <li><span class="n">3</span>Completa il profilo</li>
+      </ol>
+
+      <div class="dbl-anon" aria-label="Come funziona il doppio anonimato">
+        <p class="eyebrow">Doppio anonimato</p>
+        <ol class="dbl-steps">
+          <li><span class="dbl-ico" aria-hidden="true">1</span><span><strong>Scegli come verificarti</strong><span class="muted">SPID, Carta d’identità elettronica o documento con selfie.</span></span></li>
+          <li><span class="dbl-ico" aria-hidden="true">2</span><span><strong>Il fornitore controlla l’età</strong><span class="muted">Non sa che la verifica è per Aguardiente.</span></span></li>
+          <li><span class="dbl-ico" aria-hidden="true">3</span><span><strong>Riceviamo solo “maggiorenne: sì”</strong><span class="muted">Un codice anonimo, senza nome, data di nascita o foto.</span></span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card signup-form">
+      <div class="verify-head">
+        <p class="eyebrow" id="v-kind">Profilo di coppia</p>
+        <h2 style="font-size:28px" id="v-title">Verificate entrambi</h2>
+        <p class="muted" id="v-sub">Ogni persona del profilo fa la propria verifica, anche da due telefoni diversi.</p>
+      </div>
+
+      <ul class="people" id="people"></ul>
+
+      <section class="badge-opt" aria-labelledby="badge-title">
+        <div class="switch-row" style="border-top:0;padding-top:0">
+          <span style="display:flex;flex-direction:column;gap:4px">
+            <strong id="badge-title" style="display:inline-flex;align-items:center;gap:8px">Badge “Identità verificata” <span class="badge">Facoltativo</span></strong>
+            <span class="muted" style="font-size:14px">Con documento e selfie confermi anche di essere la persona delle foto. Gli altri vedranno il badge sul tuo profilo.</span>
+          </span>
+          <button type="button" class="switch" role="switch" id="sw-badge" aria-checked="false" aria-label="Richiedi anche il badge Identità verificata"></button>
+        </div>
+      </section>
+
+      <p class="notice" id="v-notice">Senza verifica puoi navigare il sito, ma non vedi foto esplicite, Vetrina, Webcam e Storie.</p>
+
+      <button class="btn btn-primary btn-lg btn-block" type="button" id="v-continue" disabled>Completa la verifica per continuare</button>
+      <a class="gate-back" id="v-later" href="annunci.html">Lo faccio più tardi</a>
+    </div>
+  </main>
+
+  <!-- Finestra del fornitore di verifica (simulazione) -->
+  <dialog class="sheet verify-sheet" id="verify-dialog" aria-labelledby="vd-title">
+    <div class="sheet-body">
+      <div class="provider-bar">
+        <span class="provider-logo" aria-hidden="true">✓</span>
+        <span><strong>Servizio di verifica dell’età</strong><span class="muted" style="font-size:13px;display:block">Fornitore esterno · simulazione del prototipo</span></span>
+        <button type="button" class="btn btn-ghost btn-sm" data-close aria-label="Chiudi">✕</button>
+      </div>
+
+      <div data-vstep="metodo">
+        <h3 id="vd-title" style="font-size:22px;margin:4px 0 6px">Verifica <span data-who></span></h3>
+        <p class="muted" style="margin:0 0 14px">Scegli il metodo. Aguardiente non vedrà i tuoi dati.</p>
+        <div class="method-list" role="radiogroup" aria-label="Metodo di verifica">
+          <button type="button" class="method" data-method="spid"><strong>SPID</strong><span class="muted">Con l’app del tuo gestore SPID</span></button>
+          <button type="button" class="method" data-method="cie"><strong>Carta d’identità elettronica</strong><span class="muted">Con l’app CieID e il telefono</span></button>
+          <button type="button" class="method" data-method="doc"><strong>Documento e selfie</strong><span class="muted">Foto del documento e un breve video del viso</span></button>
+        </div>
+      </div>
+
+      <div data-vstep="attesa" hidden>
+        <div class="verify-wait" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <strong>Verifica in corso…</strong>
+          <span class="muted" data-method-label></span>
+        </div>
+      </div>
+
+      <div data-vstep="ok" hidden>
+        <div class="verify-ok" role="status" aria-live="polite">
+          <span class="ok-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <strong style="font-size:20px">Maggiore età confermata</strong>
+          <span class="muted">Ad Aguardiente arriva solo questo esito, con un codice anonimo.</span>
+          <code class="token" data-token></code>
+        </div>
+        <div class="sheet-actions"><button type="button" class="btn btn-primary" data-close>Torna ad Aguardiente</button></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="assets/data.js?v=202610081437"></script>
+  <script src="assets/app.js?v=202610081437"></script>
+</body>
+</html>
