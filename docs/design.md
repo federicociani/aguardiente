@@ -115,3 +115,14 @@ Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel men
 ### Verifica dal profilo (`profilo.html`)
 
 Finché la verifica dell'età non è completa (`agu.verifica` in localStorage), sotto la testata del profilo compare il riquadro "Verifica il profilo": icona, spiegazione di cosa si perde senza verifica, avanzamento "1 di 2 verifiche" per le coppie e pulsante verso `verifica.html?tipo=…&next=profilo.html`. Il badge accanto al nome passa da "Verificati" a "Da verificare" e nella card Account c'è la voce "Verifica dell’età" con lo stato. A verifica completata il riquadro sparisce.
+
+### Icone (Google Material Symbols Rounded)
+
+Le icone non sono più SVG inline: si usa il font **Material Symbols Rounded** da Google Fonts, caricato con `icon_names=` così scarica solo le icone usate (sottoinsieme), assi `opsz 20..48`, `wght 300..600`, `FILL 0..1`, `display=block`.
+Markup: `<span class="ms" style="--ms:16px" aria-hidden="true">verified</span>`. `--ms` è la dimensione; `.ms-bold` (peso 600), `.ms-fill` (piena). Le icone della navigazione si riempiono sulla pagina corrente con `font-variation-settings: 'FILL' 1`.
+**Quando si aggiunge un'icona nuova va aggiunta anche alla lista `icon_names` del link nei `<head>`** (in ordine alfabetico), altrimenti compare il nome in testo.
+Verifica: per verificato / da verificare / verifica si usa sempre l'icona `verified`.
+
+### Online ora vicino a te (home)
+
+Ogni profilo mostra l'icona `verified` accanto al nome se è verificato e la distanza indicativa (`near_me`, "a 25 km", sotto i 5 km "meno di 5 km"), ordinati dal più vicino. Accanto a "Vedi tutti" il pulsante con la posizione apre il foglio "Dove sei?": "Usa la mia posizione" (geolocalizzazione del browser, coordinate arrotondate a ~1 km) oppure scelta della città. La posizione si salva in `agu.posizione`.

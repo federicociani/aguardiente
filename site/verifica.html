@@ -6,7 +6,8 @@
   <title>Aguardiente · Verifica dell'età</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610081501">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,300..600,0..1&icon_names=add,add_box,arrow_back,arrow_forward,badge,bed,campaign,chat_bubble,check,checkroom,chevron_left,close,confirmation_number,credit_card,expand_more,favorite,grid_view,health_and_safety,image,inbox,info,ios_share,layers,local_bar,location_on,lock,login,menu_book,more_horiz,my_location,near_me,paid,percent,play_arrow,redeem,savings,search,sell,send,shopping_bag,smart_display,star,storefront,tune,verified,videocam,water_drop,work&display=block">
+  <link rel="stylesheet" href="assets/style.css?v=202610081506">
 </head>
 <body data-page="verifica">
   <header class="site-header">
@@ -63,7 +64,7 @@
   <dialog class="sheet verify-sheet" id="verify-dialog" aria-labelledby="vd-title">
     <div class="sheet-body">
       <div class="provider-bar">
-        <span class="provider-logo" aria-hidden="true">✓</span>
+        <span class="provider-logo" aria-hidden="true"><span class="ms" style="--ms:22px">verified</span></span>
         <span><strong>Servizio di verifica dell’età</strong><span class="muted" style="font-size:13px;display:block">Fornitore esterno · simulazione del prototipo</span></span>
         <button type="button" class="btn btn-ghost btn-sm" data-close aria-label="Chiudi">✕</button>
       </div>
@@ -88,7 +89,7 @@
 
       <div data-vstep="ok" hidden>
         <div class="verify-ok" role="status" aria-live="polite">
-          <span class="ok-ico" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <span class="ok-ico" aria-hidden="true"><span class="ms ms-bold" style="--ms:28px" aria-hidden="true">verified</span></span>
           <strong style="font-size:20px">Maggiore età confermata</strong>
           <span class="muted">Ad Aguardiente arriva solo questo esito, con un codice anonimo.</span>
           <code class="token" data-token></code>
@@ -98,7 +99,7 @@
     </div>
   </dialog>
 
-  <script src="assets/data.js?v=202610081501"></script>
-  <script src="assets/app.js?v=202610081501"></script>
+  <script src="assets/data.js?v=202610081506"></script>
+  <script src="assets/app.js?v=202610081506"></script>
 </body>
 </html>
