@@ -1093,6 +1093,37 @@
 
     /* ---------- PROFILO: contatti esterni ---------- */
     profilo() {
+      // Verifica dell'età: se non è completa, il profilo mostra l'azione "Verifica il profilo"
+      const cta = $('#verify-cta');
+      if (cta) {
+        let v = null;
+        try { v = JSON.parse(localStorage.getItem('agu.verifica') || 'null'); } catch (e) { /* ignorato */ }
+        const tipo = (v && v.tipo) || 'coppia';
+        const persone = (v && Array.isArray(v.persone)) ? v.persone : (tipo === 'coppia' ? [null, null] : [null]);
+        const done = persone.filter(Boolean).length;
+        const ok = done === persone.length;
+        const href = `verifica.html?tipo=${encodeURIComponent(tipo)}&next=profilo.html`;
+        cta.hidden = ok;
+        $('#badge-verified').hidden = !ok;
+        $('#badge-unverified').hidden = ok;
+        $('#verify-cta-btn').href = href;
+        const acc = $('#acc-verify');
+        acc.href = href;
+        if (ok) {
+          const last = persone[persone.length - 1];
+          acc.textContent = `Verifica dell’età: completata (${last.data})`;
+          acc.removeAttribute('href');
+          acc.style.color = 'var(--muted)';
+        } else {
+          acc.textContent = 'Verifica dell’età: da completare';
+          if (persone.length > 1) {
+            $('#verify-cta-progress').textContent = done ? `${done} di ${persone.length} verifiche fatte: manca la Persona ${persone.findIndex((p) => !p) + 1}` : `0 di ${persone.length} verifiche: ognuno di voi fa la propria`;
+            if (done) { $('#verify-cta-title').textContent = 'Completa la verifica'; $('#verify-cta-btn').textContent = 'Completa la verifica'; }
+          }
+          $('#verify-cta-progress').hidden = persone.length < 2;
+        }
+      }
+
       const form = $('#ext-form'); if (!form) return;
       const ext = extLoad();
       Object.keys(EXT).forEach((k) => {

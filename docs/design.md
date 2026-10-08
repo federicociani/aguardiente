@@ -110,3 +110,8 @@ Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel men
 - Focus visibile (`:focus-visible`)
 - Interruttori con `role="switch"` e `aria-checked`; filtri con `aria-pressed`
 - Bagliore del logo disattivato con `prefers-reduced-motion`
+
+
+### Verifica dal profilo (`profilo.html`)
+
+Finché la verifica dell'età non è completa (`agu.verifica` in localStorage), sotto la testata del profilo compare il riquadro "Verifica il profilo": icona, spiegazione di cosa si perde senza verifica, avanzamento "1 di 2 verifiche" per le coppie e pulsante verso `verifica.html?tipo=…&next=profilo.html`. Il badge accanto al nome passa da "Verificati" a "Da verificare" e nella card Account c'è la voce "Verifica dell’età" con lo stato. A verifica completata il riquadro sparisce.
