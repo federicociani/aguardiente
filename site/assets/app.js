@@ -1137,6 +1137,16 @@
         $('#ext-public').hidden = !pub.length;
       };
       showPublic(ext);
+      // Card richiudibile: chiusa di base, aperta se si arriva da profilo.html#contatti
+      const fold = $('#contatti-fold');
+      const countSet = (v) => {
+        const n = Object.keys(EXT).filter((k) => v[k] && v[k].h).length;
+        $('#ext-count').textContent = n ? `${n} di ${Object.keys(EXT).length} impostati` : 'Nessun contatto impostato';
+      };
+      countSet(ext);
+      const openFromHash = () => { if (location.hash === '#contatti') fold.open = true; };
+      openFromHash();
+      window.addEventListener('hashchange', openFromHash);
       form.addEventListener('submit', (e) => {
         e.preventDefault();
         const v = {};
@@ -1144,6 +1154,7 @@
         if (v.whatsapp.h && v.whatsapp.h.replace(/[^\d]/g, '').length < 8) { $('#ext-saved').textContent = 'Il numero WhatsApp sembra incompleto: scrivilo con il prefisso, per esempio +39 333 1234567.'; form.whatsapp.focus(); return; }
         $('#ext-saved').textContent = extSave(v) ? 'Contatti salvati. Li trovi nella chat, nel tasto accanto al campo di scrittura.' : 'Non è stato possibile salvarli in questo browser.';
         showPublic(v);
+        countSet(v);
       });
     },
 

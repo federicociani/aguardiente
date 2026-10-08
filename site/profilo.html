@@ -6,7 +6,7 @@
   <title>Aguardiente · Il mio profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610081454">
+  <link rel="stylesheet" href="assets/style.css?v=202610081501">
 </head>
 <body data-page="profilo">
   <header class="site-header">
@@ -92,7 +92,9 @@
         <div class="switch-row"><span><strong style="font-weight:500">Ricevi offerte dai locali</strong><br><span class="muted" style="font-size:13px">Solo attività verificate</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ricevi offerte dai locali"></button></div>
         </section>
         <section class="card ext-card" id="contatti">
-          <h2 style="font-size:22px">Contatti esterni</h2>
+          <details class="fold" id="contatti-fold">
+          <summary><span class="fold-title"><h2 style="font-size:22px">Contatti esterni</h2><span class="muted fold-meta" id="ext-count">Instagram, Facebook, WhatsApp, Telegram</span></span><span class="fold-chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></summary>
+          <div class="fold-body">
           <p class="muted" style="font-size:14px;margin:4px 0 6px">Restano privati: li condividi tu, quando vuoi, con un tocco dalla chat. Se lo scegli, puoi mostrarli anche sul profilo.</p>
           <form id="ext-form" novalidate>
           <div class="ext-row">
@@ -118,6 +120,8 @@
             <button class="btn btn-ghost btn-block" type="submit" style="margin-top:8px">Salva contatti</button>
             <p class="ext-saved" id="ext-saved" role="status" aria-live="polite"></p>
           </form>
+          </div>
+          </details>
         </section>
         <section class="card-deep" style="display:flex;flex-direction:column;gap:10px">
           <span class="badge" style="background:rgba(0,0,0,.25);color:#fff;align-self:flex-start">Premium attivo</span>
@@ -147,7 +151,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610081454"></script>
-  <script src="assets/app.js?v=202610081454"></script>
+  <script src="assets/data.js?v=202610081501"></script>
+  <script src="assets/app.js?v=202610081501"></script>
 </body>
 </html>
