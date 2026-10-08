@@ -79,6 +79,13 @@ Ogni avatar, profilo, locale e galleria usa una foto di esempio (Unsplash, mappa
 
 Vetrina, Webcam e Storie sono raggiungibili anche da non iscritti (icone nel menu della home e anteprime sfocate nella sezione "Vetrina e dirette"), ma la pagina si apre sfocata sotto un pannello "Entra per vedere questa sezione". Nel prototipo l'accesso è un flag nel browser (`agu.entrato`) che si attiva iscrivendosi, accedendo o con "Ho già un account (prototipo)".
 
+## Verifica dell'età (`verifica.html`)
+- Passo 2 dell'iscrizione utente, dopo i dati di accesso. Riquadro "Doppio anonimato" in 3 passi: metodo, controllo del fornitore, esito "maggiorenne: sì".
+- Una riga per ogni persona del profilo (due per le coppie) con stato "Da verificare" / "Verificata"; il bottone per continuare resta disattivato finché tutte le persone non sono verificate.
+- La finestra del fornitore è una simulazione: barra con logo blu neutro, scelta tra SPID, CIE e documento con selfie, attesa, esito con codice anonimo.
+- Badge "Identità verificata" facoltativo con interruttore. Nel prototipo lo stato è in `localStorage` (`agu.verifica`).
+- Su mobile la card con le verifiche viene prima della spiegazione del doppio anonimato.
+
 ## Mobile (≤ 720px)
 
 - **Tab bar in basso, solo icone**, per utente loggato, home pubblica e Business; in alto restano logo e avatar o CTA.

@@ -6,7 +6,7 @@
   <title>Aguardiente · Iscrizione</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610061902">
+  <link rel="stylesheet" href="assets/style.css?v=202610081437">
 </head>
 <body data-page="iscrizione">
   <header class="site-header">
@@ -33,14 +33,14 @@
         <button type="button" role="tab" data-type="azienda" aria-selected="false">Azienda</button>
       </div>
 
-      <form id="form-utente" action="annunci.html" data-login style="display:flex;flex-direction:column;gap:20px">
+      <form id="form-utente" action="verifica.html" style="display:flex;flex-direction:column;gap:20px">
         <fieldset>
           <legend>Il profilo è di</legend>
           <div class="radio-tiles">
-            <label><input type="radio" name="tipo" checked> Coppia</label>
-            <label><input type="radio" name="tipo"> Lei</label>
-            <label><input type="radio" name="tipo"> Lui</label>
-            <label><input type="radio" name="tipo"> Trans</label>
+            <label><input type="radio" name="tipo" value="coppia" checked> Coppia</label>
+            <label><input type="radio" name="tipo" value="lei"> Lei</label>
+            <label><input type="radio" name="tipo" value="lui"> Lui</label>
+            <label><input type="radio" name="tipo" value="trans"> Trans</label>
           </div>
         </fieldset>
         <label class="field">Nickname<input type="text" placeholder="Come ti vedranno gli altri"></label>
@@ -72,7 +72,7 @@
     </div>
   </main>
 
-  <script src="assets/data.js?v=202610061902"></script>
-  <script src="assets/app.js?v=202610061902"></script>
+  <script src="assets/data.js?v=202610081437"></script>
+  <script src="assets/app.js?v=202610081437"></script>
 </body>
 </html>

@@ -1170,6 +1170,44 @@ select, .field select {
 }
 select::-ms-expand { display: none; }
 
+
+/* ---------- Verifica dell'età (doppio anonimato) ---------- */
+.steps li.current { color: var(--text); }
+.steps li.current .n { border-color: #D61E52; color: var(--text); box-shadow: 0 0 0 4px rgba(214,30,82,.18); }
+.dbl-anon { display: flex; flex-direction: column; gap: 14px; padding: 22px; border: 1px solid var(--line); border-radius: 32px; background: rgba(32,10,17,.6); }
+.dbl-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.dbl-steps li { display: flex; gap: 14px; align-items: flex-start; }
+.dbl-steps li > span:last-child { display: flex; flex-direction: column; gap: 2px; font-size: 15px; }
+.dbl-steps .muted { font-size: 14px; }
+.dbl-ico { flex: 0 0 28px; height: 28px; border-radius: 999px; background: var(--surface-2); color: var(--accent); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
+.verify-head { display: flex; flex-direction: column; gap: 8px; }
+.verify-head h2, .verify-head p { margin: 0; }
+.people { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.person { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 28px; background: var(--bg); }
+.person.is-ok { border-color: rgba(214,30,82,.55); }
+.person-ico { flex: 0 0 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; background: var(--surface-2); color: var(--text-2); font-weight: 600; }
+.person.is-ok .person-ico { background: var(--grad); color: #fff; }
+.person.is-ok .person-ico svg { width: 20px; height: 20px; }
+.person-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.person-text .muted { font-size: 14px; }
+.badge-opt { padding: 18px; border: 1px dashed var(--line-2); border-radius: 28px; }
+#v-continue:disabled { opacity: .5; cursor: not-allowed; filter: grayscale(.3); }
+#v-later { align-self: center; }
+.verify-sheet .sheet-body { gap: 16px; }
+.provider-bar { display: flex; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.provider-bar > span:nth-child(2) { flex: 1; }
+.provider-logo { width: 36px; height: 36px; border-radius: 12px; background: #1F5FBF; color: #fff; display: grid; place-items: center; font-weight: 700; }
+.method-list { display: flex; flex-direction: column; gap: 10px; }
+.method { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px 18px; text-align: left; border: 1px solid var(--line); border-radius: 24px; background: var(--bg); color: var(--text); font: inherit; cursor: pointer; }
+.method:hover, .method:focus-visible { border-color: #D61E52; }
+.method .muted { font-size: 14px; }
+.verify-wait, .verify-ok { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 18px 0; }
+.spinner { width: 40px; height: 40px; border-radius: 999px; border: 3px solid var(--line); border-top-color: #D61E52; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ok-ico { width: 56px; height: 56px; border-radius: 999px; background: var(--grad); color: #fff; display: grid; place-items: center; }
+.token { font-size: 12px; color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
 /* ==========================================================
    MOBILE (≤ 720px)
    ========================================================== */
@@ -1283,6 +1321,11 @@ select::-ms-expand { display: none; }
   .signup { padding-block: 28px 64px; gap: 28px; }
   .signup-form { padding: 20px; }
   .signup-intro h1 { font-size: 36px !important; }
+  body[data-page="verifica"] .signup-intro { display: contents; }
+  body[data-page="verifica"] .signup-intro > h1 { order: 1; } body[data-page="verifica"] .signup-intro > .lead { order: 2; } body[data-page="verifica"] .signup-intro > .steps { order: 3; }
+  body[data-page="verifica"] .signup-form { order: 4; } body[data-page="verifica"] .dbl-anon { order: 5; }
+  .badge-opt strong { flex-wrap: wrap; }
+  .dbl-anon { padding: 18px; }
 
   /* Annuncio singolo e scheda */
   .detail-cover .ad-cover { aspect-ratio: 4 / 3; border-radius: 32px; }
