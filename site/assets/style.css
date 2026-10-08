@@ -57,7 +57,7 @@ body.business {
 body { text-wrap: balance; }
 h1, h2, h3, h4, .lead, .cf-sub, .cf-title, .detail-text, .detail-hint, .cf-note, .muted, p, li, summary, label, legend, .btn, .badge { text-wrap: balance; }
 
-a { color: var(--accent); }
+a { color: var(--accent); text-decoration: none; }
 a:hover { color: #FF9BB3; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
@@ -865,6 +865,16 @@ legend { font-family: var(--font-body); font-weight: 600; margin-bottom: 10px; p
 
 /* ---------- Contatti esterni e condivisione in chat ---------- */
 .ext-card { display: flex; flex-direction: column; gap: 6px; scroll-margin-top: 90px; }
+/* Card richiudibile (Contatti esterni nel profilo) */
+.fold > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-radius: 16px; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.fold-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.fold-meta { font-size: 13px; }
+.fold-chev { flex: 0 0 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--line-2); color: var(--text-2); transition: transform .25s; }
+.fold[open] .fold-chev { transform: rotate(180deg); }
+.fold-body { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) { .fold-chev { transition: none; } }
 .ext-row { display: flex; flex-direction: column; gap: 2px; padding: 12px 0; border-top: 1px solid var(--line); }
 .ext-field { gap: 8px; }
 .ext-label { display: inline-flex; align-items: center; gap: 10px; color: var(--text); font-weight: 600; font-size: 15px; }
