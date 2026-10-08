@@ -11,9 +11,9 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = window.DATA || {};
 
-  const ICON_CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-  const ICON_HEART = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FF6B8F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
-  const ICON_PIN = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  const ICON_CHECK = '<span class="ms ms-bold" style="--ms:14px" aria-hidden="true">check</span>';
+  const ICON_HEART = '<span class="ms" style="--ms:18px" aria-hidden="true">favorite</span>';
+  const ICON_PIN = '<span class="ms" style="--ms:14px" aria-hidden="true">location_on</span>';
 
 
   /* Utility: gruppo di pill che filtrano una lista */
@@ -136,14 +136,14 @@
      La foto di lancio (a.cover / a.coverSrc) è indipendente dalla foto profilo:
      l'avatar in basso a sinistra viene sempre dal profilo dell'autore. */
   const CERT_TIP = 'I luoghi certificati da Aguardiente si impegnano a fornire tutti i dettagli e l’attendibilità del luogo.';
-  const ICON_SEAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2.9 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-.9 2.8-3-.2L12 21l-2.4-1.8-3 .2-.9-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7.9-2.8 3 .2z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg>';
+  const ICON_SEAL = '<span class="ms" style="--ms:16px" aria-hidden="true">verified</span>';
   // Badge "Certificato" con tooltip; focusable=false dentro i link (niente elementi interattivi annidati)
   function certHTML(focusable = true) {
     const id = 'tip-' + Math.random().toString(36).slice(2, 8);
     return `<span class="cert"${focusable ? ` tabindex="0" aria-describedby="${id}"` : ''}>${ICON_SEAL}Certificato<span class="cert-tip" role="tooltip" id="${id}">${CERT_TIP}</span></span>`;
   }
   const VIS_LABEL = { tutti: 'Visibile a tutti', verificati: 'Solo profili verificati', sfocata: 'Sfocata fino al contatto' };
-  const ICON_LOCK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  const ICON_LOCK = '<span class="ms" style="--ms:18px" aria-hidden="true">lock</span>';
   function profileOf(nick) { return (D.profili || []).find((p) => p.nick === nick); }
   // Avatar con foto di esempio se disponibile, altrimenti iniziali
   function photoOf(nick) { const p = profileOf(nick); return (p && p.foto && p.foto.id) || (D.avatar && D.avatar[nick]) || null; }
@@ -157,7 +157,7 @@
   }
   // "Oggi • Verificato": data di pubblicazione e, se c'è, la verifica del profilo
   function metaHTML(a) {
-    return `<span class="muted">${esc(a.quando)}</span>${a.ver ? `<span class="meta-dot" aria-hidden="true"></span><span class="meta-ver">${ICON_CHECK}Verificato</span>` : ''}`;
+    return `<span class="muted">${esc(a.quando)}</span>${a.ver ? `<span class="meta-dot" aria-hidden="true"></span><span class="meta-ver">${ICON_SEAL}Verificato</span>` : ''}`;
   }
   function coverHTML(a, { compact = false } = {}) {
     const src = a.coverSrc || (a.cover && D.unsplash(a.cover.id, 800, 450));
@@ -374,7 +374,7 @@
   const CR_KEY = 'agu.crediti';
   const crGet = () => { try { const v = localStorage.getItem(CR_KEY); return v === null ? (D.webcam ? D.webcam.crediti : 0) : +v; } catch (e) { return D.webcam ? D.webcam.crediti : 0; } };
   const crSet = (v) => { try { localStorage.setItem(CR_KEY, String(v)); } catch (e) { /* ignorato */ } };
-  const ICON_COIN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M14.5 9.5c-.5-.9-1.4-1.4-2.5-1.4-1.6 0-2.7 1-2.7 2.2 0 2.9 5.6 1.5 5.6 4.3 0 1.2-1.2 2.2-2.9 2.2-1.2 0-2.2-.6-2.6-1.5M12 6.5v1.6M12 16v1.5"/></svg>';
+  const ICON_COIN = '<span class="ms" style="--ms:16px" aria-hidden="true">paid</span>';
   const walletHTML = (v) => `${ICON_COIN}<strong>${v}</strong> crediti <button type="button" class="wallet-add" data-topup aria-label="Ricarica crediti">+</button>`;
 
   /* ---------- Accesso: le sezioni per adulti (Vetrina, Webcam, Storie) chiedono di entrare ----------
@@ -431,14 +431,70 @@
 
     /* ---------- HOME ---------- */
     home() {
-      const online = D.profili.filter((p) => p.online);
-      $('#online-strip').innerHTML = online.map((p) => `
+      /* Online ora vicino a te: distanza indicativa dalla posizione scelta (GPS o città) */
+      const CITTA = {
+        Bologna: [44.4949, 11.3426], Cervia: [44.2617, 12.3486], Cesena: [44.1391, 12.2431], Faenza: [44.2857, 11.8833],
+        Forlì: [44.2227, 12.0407], Imola: [44.3533, 11.7142], Lugo: [44.4206, 11.9110], Ravenna: [44.4184, 12.2035],
+        Riccione: [43.9993, 12.6556], Rimini: [44.0678, 12.5695]
+      };
+      const LKEY = 'agu.posizione';
+      let pos = { nome: 'Ravenna', lat: CITTA.Ravenna[0], lng: CITTA.Ravenna[1], gps: false };
+      try { const s = JSON.parse(localStorage.getItem(LKEY) || 'null'); if (s && typeof s.lat === 'number') pos = s; } catch (e) { /* ignorato */ }
+      const km = (a, b) => {
+        const r = (d) => d * Math.PI / 180; const dLat = r(b[0] - a[0]); const dLng = r(b[1] - a[1]);
+        const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(a[0])) * Math.cos(r(b[0])) * Math.sin(dLng / 2) ** 2;
+        return 6371 * 2 * Math.asin(Math.sqrt(h));
+      };
+      const distLabel = (d) => d < 5 ? 'meno di 5 km' : `${Math.round(d)} km`;
+      const renderOnline = () => {
+        const here = [pos.lat, pos.lng];
+        const online = D.profili.filter((p) => p.online)
+          .map((p) => ({ p, d: CITTA[p.citta] ? km(here, CITTA[p.citta]) : 999 }))
+          .sort((a, b) => a.d - b.d);
+        $('#online-strip').innerHTML = online.map(({ p, d }) => `
         <a class="online-item" href="cerca.html">
           <span class="photo">${p.foto
             ? `<img src="${D.unsplash(p.foto.id)}" srcset="${D.unsplash(p.foto.id)} 1x, ${D.unsplash(p.foto.id, 800, 800)} 2x" alt="" loading="lazy" decoding="async">`
             : esc(p.ini)}<span class="online-dot" aria-label="Online"></span></span>
-          <span><strong>${esc(p.nick)}</strong><br><span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span></span>
+          <span class="online-meta">
+            <strong class="online-name">${esc(p.nick)}${p.ver ? `<span class="online-ver" title="${p.tipo === 'Coppia' ? 'Verificati' : 'Verificato'}">${ICON_SEAL}<span class="sr-only">, ${p.tipo === 'Coppia' ? 'verificati' : 'verificato'}</span></span>` : ''}</strong>
+            <span class="muted">${esc(p.tipo)}, ${esc(p.citta)}</span>
+            <span class="online-dist"><span class="ms" style="--ms:14px" aria-hidden="true">near_me</span>${d < 999 ? `a ${distLabel(d)}` : 'distanza non disponibile'}</span>
+          </span>
         </a>`).join('');
+        $('#loc-label').textContent = pos.nome;
+        $('#loc-ico').textContent = pos.gps ? 'my_location' : 'location_on';
+      };
+      renderOnline();
+
+      const ldlg = $('#loc-dialog');
+      sheetClose(ldlg);
+      const setPos = (p) => {
+        pos = p;
+        try { localStorage.setItem(LKEY, JSON.stringify(p)); } catch (e) { /* ignorato */ }
+        renderOnline();
+        ldlg.close();
+      };
+      const renderCities = () => {
+        $('#loc-cities').innerHTML = Object.keys(CITTA).map((c) => `<button type="button" class="chip loc-city" data-city="${esc(c)}" aria-pressed="${!pos.gps && pos.nome === c}">${esc(c)}</button>`).join('');
+        $$('[data-city]', ldlg).forEach((b) => b.addEventListener('click', () => {
+          const c = b.dataset.city; setPos({ nome: c, lat: CITTA[c][0], lng: CITTA[c][1], gps: false });
+        }));
+      };
+      $('#loc-btn').addEventListener('click', () => { $('#loc-status').textContent = ''; renderCities(); ldlg.showModal(); });
+      $('#loc-gps').addEventListener('click', () => {
+        const st = $('#loc-status');
+        if (!('geolocation' in navigator)) { st.textContent = 'Questo browser non permette la geolocalizzazione: scegli una città.'; return; }
+        st.textContent = 'Sto cercando la tua posizione…';
+        navigator.geolocation.getCurrentPosition((g) => {
+          const here = [g.coords.latitude, g.coords.longitude];
+          const near = Object.keys(CITTA).sort((a, b) => km(here, CITTA[a]) - km(here, CITTA[b]))[0];
+          // Arrotondata a ~1 km: basta per le distanze e non salva la posizione precisa
+          setPos({ nome: `Vicino a ${near}`, lat: +here[0].toFixed(2), lng: +here[1].toFixed(2), gps: true });
+        }, () => {
+          st.textContent = 'Non riesco a leggere la posizione. Controlla i permessi del browser o scegli una città.';
+        }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
+      });
       homeEvents();
       $('#latest-ads').innerHTML = D.annunci.slice(0, 3).map((a) => `
         <a class="card ad latest${a.cover ? ' has-cover' : ''}" href="annunci.html" style="color:inherit;text-decoration:none">
@@ -515,7 +571,7 @@
             <span class="person-ico" aria-hidden="true">${v ? ICON_SEAL : i + 1}</span>
             <span class="person-text"><strong>${esc(name)}</strong>
               <span class="muted">${v ? `Confermata: ${esc(v.data)} · ${esc(SHORT[v.metodo])}` : 'Da verificare'}</span></span>
-            ${v ? '<span class="badge">Verificata</span>' : `<button type="button" class="btn btn-ghost btn-sm" data-verify="${i}">Verifica</button>`}
+            ${v ? `<span class="badge">${ICON_SEAL}Verificata</span>` : `<button type="button" class="btn btn-ghost btn-sm" data-verify="${i}">Verifica</button>`}
           </li>`;
         }).join('');
         const all = state.persone.every(Boolean);
@@ -818,14 +874,8 @@
     shop() {
       const S = D.shop; const cart = new Map();
       const eur = (n) => n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
-      const ICONS = {
-        'Protezione': '<path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/>',
-        'Benessere': '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
-        'Giochi': '<path d="M12 3l2.2 5.2L20 9l-4.3 3.8L17 18.5 12 15.6 7 18.5l1.3-5.7L4 9l5.8-.8z"/>',
-        'Kit coppia': '<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M3 12h18M12 8v13M12 8s-1.5-5-4.5-5a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4.5-5a2.5 2.5 0 0 1 0 5"/>',
-        'Lingerie': '<path d="M12 4a2 2 0 0 1 2 2c0 1-1 1.5-2 2.2L3 14h18l-9-5.8"/>'
-      };
-      const icon = (c) => `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[c] || ''}</svg>`;
+      const ICONS = { 'Protezione': 'health_and_safety', 'Benessere': 'water_drop', 'Giochi': 'star', 'Kit coppia': 'redeem', 'Lingerie': 'checkroom' };
+      const icon = (c) => `<span class="ms" style="--ms:40px;font-variation-settings:'wght' 300" aria-hidden="true">${ICONS[c] || 'sell'}</span>`;
       const renderCart = () => {
         const items = [...cart].map(([id, q]) => ({ p: S.prodotti.find((x) => x.id === id), q }));
         const tot = items.reduce((t, { p, q }) => t + p.prezzo * q, 0);
@@ -996,8 +1046,8 @@
     /* ---------- STORIE: elenco con collezioni, filtri, ordinamento, autori e temi ---------- */
     storie() {
       const S = D.storie; const st = { cat: null, q: '', sort: 'nuove' };
-      const ICON_HEART_S = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
-      const ICON_COMMENT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.4 3.3a.6.6 0 0 1-1-.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg>';
+      const ICON_HEART_S = '<span class="ms" style="--ms:15px" aria-hidden="true">favorite</span>';
+      const ICON_COMMENT = '<span class="ms" style="--ms:15px" aria-hidden="true">chat_bubble</span>';
       const count = (c) => S.filter((x) => x.cat === c).length;
 
       $('#st-collections').innerHTML = D.storieCategorie.map((g) => `
@@ -1164,8 +1214,8 @@
       const unlocked = new Set(); const subs = new Set();
       const cr = (id) => V.creator.find((c) => c.id === id);
       const canSee = (p) => p.accesso === 'free' || unlocked.has(p.id) || (p.accesso === 'sub' && subs.has(p.creator));
-      const LOCK = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
-      const PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>';
+      const LOCK = '<span class="ms" style="--ms:22px" aria-hidden="true">lock</span>';
+      const PLAY = '<span class="ms" style="--ms:16px" aria-hidden="true">play_arrow</span>';
       const label = (p) => p.accesso === 'free' ? 'Gratis' : p.accesso === 'ppv' ? eur(p.prezzo) : 'Abbonati';
 
       const renderCreators = () => {
@@ -1174,7 +1224,7 @@
             <div class="creator-cover"><img src="${D.unsplash(c.foto, 600, 400)}" alt="" loading="lazy"></div>
             <div class="creator-body">
               <span class="creator-av"><img src="${D.unsplash(c.foto, 120, 120)}" alt="" loading="lazy"></span>
-              <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_CHECK}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
+              <div><strong>${esc(c.nick)}</strong> <span class="badge">${ICON_SEAL}Creator verificato</span><br><span class="muted">${esc(c.tipo)}, ${esc(c.citta)} · ${c.nFoto} foto · ${c.nVideo} video</span></div>
               <p class="muted" style="margin:0">${esc(c.bio)}</p>
               <button class="btn btn-ghost" type="button" data-sub="${c.id}" aria-pressed="${subs.has(c.id)}">${subs.has(c.id) ? 'Abbonato' : `Abbonati · ${eur(c.abbonamento)}/mese`}</button>
             </div>
@@ -1338,7 +1388,7 @@
       const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k) || d); } catch (e) { return JSON.parse(d); } };
       const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignorato */ } };
       const reviews = () => [...(ex.recensioni || []), ...(load(RV_KEY, '{}')[nick] || [])];
-      const stars = (n) => `<span class="stars" aria-label="${n} stelle su 5">${[1, 2, 3, 4, 5].map((i) => `<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" class="${i <= Math.round(n) ? 'on' : ''}"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg>`).join('')}</span>`;
+      const stars = (n) => `<span class="stars" aria-label="${n} stelle su 5">${[1, 2, 3, 4, 5].map((i) => `<span class="ms ${i <= Math.round(n) ? 'on' : ''}" style="--ms:16px" aria-hidden="true">star</span>`).join('')}</span>`;
       let following = load('agu.seguiti', '[]').includes(nick);
       document.title = `Aguardiente · ${nick}`;
 
@@ -1364,13 +1414,13 @@
             <div class="actions" style="padding-bottom:6px">
               <button class="btn btn-ghost" type="button" data-follow aria-pressed="${following}">${following ? 'Segui già' : 'Segui'}</button>
               <a class="btn btn-primary" href="messaggi.html">Scrivi</a>
-              <button class="btn btn-ghost btn-icon" type="button" aria-label="Segnala o blocca" title="Segnala o blocca"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+              <button class="btn btn-ghost btn-icon" type="button" aria-label="Segnala o blocca" title="Segnala o blocca"><span class="ms" style="--ms:18px" aria-hidden="true">more_horiz</span></button>
             </div>
           </div>
           ${ex.bio ? `<p class="u-bio">${esc(ex.bio)}</p>` : ''}`;
       };
       $('#u-foto').innerHTML = `<div class="u-grid">${fotos.map((id, i) => `<div class="u-tile${i >= fotos.length - 2 && fotos.length > 3 ? ' is-private' : ''}"><img src="${D.unsplash(id, 500, 500)}" alt="" loading="lazy">${i >= fotos.length - 2 && fotos.length > 3 ? '<span class="photo-tag">Solo contatti</span>' : ''}</div>`).join('')}</div>`;
-      $('#u-video').innerHTML = videos.length ? `<div class="u-grid">${videos.map((v) => `<div class="u-tile"><img src="${D.unsplash(v.img, 500, 500)}" alt="" loading="lazy"><span class="vt-pill u-dur"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>${esc(v.durata)}</span></div>`).join('')}</div>` : '<p class="empty">Nessun video pubblicato.</p>';
+      $('#u-video').innerHTML = videos.length ? `<div class="u-grid">${videos.map((v) => `<div class="u-tile"><img src="${D.unsplash(v.img, 500, 500)}" alt="" loading="lazy"><span class="vt-pill u-dur"><span class="ms" style="--ms:12px" aria-hidden="true">play_arrow</span>${esc(v.durata)}</span></div>`).join('')}</div>` : '<p class="empty">Nessun video pubblicato.</p>';
       $('#u-annunci').innerHTML = ads.length ? `<div class="grid grid-3">${ads.map((a) => adCard(a)).join('')}</div>` : '<p class="empty">Nessun annuncio attivo.</p>';
 
       const renderReviews = () => {
@@ -1381,7 +1431,7 @@
         $('#u-rev-box').innerHTML = met ? `
           <h2 style="font-size:22px">Lascia una recensione</h2>
           <form id="u-rev-form" class="rev-form">
-            <fieldset class="star-input"><legend>Il tuo voto</legend>${[5, 4, 3, 2, 1].map((n) => `<input type="radio" name="stelle" id="st${n}" value="${n}"${n === 5 ? ' checked' : ''}><label for="st${n}" aria-label="${n} stelle"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg></label>`).join('')}</fieldset>
+            <fieldset class="star-input"><legend>Il tuo voto</legend>${[5, 4, 3, 2, 1].map((n) => `<input type="radio" name="stelle" id="st${n}" value="${n}"${n === 5 ? ' checked' : ''}><label for="st${n}" aria-label="${n} stelle"><span class="ms" style="--ms:28px" aria-hidden="true">star</span></label>`).join('')}</fieldset>
             <label class="field">Com’è andata<textarea name="testo" rows="4" maxlength="500" placeholder="Racconta in poche righe: puntualità, rispetto, sintonia."></textarea></label>
             <button class="btn btn-ghost btn-block" type="submit">Pubblica recensione</button>
           </form>`
