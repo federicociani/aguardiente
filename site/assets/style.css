@@ -1171,6 +1171,21 @@ select, .field select {
 select::-ms-expand { display: none; }
 
 
+/* ---------- Profilo: azione "Verifica il profilo" se la verifica non è completa ---------- */
+.badge-todo { background: var(--surface-2); color: var(--text-2); border: 1px dashed var(--line-2); }
+.verify-cta { margin-top: 20px; display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 36px; border: 1px solid rgba(214,30,82,.55); background: #3A1230; }
+.verify-cta[hidden] { display: none; }
+.verify-cta-ico { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 999px; display: grid; place-items: center; background: var(--grad); color: #fff; }
+.verify-cta-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.verify-cta-text h2 { font-size: 24px; }
+.verify-cta-text .muted { color: #F4C9D6; font-size: 15px; max-width: 640px; margin: 0; }
+.verify-cta-progress { margin: 4px 0 0; font-size: 14px; font-weight: 600; color: #fff; }
+.verify-cta .btn { flex: 0 0 auto; }
+@media (max-width: 720px) {
+  .verify-cta { flex-direction: column; align-items: flex-start; padding: 20px; border-radius: 28px; gap: 14px; }
+  .verify-cta .btn { width: 100%; }
+}
+
 /* ---------- Verifica dell'età (doppio anonimato) ---------- */
 .steps li.current { color: var(--text); }
 .steps li.current .n { border-color: #D61E52; color: var(--text); box-shadow: 0 0 0 4px rgba(214,30,82,.18); }

@@ -6,7 +6,7 @@
   <title>Aguardiente · Il mio profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="assets/style.css?v=202610081437">
+  <link rel="stylesheet" href="assets/style.css?v=202610081454">
 </head>
 <body data-page="profilo">
   <header class="site-header">
@@ -33,7 +33,8 @@
         <div style="flex-grow:1;display:flex;flex-direction:column;gap:6px;padding-bottom:6px">
           <div class="chips chips-wrap" style="align-items:center">
             <h1 style="font-size:44px">Ombra &amp; Mare</h1>
-            <span class="badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Verificati</span>
+            <span class="badge" id="badge-verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Verificati</span>
+            <span class="badge badge-todo" id="badge-unverified" hidden>Da verificare</span>
             <span class="badge badge-grad">Premium</span>
           </div>
           <span class="muted" style="font-size:17px">Coppia, 35 / 33, Ravenna</span>
@@ -44,6 +45,18 @@
           <a class="btn btn-primary" href="pubblica.html" id="nuovo-annuncio" aria-label="Nuovo annuncio"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Annuncio</a>
         </div>
       </div>
+    </section>
+
+    <!-- Compare solo se la verifica dell'età non è completa -->
+    <section class="verify-cta" id="verify-cta" hidden aria-labelledby="verify-cta-title">
+      <span class="verify-cta-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></span>
+      <div class="verify-cta-text">
+        <p class="eyebrow">Profilo non verificato</p>
+        <h2 id="verify-cta-title">Verifica il profilo</h2>
+        <p class="muted" id="verify-cta-sub">Finché non confermate la maggiore età il profilo non compare a chi cerca solo verificati e non vedete foto esplicite, Vetrina, Webcam e Storie.</p>
+        <p class="verify-cta-progress" id="verify-cta-progress"></p>
+      </div>
+      <a class="btn btn-primary" id="verify-cta-btn" href="verifica.html?tipo=coppia&amp;next=profilo.html">Verifica il profilo</a>
     </section>
 
     <div class="two-col">
@@ -114,6 +127,7 @@
         </section>
         <section class="card" style="display:flex;flex-direction:column;gap:4px">
           <h2 style="font-size:22px;margin-bottom:6px">Account</h2>
+          <a href="verifica.html?tipo=coppia&amp;next=profilo.html" id="acc-verify" style="padding:10px 0">Verifica dell’età</a>
           <a href="#" style="padding:10px 0">Scarica i miei dati</a>
           <a href="index.html" style="padding:10px 0">Esci</a>
           <a href="#" style="padding:10px 0;color:var(--muted)">Elimina account</a>
@@ -133,7 +147,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610081437"></script>
-  <script src="assets/app.js?v=202610081437"></script>
+  <script src="assets/data.js?v=202610081454"></script>
+  <script src="assets/app.js?v=202610081454"></script>
 </body>
 </html>

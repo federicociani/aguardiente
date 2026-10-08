@@ -18,7 +18,7 @@
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
 | `messaggi.html` | Lista conversazioni + chat; a destra Proponi dove andare (eventi, luoghi, shop) da inviare come card; sicurezza | annuncio ("Vedi annuncio"), scheda |
-| `profilo.html` | Profilo personale, foto con visibilità, privacy, Premium | annunci, luoghi |
+| `profilo.html` | Profilo personale, foto con visibilità, privacy, Premium. Se la verifica dell'età non è completa mostra il badge "Da verificare" e il riquadro "Verifica il profilo" (con l'avanzamento per le coppie); a verifica fatta torna il badge "Verificati" | annunci, luoghi, verifica?next=profilo |
 
 ## Lato aziende
 
