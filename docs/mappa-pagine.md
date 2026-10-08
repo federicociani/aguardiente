@@ -5,7 +5,8 @@
 | Pagina | Scopo | Porta a |
 |---|---|---|
 | `index.html` | Home pubblica: ricerca rapida, categorie, online ora, tab Annunci/Eventi (eventi dei locali con prevendita del biglietto), regioni, "Come funziona" con switch Privati / Business | annunci, cerca, iscrizione, business |
-| `iscrizione.html` | Registrazione con switch Utente / Azienda | annunci (utente), dashboard (azienda) |
+| `iscrizione.html` | Registrazione con switch Utente / Azienda | verifica (utente), dashboard (azienda) |
+| `verifica.html` | Passo 2 dell'iscrizione utente: verifica dell'età con doppio anonimato (fornitore esterno simulato: SPID, CIE, documento e selfie). Due verifiche per i profili di coppia; badge "Identità verificata" facoltativo. Si salva solo un codice anonimo | annunci (o la pagina `next`) |
 | `annunci.html` | Last di 24 ore in cima (visualizzatore a schermo intero con risposta); bacheca filtrabile per categoria; ogni annuncio può avere una foto di lancio diversa dalla foto profilo | messaggi, luoghi (banner sponsorizzato) |
 | `annuncio.html?id=…` | Annuncio singolo: foto di lancio, testo, autore, Scrivi/Salva/Segnala, annunci simili | messaggi, annunci |
 | `vetrina.html` | Vetrina dei creator: creator verificati con abbonamento, contenuti gratis / a pagamento / per abbonati con anteprima sfocata, sblocco e abbonamento, form Diventa creator con dichiarazioni di consenso | messaggi |
