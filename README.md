@@ -41,6 +41,7 @@ python3 -m http.server --directory site 8080
 │  ├─ storie.html           storie della community
 │  ├─ storia.html           storia singola (?id=…)
 │  ├─ cerca.html            ricerca profili
+│  ├─ viaggio.html          In viaggio: visibili in un'altra città per le date del viaggio, accordi di coppia
 │  ├─ messaggi.html         chat
 │  ├─ profilo.html          profilo utente
 │  ├─ luoghi.html           locali e strutture (vista utente)

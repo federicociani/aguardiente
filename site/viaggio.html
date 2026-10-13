@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aguardiente · In viaggio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,300..600,0..1&icon_names=add,add_box,arrow_back,arrow_forward,badge,bed,campaign,chat_bubble,check,checkroom,chevron_left,close,confirmation_number,credit_card,expand_more,favorite,grid_view,handshake,health_and_safety,image,inbox,info,ios_share,layers,local_bar,location_on,lock,login,luggage,menu_book,more_horiz,my_location,near_me,paid,percent,play_arrow,redeem,savings,schedule,search,sell,send,shopping_bag,smart_display,star,storefront,travel_explore,tune,verified,videocam,visibility,visibility_off,water_drop,work&display=block">
+  <link rel="stylesheet" href="assets/style.css?v=202610131124">
+</head>
+<body data-page="viaggio">
+  <header class="site-header">
+    <a class="logo" href="index.html">aguardiente</a>
+    <nav class="nav nav-icons" aria-label="Principale">
+      <a class="nav-icon" href="annunci.html" aria-label="Annunci"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">campaign</span><span class="nav-tip" aria-hidden="true">Annunci</span></a>
+      <a class="nav-icon" href="cerca.html" aria-label="Cerca"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">search</span><span class="nav-tip" aria-hidden="true">Cerca</span></a>
+      <a class="nav-icon" href="viaggio.html" aria-current="page" aria-label="In viaggio"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">luggage</span><span class="nav-tip" aria-hidden="true">In viaggio</span></a>
+      <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">add_box</span><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
+      <a class="nav-icon" href="storie.html" aria-label="Storie"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">menu_book</span><span class="nav-tip" aria-hidden="true">Storie</span></a>
+      <a class="nav-icon" href="vetrina.html" aria-label="Vetrina"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">smart_display</span><span class="nav-tip" aria-hidden="true">Vetrina</span></a>
+      <a class="nav-icon" href="webcam.html" aria-label="Webcam"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">videocam</span><span class="nav-tip" aria-hidden="true">Webcam</span></a>
+      <a class="nav-icon" href="messaggi.html" aria-label="Messaggi, 2 non letti"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">chat_bubble</span><span class="nav-dot" aria-hidden="true"></span><span class="nav-tip" aria-hidden="true">Messaggi</span></a>
+    </nav>
+    <div class="header-actions">
+      <a class="avatar-link" href="profilo.html" aria-label="Il mio profilo"><img src="https://images.unsplash.com/photo-1755884684493-16b21f4adf96?w=96&amp;h=96&amp;fit=crop&amp;crop=entropy&amp;auto=format&amp;q=70" alt=""></a>
+    </div>
+  </header>
+
+  <main class="container trip-page">
+    <div class="trip-intro">
+      <p class="eyebrow">Nuovo · In viaggio</p>
+      <h1>Fuori città, con le vostre regole</h1>
+      <p class="lead">Indicate dove andate e per quanti giorni: comparite lì solo per quelle date, poi la modalità si spegne da sola. Se volete, a casa restate invisibili.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="main">
+
+        <!-- Il mio viaggio: modulo per attivarlo oppure riepilogo del viaggio attivo -->
+        <section class="card trip-card" id="trip" aria-labelledby="trip-title">
+          <div class="trip-card-head">
+            <span class="teaser-ico" aria-hidden="true"><span class="ms" style="--ms:24px" aria-hidden="true">luggage</span></span>
+            <div><h2 id="trip-title">Il vostro prossimo viaggio</h2><p class="muted" id="trip-sub">Nessun viaggio attivo. Siete visibili solo nella vostra zona, Ravenna.</p></div>
+          </div>
+
+          <form class="trip-form" id="trip-form" novalidate>
+            <div class="field-row">
+              <label class="field" style="flex:2 1 220px">Dove andate<input type="text" name="meta" list="mete" placeholder="Città, per esempio Bologna" autocomplete="off" required></label>
+              <label class="field">Dal<input type="date" name="dal" data-future data-placeholder="gg/mm/aaaa" required></label>
+              <label class="field">Al<input type="date" name="al" data-future data-placeholder="gg/mm/aaaa" required></label>
+            </div>
+            <datalist id="mete"></datalist>
+            <div class="trip-who">
+              <span class="field" style="gap:0">Chi viaggia</span>
+              <div class="chips" id="trip-chi" role="group" aria-label="Chi viaggia"></div>
+            </div>
+            <label class="field">Perché ci andate (facoltativo)<select name="motivo"><option value="">Preferiamo non dirlo</option><option>Vacanza</option><option>Lavoro</option><option>Weekend</option><option>Evento o serata</option></select></label>
+            <div>
+              <div class="switch-row"><span><strong style="font-weight:500">Nascosti a casa</strong><br><span class="muted" style="font-size:13px">Durante il viaggio non comparite a Ravenna e provincia</span></span><button type="button" class="switch" role="switch" id="sw-home" aria-checked="true" aria-label="Nascosti a casa"></button></div>
+              <div class="switch-row"><span><strong style="font-weight:500">Solo profili verificati</strong><br><span class="muted" style="font-size:13px">A destinazione vi vede solo chi ha verificato l’identità</span></span><button type="button" class="switch" role="switch" id="sw-trip-ver" aria-checked="true" aria-label="Solo profili verificati"></button></div>
+              <div class="switch-row"><span><strong style="font-weight:500">Locali e serate a destinazione</strong><br><span class="muted" style="font-size:13px">Vi suggeriamo club e strutture friendly della città</span></span><button type="button" class="switch" role="switch" id="sw-trip-locali" aria-checked="true" aria-label="Locali e serate a destinazione"></button></div>
+            </div>
+            <div class="trip-preview" aria-live="polite">
+              <span class="muted" style="font-size:13px">Così vi vedranno a destinazione</span>
+              <span class="trip-badge" id="trip-badge-preview"><span class="ms" style="--ms:16px" aria-hidden="true">luggage</span><span>In viaggio · scegliete città e date</span></span>
+            </div>
+            <p class="trip-error" id="trip-error" role="alert"></p>
+            <button class="btn btn-primary" type="submit">Attiva In viaggio</button>
+          </form>
+
+          <div class="trip-active" id="trip-active" hidden>
+            <span class="trip-badge trip-badge-lg" id="trip-badge-active"></span>
+            <ul class="trip-facts" id="trip-facts"></ul>
+            <div class="actions">
+              <a class="btn btn-primary" href="pubblica.html" id="trip-last"><span class="ms ms-bold" style="--ms:16px" aria-hidden="true">add</span>Last a destinazione</a>
+              <button class="btn btn-ghost" type="button" id="trip-edit">Modifica</button>
+              <button class="btn btn-ghost" type="button" id="trip-end">Termina il viaggio</button>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="arrivi-title">
+          <div class="section-head" style="margin-bottom:6px"><h2 id="arrivi-title" style="font-size:28px">Di passaggio in Romagna</h2></div>
+          <p class="muted" id="arrivi-sub" style="margin:0 0 16px">Profili che hanno programmato un viaggio nella vostra zona. Gli accordi li hanno scritti loro: sapete subito cosa è possibile.</p>
+          <div class="grid grid-profiles" id="arrivi"></div>
+        </section>
+
+        <section aria-labelledby="last-trip-title">
+          <div class="section-head" style="margin-bottom:16px"><h2 id="last-trip-title" style="font-size:28px">Last in viaggio</h2><a class="btn btn-ghost btn-sm btn-more" href="pubblica.html"><span>Pubblica</span><span class="ms" style="--ms:14px" aria-hidden="true">arrow_forward</span></a></div>
+          <div class="trip-lasts" id="trip-lasts"></div>
+        </section>
+
+        <section aria-labelledby="locali-trip-title" id="locali-trip">
+          <div class="section-head" style="margin-bottom:16px"><h2 id="locali-trip-title" style="font-size:28px">Locali e serate in zona</h2><a class="btn btn-ghost btn-sm btn-more" href="luoghi.html"><span>Tutti i locali</span><span class="ms" style="--ms:14px" aria-hidden="true">arrow_forward</span></a></div>
+          <div class="grid grid-3" id="trip-places"></div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="card" id="accordi" aria-labelledby="accordi-title">
+          <h2 id="accordi-title" style="font-size:22px;margin-bottom:6px">I vostri accordi</h2>
+          <p class="muted" style="font-size:14px;margin:0 0 6px">Compaiono sul profilo e negli annunci. Ogni cambio va confermato da entrambi.</p>
+          <div id="accordi-list"></div>
+          <p class="trip-pending" id="accordi-pending" role="status" aria-live="polite" hidden></p>
+        </section>
+        <section class="card" style="display:flex;flex-direction:column;gap:10px">
+          <h2 style="font-size:22px">Discrezione</h2>
+          <ul class="trip-privacy">
+            <li><span class="ms" style="--ms:18px" aria-hidden="true">location_on</span><span>Mostriamo solo la città, mai la posizione precisa.</span></li>
+            <li><span class="ms" style="--ms:18px" aria-hidden="true">schedule</span><span>Alla data di ritorno la modalità si spegne da sola.</span></li>
+            <li><span class="ms" style="--ms:18px" aria-hidden="true">visibility_off</span><span>Lo storico dei viaggi non viene salvato.</span></li>
+            <li><span class="ms" style="--ms:18px" aria-hidden="true">verified</span><span>Chi incontrate fuori città lo vedete verificato: controllate sempre il badge.</span></li>
+          </ul>
+        </section>
+        <section class="card-deep" style="display:flex;flex-direction:column;gap:10px">
+          <span class="badge" style="background:rgba(0,0,0,.25);color:#fff;align-self:flex-start">Premium</span>
+          <h3>Più viaggi in programma e in evidenza a destinazione</h3>
+          <p>Gratis un viaggio alla volta. Con Premium ne programmate fino a cinque e il vostro profilo compare per primo nella città dove andate.</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <span>Servizio riservato ai maggiorenni. Vietata ogni forma di prostituzione e di contenuto non consensuale.</span>
+      <nav aria-label="Footer">
+        <a href="#">Termini</a>
+        <a href="#">Privacy</a>
+        <a href="#">Linee guida</a>
+        <a class="strong" href="business.html">Aguardiente Business</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/data.js?v=202610131124"></script>
+  <script src="assets/app.js?v=202610131124"></script>
+</body>
+</html>
