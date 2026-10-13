@@ -17,8 +17,9 @@
 | `utente.html?u=…` | Profilo pubblico: foto, video, annunci, seguaci/seguiti, Segui, Scrivi, recensioni con stelle (solo dopo un incontro confermato da entrambi) | messaggi |
 | `pubblica.html` | Pubblicazione annuncio: testo, foto di lancio (caricata, scelta tra atmosfere o nessuna), visibilità della foto, anteprima dal vivo | annunci |
 | `cerca.html` | Griglia profili con filtri tipo, online, verificati | messaggi |
+| `viaggio.html` | In viaggio (non monogamia geografica): città e date del viaggio, chi viaggia (insieme, solo lei, solo lui), "Nascosti a casa", anteprima del badge, viaggio attivo che si spegne da solo al ritorno; chi arriva nella tua zona o sarà a destinazione con i suoi accordi, Last in viaggio, locali a destinazione; accordi di coppia con conferma di entrambi | messaggi, pubblica, luoghi, scheda |
 | `messaggi.html` | Lista conversazioni + chat; a destra Proponi dove andare (eventi, luoghi, shop) da inviare come card; sicurezza | annuncio ("Vedi annuncio"), scheda |
-| `profilo.html` | Profilo personale, foto con visibilità, privacy, Premium | annunci, luoghi |
+| `profilo.html` | Profilo personale, accordi di coppia, riquadro In viaggio, foto con visibilità, privacy, Premium. Se la verifica dell'età non è completa mostra il badge "Da verificare" e il riquadro "Verifica il profilo" (con l'avanzamento per le coppie); a verifica fatta torna il badge "Verificati" | annunci, luoghi, viaggio, verifica?next=profilo |
 
 ## Lato aziende
 
