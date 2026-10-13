@@ -297,6 +297,35 @@ window.DATA = {
       recensioni: [ { da: 'Luna & Matteo', stelle: 5, testo: 'Solare come il nickname. Ci ha fatto sentire subito a nostro agio al club.', data: 'settembre 2026' } ] }
   },
 
+  /* In viaggio: chi ha programmato un viaggio nella tua zona, con i suoi accordi (dati di esempio) */
+  viaggio: {
+    casa: 'Ravenna',
+    mete: ['Bologna', 'Milano', 'Roma', 'Firenze', 'Venezia', 'Torino', 'Napoli', 'Verona', 'Rimini', 'Riccione', 'Cervia', 'Padova'],
+    arrivi: [
+      { nick: 'Chiara & Luca', tipo: 'Coppia', eta: '38 / 40', da: 'Milano', meta: 'Ravenna', date: '16–18 ott', motivo: 'Weekend', ver: true,
+        img: '1615966650071-855b15f29ad1', accordi: ['Insieme', 'Solo in viaggio'] },
+      { nick: 'Marco_TO', tipo: 'Lui', eta: '44', da: 'Torino', meta: 'Rimini', date: '14–15 ott', motivo: 'Lavoro', ver: true,
+        img: '1578977826019-5141d8ff5870', accordi: ['Da solo, d’accordo con lei', 'Solo in viaggio'] },
+      { nick: 'Elena.fi', tipo: 'Lei', eta: '36', da: 'Firenze', meta: 'Ravenna', date: '20–22 ott', motivo: 'Evento o serata', ver: true,
+        img: '1617055407123-3d7130c1f940', accordi: ['Da sola, d’accordo con lui'] },
+      { nick: 'Sara & Gio', tipo: 'Coppia', eta: '31 / 33', da: 'Roma', meta: 'Cervia', date: '24–27 ott', motivo: 'Vacanza', ver: false,
+        img: '1612744192242-35cd7a7d35e6', accordi: ['Insieme', 'Solo con coppie'] }
+    ],
+    last: [
+      { nick: 'Marco_TO', citta: 'Rimini', img: '1543007630-9710e4a00a20', testo: 'Stasera a Rimini per lavoro: aperitivo sul porto?', ore: 2 },
+      { nick: 'Chiara & Luca', citta: 'Ravenna', img: '1702725365144-6e8584ea54e4', testo: 'Weekend al mare, consigliateci un locale per sabato', ore: 5 },
+      { nick: 'Elena.fi', citta: 'Ravenna', img: '1468056961052-15507578a50d', testo: 'Venerdì in fiera, sabato libera', ore: 9 }
+    ],
+    /* Accordi di coppia del profilo in uso: lei e lui possono avere regole diverse */
+    accordi: [
+      { id: 'insieme', label: 'Insieme', note: 'Incontri con tutti e due', on: true },
+      { id: 'lei', label: 'Lei da sola', note: 'D’accordo con lui', on: true },
+      { id: 'lui', label: 'Lui da solo', note: 'Non concordato', on: false },
+      { id: 'viaggio', label: 'Solo in viaggio', note: 'Mai nella nostra zona', on: true },
+      { id: 'coppie', label: 'Solo con coppie', note: 'Niente single', on: false }
+    ]
+  },
+
   regioni: ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
             'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto']
 };

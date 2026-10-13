@@ -1477,6 +1477,140 @@
       pills($('#place-filters'), ['Tutti', 'Struttura friendly', 'Boutique', 'Club', 'Spazio privato'], render);
     },
 
+    /* ---------- IN VIAGGIO: non monogamia geografica ----------
+       Il viaggio attivo resta nel browser (localStorage) solo per la demo:
+       in produzione la città è l'unico dato salvato e sparisce alla data di ritorno. */
+    viaggio() {
+      const V = D.viaggio || {};
+      const KEY = 'agu.viaggio';
+      const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
+      const ICON_BAG = (s = 16) => `<span class="ms" style="--ms:${s}px" aria-hidden="true">luggage</span>`;
+      const form = $('#trip-form');
+      const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
+      const save = (t) => { try { t ? localStorage.setItem(KEY, JSON.stringify(t)) : localStorage.removeItem(KEY); } catch (e) { /* ignorato */ } };
+      const d = (iso) => { const x = new Date(iso + 'T12:00:00'); return { g: x.getDate(), m: MESI[x.getMonth()] }; };
+      const range = (a, b) => { if (!a || !b) return ''; const A = d(a), B = d(b); return A.m === B.m ? `${A.g}–${B.g} ${B.m}` : `${A.g} ${A.m} – ${B.g} ${B.m}`; };
+      const cap = (s) => s.trim().replace(/\s+/g, ' ').replace(/(^|\s)\S/g, (c) => c.toUpperCase());
+
+      $('#mete').innerHTML = (V.mete || []).map((m) => `<option value="${esc(m)}">`).join('');
+      let chi = 'Insieme';
+      pills($('#trip-chi'), ['Insieme', 'Solo lei', 'Solo lui'], (v) => { chi = v; preview(); });
+
+      function badgeText(t) { return `In viaggio a ${t.meta}${t.dal && t.al ? ' · ' + range(t.dal, t.al) : ''}${t.chi && t.chi !== 'Insieme' ? ' · ' + t.chi.toLowerCase() : ''}`; }
+      function current() { return { meta: cap(form.meta.value || ''), dal: form.dal.value, al: form.al.value, chi, motivo: form.motivo.value,
+        casa: $('#sw-home').getAttribute('aria-checked') === 'true', ver: $('#sw-trip-ver').getAttribute('aria-checked') === 'true',
+        locali: $('#sw-trip-locali').getAttribute('aria-checked') === 'true' }; }
+      function preview() {
+        const t = current();
+        $('#trip-badge-preview').innerHTML = `${ICON_BAG()}<span>${t.meta ? esc(badgeText(t)) : 'In viaggio · scegliete città e date'}</span>`;
+      }
+      form.addEventListener('input', preview);
+      form.addEventListener('change', preview);
+
+      function renderTrip() {
+        const t = load();
+        $('#trip-form').hidden = !!t;
+        $('#trip-active').hidden = !t;
+        $('#trip-title').textContent = t ? `In viaggio a ${t.meta}` : 'Il vostro prossimo viaggio';
+        $('#trip-sub').textContent = t ? `Attivo dal ${d(t.dal).g} ${d(t.dal).m}: si spegne da solo il ${d(t.al).g} ${d(t.al).m}.` : `Nessun viaggio attivo. Siete visibili solo nella vostra zona, ${V.casa || 'casa'}.`;
+        if (t) {
+          $('#trip-badge-active').innerHTML = `${ICON_BAG(20)}<span>${esc(badgeText(t))}</span>`;
+          const facts = [
+            ['travel_explore', `Comparite nella ricerca, negli annunci e negli Online ora di ${t.meta}.`],
+            [t.casa ? 'visibility_off' : 'visibility', t.casa ? `A ${V.casa} e provincia siete nascosti fino al ritorno.` : `Restate visibili anche a ${V.casa}.`],
+            ['verified', t.ver ? 'Vi vede solo chi ha verificato l’identità.' : 'Vi vedono tutti gli iscritti di quella zona.'],
+            ['handshake', `Chi vi scrive vede i vostri accordi: ${(V.accordi || []).filter((a) => a.on).map((a) => a.label.toLowerCase()).join(', ')}.`]
+          ];
+          if (t.motivo) facts.push(['info', `Motivo indicato: ${t.motivo.toLowerCase()}.`]);
+          $('#trip-facts').innerHTML = facts.map(([i, s]) => `<li><span class="ms" style="--ms:18px" aria-hidden="true">${i}</span><span>${esc(s)}</span></li>`).join('');
+          $('#trip-last').setAttribute('href', `pubblica.html?last=1&citta=${encodeURIComponent(t.meta)}`);
+        }
+        renderSide(t);
+      }
+
+      function renderSide(t) {
+        // Con un viaggio attivo: chi sarà nella città di destinazione; altrimenti chi arriva nella tua zona
+        const arrivi = V.arrivi || [];
+        $('#arrivi-title').textContent = t ? `Chi sarà a ${t.meta}` : 'Di passaggio in Romagna';
+        $('#arrivi-sub').textContent = t ? `Profili che saranno a ${t.meta} negli stessi giorni (esempi). Gli accordi li hanno scritti loro: sapete subito cosa è possibile.`
+          : 'Profili che hanno programmato un viaggio nella vostra zona. Gli accordi li hanno scritti loro: sapete subito cosa è possibile.';
+        $('#arrivi').innerHTML = arrivi.map((p) => `
+          <article class="card profile-card trip-profile">
+            <div class="photo">${p.img ? `<img src="${D.unsplash(p.img, 420, 400)}" alt="" loading="lazy" decoding="async">` : ''}
+              <span class="tag-online">${ICON_BAG(14)}${t ? esc(t.meta) : esc(p.meta)} · ${esc(p.date)}</span>
+              ${p.ver ? `<span class="tag-ver" aria-label="Verificato" style="color:#fff">${ICON_SEAL}</span>` : ''}
+            </div>
+            <div class="body">
+              <strong><a class="ad-link-plain" href="${userHref(p.nick)}">${esc(p.nick)}</a></strong>
+              <span class="muted">${esc(p.tipo)}, ${esc(p.eta)}, da ${esc(p.da)}${p.motivo ? ` · ${esc(p.motivo.toLowerCase())}` : ''}</span>
+              <div class="trip-deals">${p.accordi.map((a) => `<span class="trip-deal">${esc(a)}</span>`).join('')}</div>
+              <div class="row"><a class="btn btn-ghost" style="flex:1" href="messaggi.html">Scrivi</a></div>
+            </div>
+          </article>`).join('');
+
+        $('#trip-lasts').innerHTML = (V.last || []).map((l) => `
+          <article class="card trip-last-item">
+            <div class="trip-last-img"><img src="${D.unsplash(l.img, 240, 240)}" alt="" loading="lazy" decoding="async"></div>
+            <div class="trip-last-body">
+              <span class="cat-label">${ICON_BAG(14)} ${esc(t ? t.meta : l.citta)} · ${l.ore} ${l.ore === 1 ? 'ora' : 'ore'} fa</span>
+              <strong>${esc(l.testo)}</strong>
+              <span class="muted" style="font-size:14px">${esc(l.nick)} · scade tra ${24 - l.ore} ore</span>
+            </div>
+          </article>`).join('');
+
+        const showPlaces = !t || t.locali;
+        $('#locali-trip').hidden = !showPlaces;
+        $('#locali-trip-title').textContent = t ? `Locali e serate a ${t.meta}` : 'Locali e serate in zona';
+        $('#trip-places').innerHTML = (D.luoghi || []).filter((p) => p.citta !== 'Online').slice(0, 3).map((p) => `
+          <a class="card place" href="${p.link || 'scheda.html'}">
+            <div class="photo">${p.img ? `<img src="${D.unsplash(p.img, 640, 360)}" alt="" loading="lazy" decoding="async">` : ''}${p.offerta ? `<span class="badge badge-grad">${esc(p.offerta)}</span>` : ''}</div>
+            <div class="body">
+              <span class="muted" style="font-size:14px">${esc(p.cat)}</span>
+              <h3>${esc(p.nome)}</h3>
+              <p class="muted">${esc(p.descr)}</p>
+            </div>
+          </a>`).join('');
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const t = current(); const err = $('#trip-error');
+        if (!t.meta) { err.textContent = 'Indicate la città dove andate.'; form.meta.focus(); return; }
+        if (t.meta.toLowerCase() === (V.casa || '').toLowerCase()) { err.textContent = `${V.casa} è già la vostra zona: scegliete una città diversa.`; form.meta.focus(); return; }
+        if (!t.dal || !t.al) { err.textContent = 'Indicate le date di andata e di ritorno.'; (t.dal ? form.al : form.dal).focus(); return; }
+        if (t.al < t.dal) { err.textContent = 'La data di ritorno viene prima di quella di partenza.'; form.al.focus(); return; }
+        err.textContent = '';
+        save(t); renderTrip();
+        $('#trip').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      });
+      $('#trip-end').addEventListener('click', () => { save(null); form.reset(); $$('input[type="date"]', form).forEach((i) => i.dispatchEvent(new Event('input'))); preview(); renderTrip(); });
+      $('#trip-edit').addEventListener('click', () => {
+        const t = load(); if (!t) return;
+        form.meta.value = t.meta; form.dal.value = t.dal; form.al.value = t.al; form.motivo.value = t.motivo || '';
+        $$('input[type="date"]', form).forEach((i) => i.dispatchEvent(new Event('input')));
+        $$('#trip-chi button').forEach((b) => { if (b.textContent === t.chi) b.click(); });
+        $('#sw-home').setAttribute('aria-checked', t.casa); $('#sw-trip-ver').setAttribute('aria-checked', t.ver); $('#sw-trip-locali').setAttribute('aria-checked', t.locali);
+        $('#trip-form').hidden = false; $('#trip-active').hidden = true; preview(); form.meta.focus();
+      });
+
+      // Accordi di coppia: ogni modifica resta "in attesa" finché l'altra persona non conferma
+      const acc = (V.accordi || []).map((a) => ({ ...a }));
+      $('#accordi-list').innerHTML = acc.map((a) => `
+        <div class="switch-row"><span><strong style="font-weight:500">${esc(a.label)}</strong><br><span class="muted" style="font-size:13px">${esc(a.note)}</span></span>
+          <button type="button" class="switch" role="switch" data-acc="${a.id}" aria-checked="${a.on}" aria-label="${esc(a.label)}"></button></div>`).join('');
+      $$('#accordi-list [role="switch"]').forEach((sw) => sw.addEventListener('click', () => {
+        sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
+        const changed = acc.filter((a) => String(a.on) !== $(`[data-acc="${a.id}"]`).getAttribute('aria-checked'));
+        const p = $('#accordi-pending');
+        p.hidden = !changed.length;
+        p.innerHTML = changed.length ? `<span class="ms" style="--ms:16px" aria-hidden="true">schedule</span><span>${changed.length === 1 ? '1 modifica' : changed.length + ' modifiche'} in attesa della conferma dell’altra persona della coppia. Fino ad allora valgono gli accordi di prima.</span>` : '';
+      }));
+
+      const q = new URLSearchParams(location.search);
+      if (q.get('meta')) form.meta.value = q.get('meta');
+      preview(); renderTrip();
+    },
+
     /* ---------- DASHBOARD AZIENDA: checklist verifica ---------- */
     dashboard() {
       const tasks = $$('.task button');

@@ -6,8 +6,8 @@
   <title>Aguardiente · Il mio profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,300..600,0..1&icon_names=add,add_box,arrow_back,arrow_forward,badge,bed,campaign,chat_bubble,check,checkroom,chevron_left,close,confirmation_number,credit_card,expand_more,favorite,grid_view,health_and_safety,image,inbox,info,ios_share,layers,local_bar,location_on,lock,login,menu_book,more_horiz,my_location,near_me,paid,percent,play_arrow,redeem,savings,search,sell,send,shopping_bag,smart_display,star,storefront,tune,verified,videocam,water_drop,work&display=block">
-  <link rel="stylesheet" href="assets/style.css?v=202610081506">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@20..48,300..600,0..1&icon_names=add,add_box,arrow_back,arrow_forward,badge,bed,campaign,chat_bubble,check,checkroom,chevron_left,close,confirmation_number,credit_card,expand_more,favorite,grid_view,handshake,health_and_safety,image,inbox,info,ios_share,layers,local_bar,location_on,lock,login,luggage,menu_book,more_horiz,my_location,near_me,paid,percent,play_arrow,redeem,savings,schedule,search,sell,send,shopping_bag,smart_display,star,storefront,travel_explore,tune,verified,videocam,visibility,visibility_off,water_drop,work&display=block">
+  <link rel="stylesheet" href="assets/style.css?v=202610131124">
 </head>
 <body data-page="profilo">
   <header class="site-header">
@@ -15,6 +15,7 @@
     <nav class="nav nav-icons" aria-label="Principale">
       <a class="nav-icon" href="annunci.html" aria-label="Annunci"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">campaign</span><span class="nav-tip" aria-hidden="true">Annunci</span></a>
       <a class="nav-icon" href="cerca.html" aria-label="Cerca"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">search</span><span class="nav-tip" aria-hidden="true">Cerca</span></a>
+      <a class="nav-icon" href="viaggio.html" aria-label="In viaggio"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">luggage</span><span class="nav-tip" aria-hidden="true">In viaggio</span></a>
       <a class="nav-icon nav-add" href="pubblica.html" aria-label="Pubblica annuncio"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">add_box</span><span class="nav-tip" aria-hidden="true">Pubblica</span></a>
       <a class="nav-icon" href="storie.html" aria-label="Storie"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">menu_book</span><span class="nav-tip" aria-hidden="true">Storie</span></a>
       <a class="nav-icon" href="vetrina.html" aria-label="Vetrina"><span class="ms ms-fillable" style="--ms:24px" aria-hidden="true">smart_display</span><span class="nav-tip" aria-hidden="true">Vetrina</span></a>
@@ -66,6 +67,9 @@
           <p style="color:var(--text-2);font-size:17px;line-height:1.6;max-width:680px">Coppia insieme da otto anni, amiamo il mare d’inverno, la buona cucina e le persone che sanno ascoltare. Ci piace prenderci il tempo per conoscerci prima di tutto.</p></section>
         <section><h2 style="font-size:28px;margin-bottom:14px">Cosa cerchiamo</h2>
           <div class="chips"><span class="chip">Coppie</span><span class="chip">Amicizie</span><span class="chip">Serate al club</span><span class="chip">Weekend fuori</span><span class="chip">Solo profili verificati</span></div></section>
+        <section class="profile-trip"><div class="section-head" style="margin-bottom:4px"><h2 style="font-size:28px">I nostri accordi</h2><a class="btn btn-ghost btn-sm btn-more" href="viaggio.html#accordi"><span>Modifica</span><span class="ms" style="--ms:14px" aria-hidden="true">arrow_forward</span></a></div>
+          <p class="muted" style="margin:0">Li vede chi vi scrive, così sa subito cosa è possibile. Ogni cambio va confermato da entrambi.</p>
+          <div class="trip-deals"><span class="trip-deal">Insieme</span><span class="trip-deal">Lei da sola</span><span class="trip-deal">Solo in viaggio</span></div></section>
         <section>
           <div class="section-head" style="margin-bottom:14px"><h2 style="font-size:28px">I nostri annunci</h2><a class="btn btn-ghost btn-sm btn-more" href="annunci.html"><span>Gestisci</span><span class="ms" style="--ms:14px" aria-hidden="true">arrow_forward</span></a></div>
           <article class="card ad">
@@ -91,6 +95,11 @@
         <div class="switch-row"><span><strong style="font-weight:500">Foto sfocate</strong><br><span class="muted" style="font-size:13px">Nitide solo per i contatti accettati</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Foto sfocate"></button></div>
         <div class="switch-row"><span><strong style="font-weight:500">Mostra distanza</strong><br><span class="muted" style="font-size:13px">Indicativa, mai la posizione esatta</span></span><button type="button" class="switch" role="switch" aria-checked="false" aria-label="Mostra distanza"></button></div>
         <div class="switch-row"><span><strong style="font-weight:500">Ricevi offerte dai locali</strong><br><span class="muted" style="font-size:13px">Solo attività verificate</span></span><button type="button" class="switch" role="switch" aria-checked="true" aria-label="Ricevi offerte dai locali"></button></div>
+        </section>
+        <section class="card" style="display:flex;flex-direction:column;gap:12px">
+          <div class="trip-card-head"><span class="teaser-ico" aria-hidden="true"><span class="ms" style="--ms:24px" aria-hidden="true">luggage</span></span>
+            <div><h2 style="font-size:22px">In viaggio</h2><p class="muted" style="font-size:14px">Comparite in un’altra città solo per i giorni del viaggio. A casa, se volete, restate invisibili.</p></div></div>
+          <a class="btn btn-ghost btn-block" href="viaggio.html">Programma un viaggio</a>
         </section>
         <section class="card ext-card" id="contatti">
           <details class="fold" id="contatti-fold">
@@ -152,7 +161,7 @@
     </div>
   </footer>
 
-  <script src="assets/data.js?v=202610081506"></script>
-  <script src="assets/app.js?v=202610081506"></script>
+  <script src="assets/data.js?v=202610131124"></script>
+  <script src="assets/app.js?v=202610131124"></script>
 </body>
 </html>
